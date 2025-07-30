@@ -1,0 +1,21 @@
+id,name,email,age,city,purchase_amount,purchase_date,product_category
+1,John Smith,john.smith@email.com,34,New York,299,2024-01-15,Electronics
+2,Sarah Johnson,sarah.j@gmail.com,28,Los Angeles,149.50,2024-01-16,Clothing
+3,Michael Brown,m.brown@yahoo.com,45,Chicago,89.99,2024-01-17,Books
+4,Emily Davis,emily.davis@hotmail.com,31,Houston,199.99,2024-01-18,Home & Garden
+5,David Wilson,d.wilson@outlook.com,52,Phoenix,399.99,2024-01-19,Electronics
+6,Lisa Anderson,lisa.anderson@gmail.com,29,Philadelphia,79.99,2024-01-20,Beauty
+7,Robert Taylor,rob.taylor@email.com,38,San Antonio,249.99,2024-01-21,Sports
+8,Jennifer Martinez,j.martinez@yahoo.com,42,San Diego,159.99,2024-01-22,Clothing
+9,William Garcia,w.garcia@gmail.com,36,Dallas,329.99,2024-01-23,Electronics
+10,Jessica Rodriguez,jessica.r@hotmail.com,27,San Jose,99.99,2024-01-24,Books
+11,Christopher Lee,chris.lee@email.com,41,Austin,179.99,2024-01-25,Home & Garden
+12,Amanda White,amanda.white@gmail.com,33,Jacksonville,219.99,2024-01-26,Beauty
+13,Matthew Harris,m.harris@yahoo.com,39,Fort Worth,289.99,2024-01-27,Sports
+14,Ashley Clark,ashley.clark@outlook.com,26,Columbus,129.99,2024-01-28,Clothing
+15,Daniel Lewis,daniel.lewis@gmail.com,44,Charlotte,349.99,2024-01-29,Electronics
+16,Stephanie Walker,s.walker@email.com,35,San Francisco,189.99,2024-01-30,Books
+17,Kevin Hall,kevin.hall@hotmail.com,30,Indianapolis,259.99,2024-01-31,Home & Garden
+18,Michelle Allen,michelle.a@gmail.com,37,Seattle,109.99,2024-02-01,Beauty
+19,Ryan Young,ryan.young@yahoo.com,43,Denver,199.99,2024-02-02,Sports
+20,Nicole King,nicole.king@email.com,32,Washington,279.99,2024-02-03,Clothing

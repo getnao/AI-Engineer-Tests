@@ -1,0 +1,12 @@
+version: 2
+ 
+sources:
+ - name: flaky_tests
+   database: '{{ env_var("SNOWFLAKE_LOAD_DATABASE") }}'
+   schema: flaky_tests
+   loaded_at_field: uploaded_at
+   loader: Snowflake tasks
+   description: flaky_tests metrics data [Original Issue](https://gitlab.com/gitlab-data/analytics/-/issues/22540)
+ 
+   tables:
+     - name: rspec_flaky_tests

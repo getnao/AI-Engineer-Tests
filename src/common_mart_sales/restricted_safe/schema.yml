@@ -1,0 +1,1850 @@
+version: 2
+
+models:
+  - name: mart_arr
+    description: '{{ doc("mart_arr") }}'
+    columns:
+      - name: arr
+        description: "Calculated as 12 * MRR value"
+      - name: primary_key
+        data_tests:
+          - not_null
+          - unique
+      - name: is_reseller
+        description: Identify whether a crm_account is a reseller.
+      - name: subscription_sales_type
+        description: Identifies whether a subscription is Sales-Assisted or Self-Service / Web Direct.
+      - name: billing_account_number
+        data_tests:
+          - not_null
+      - name: subscription_name_slugify
+        data_tests:
+          - not_null
+      - name: subscription_name
+        data_tests:
+          - not_null
+      - name: oldest_subscription_in_cohort
+      - name: subscription_lineage
+      - name: dim_crm_opportunity_id
+        description: opportunity_id related to the given subscription version
+      - name: arr_month
+        data_tests:
+          - not_null
+      - name: subscription_cohort_month
+      - name: subscription_cohort_quarter
+      - name: mrr
+        data_tests:
+          - not_null
+      - name: months_since_subscription_cohort_start
+      - name: quarters_since_subscription_cohort_start
+      - name: dim_billing_account_id
+        data_tests:
+          - not_null
+      - name: billing_account_name
+        data_tests:
+          - not_null
+      - name: product_tier_name
+        data_tests:
+          - not_null
+      - name: unit_of_measure
+      - name: quantity
+      - name: dim_crm_account_id
+      - name: crm_account_name
+      - name: ultimate_parent_account_id
+      - name: ultimate_parent_account_name
+      - name: billing_account_cohort_month
+      - name: billing_account_cohort_quarter
+      - name: crm_account_cohort_month
+      - name: crm_account_cohort_quarter
+        description: '{{ doc("mart_arr_col_parent_account_cohort_month") }}'
+      - name: parent_account_cohort_quarter
+        description: '{{ doc("mart_arr_col_parent_account_cohort_quarter") }}'
+      - name: months_since_billing_account_cohort_start
+      - name: quarters_since_billing_account_cohort_start
+      - name: months_since_crm_account_cohort_start
+      - name: quarters_since_crm_account_cohort_start
+      - name: months_since_parent_account_cohort_start
+        description: '{{ doc("mart_arr_col_months_since_parent_cohort_start") }}'
+      - name: quarters_since_parent_account_cohort_start
+        description: '{{ doc("mart_arr_col_quarters_since_parent_cohort_start") }}'
+      - name: dim_subscription_id
+      - name: dim_subscription_id_original
+      - name: was_purchased_through_reseller
+        description: Boolean field that indicates whether the subscription was purchased through a reseller. If TRUE, the `invoice_owner_account` will contain the name of the reseller.
+      - name: is_licensed_user
+        description: '{{ doc("is_licensed_user") }}'
+      - name: is_licensed_user_base_product
+        description: '{{ doc("is_licensed_user_base_product") }}'
+      - name: is_licensed_user_add_on
+        description: '{{ doc("is_licensed_user_add_on") }}'
+      - name: is_arpu
+        description: Flag to identify what counts towards Annual Revenue Per User (ARPU). It works by excluding `Storage` product_tier and `EDU` product_rate_plan.
+      - name: is_oss_or_edu_rate_plan
+        description: boolean field indicating edu or oss rate plan
+      - name: dim_charge_id
+        description: Unique identifier for a rate plan charge in Zuora. Can be joined to dim_charge.
+      - name: product_deployment_type
+        description: How a product is deployed to the customer; Self-Managed, GitLab.com or Dedicated (or Other).
+      - name: product_category
+        description: Categorizes Zuora products as either Add On Services or Base Products
+      - name: product_rate_plan_category
+        description: On created opportunities (Web store/Sales assisted), the Product category field is be populated at the Rate plan level in Salesforce. Aides identification of Agile Planning and Duo Pro SKUs, flowing from salesforce.
+      - name: is_landed_arr_first_order
+        description: Landed ARR is calculated by looking at the first 'ARR _Month' at the ultimate parent level, and delineating the landed ARR value from that first month's documented ARR. The EDU/OSS orders are excluded from these orders using the dim_product_detail.is_oss_or_edu_rate_plan flag.
+
+  - name: mart_arr_jihu
+    description: '{{ doc("mart_arr_jihu") }}'
+    columns:
+      - name: arr
+        description: "Calculated as 12 * MRR value"
+      - name: primary_key
+        data_tests:
+          - not_null
+          - unique
+      - name: is_reseller
+        description: Identify whether a crm_account is a reseller.
+      - name: subscription_sales_type
+        description: Identifies whether a subscription is Sales-Assisted or Self-Service / Web Direct.
+      - name: billing_account_number
+        data_tests:
+          - not_null
+      - name: subscription_name_slugify
+        data_tests:
+          - not_null
+      - name: subscription_name
+        data_tests:
+          - not_null
+      - name: oldest_subscription_in_cohort
+      - name: subscription_lineage
+      - name: arr_month
+        data_tests:
+          - not_null
+      - name: subscription_cohort_month
+      - name: subscription_cohort_quarter
+      - name: mrr
+        data_tests:
+          - not_null
+      - name: months_since_subscription_cohort_start
+      - name: quarters_since_subscription_cohort_start
+      - name: dim_billing_account_id
+        data_tests:
+          - not_null
+      - name: billing_account_name
+        data_tests:
+          - not_null
+      - name: product_tier_name
+        data_tests:
+          - not_null
+      - name: unit_of_measure
+      - name: quantity
+      - name: dim_crm_account_id
+      - name: crm_account_name
+      - name: ultimate_parent_account_id
+      - name: ultimate_parent_account_name
+      - name: billing_account_cohort_month
+      - name: billing_account_cohort_quarter
+      - name: crm_account_cohort_month
+      - name: crm_account_cohort_quarter
+        description: '{{ doc("mart_arr_col_parent_account_cohort_month") }}'
+      - name: parent_account_cohort_quarter
+        description: '{{ doc("mart_arr_col_parent_account_cohort_quarter") }}'
+      - name: months_since_billing_account_cohort_start
+      - name: quarters_since_billing_account_cohort_start
+      - name: months_since_crm_account_cohort_start
+      - name: quarters_since_crm_account_cohort_start
+      - name: months_since_parent_account_cohort_start
+        description: '{{ doc("mart_arr_col_months_since_parent_cohort_start") }}'
+      - name: quarters_since_parent_account_cohort_start
+        description: '{{ doc("mart_arr_col_quarters_since_parent_cohort_start") }}'
+      - name: dim_subscription_id
+      - name: dim_subscription_id_original
+      - name: dim_crm_opportunity_id
+        description: opportunity_id related to the given subscription version
+      - name: product_rate_plan_category
+        description: On created opportunities (Web store/Sales assisted), the Product category field is be populated at the Rate plan level in Salesforce. Aides identification of Agile Planning and Duo Pro SKUs, flowing from salesforce.
+      - name: is_landed_arr_first_order
+        description: Landed ARR is calculated by looking at the first 'ARR _Month' at the ultimate parent level, and delineating the landed ARR value from that first month's documented ARR. The EDU/OSS orders are excluded from these orders using the dim_product_detail.is_oss_or_edu_rate_plan flag.
+
+
+  - name: mart_arr_snapshot_bottom_up
+    description: Daily snapshots of MRR/ARR by month values per customer, subscription and product. Built using the snapshotted source tables.
+    columns:
+      - name: primary_key
+        data_tests:
+          - unique:
+              config:
+                where: "arr_month >= DATEADD('month',-3,CURRENT_DATE())"
+          - not_null
+        tags: ["tdf"]
+      - name: was_purchased_through_reseller
+        description: Boolean field that indicates whether the subscription was purchased through a reseller. If TRUE, the `invoice_owner_account` will contain the name of the reseller.
+      - name: dim_charge_id
+        description: Unique identifier for a rate plan charge in Zuora. These are transactions in Zuora Billing.
+
+  - name: mart_arr_snapshot_model
+    description: Simpler incremental version of the mart_arr snapshot model
+    columns:
+        - name: primary_key
+          data_tests:
+            - not_null
+          tags: [ "tdf"]
+
+  - name: mart_arr_weekly_with_zero_dollar_charges
+    description: A version of mart_arr aggregated by arr_week. This allows more frequent updates to the arr and quantity fields for faster analysis.
+    columns:
+      - name: primary_key
+        data_tests:
+          - not_null
+          - unique
+
+  - name: mart_charge
+    description: Model combining Subscription related objects such as product details and rate plan charge details into a mart.
+    columns:
+      - name: dim_charge_id
+        description: The unique identifier of a rate plan charge
+        data_tests:
+          - not_null
+          - unique
+      - name: was_purchased_through_reseller
+        description: Boolean field that indicates whether the subscription was purchased through a reseller. If TRUE, the `invoice_owner_account` will contain the name of the reseller.
+      - name: subscription_renewal_type
+        description: Calculated field that indicates how a subscription renewal was made. Can be one of 'Auto-Renewal', 'Customer Portal', 'Sales-Assisted' or null when the charge is not related to a subscription renewal.
+      - name: dim_order_id
+        description: Unique identifier for an order. Can be used to join to dim_order.
+      - name: unit_of_measure
+      - name: charge_term
+      - name: dim_subscription_id_original
+      - name: dim_subscription_id_previous
+      - name: renewal_term
+      - name: renewal_term_period_type
+      - name: ultimate_parent_namespace_id
+      - name: dim_namespace_id
+      - name: internal_customer_id
+        description: Unique identifier of a customer taken from the Customers DB.
+      - name: is_trial_converted
+        description: '{{ doc("is_trial_converted") }}'
+      - name: latest_trial_start_date
+      - name: is_first_paid_order
+        description: Boolean field indicating whether the charge relates to the first order made by that ultimate_parent_namespace_id. If two charges are processed on the same date, both will be true.
+      - name: is_oss_or_edu_rate_plan
+      - name: days_since_trial_start_at_first_paid_subscription_start
+        description: The number of days between the start date of the latest trial and first paid subscription.
+      - name: days_since_namespace_creation_at_trial_start
+        description: The number of days between the start date of the latest trial and namespace creation.
+      - name: is_trial_started_on_namespace_creation_date
+        description: Boolean field indicating whether the namespace was created on the same date as the latest trial started.
+      - name: days_between_first_trial_and_subscription_start
+        description: Calculated field showing the number of days between the start of the first trial and the start of the first subscription.
+      - name: days_between_latest_trial_and_subscription_start
+        description: Calculated field showing the number of days between the start of the latest trial and the start of the first subscription.
+      - name: subscription_name
+      - name: subscription_version
+      - name: rate_plan_charge_number
+      - name: rate_plan_charge_version
+      - name: rate_plan_charge_segment
+      - name: rate_plan_name
+      - name: rate_plan_charge_name
+      - name: rate_plan_charge_description
+      - name: charge_type
+      - name: is_paid_in_full
+      - name: is_last_segment
+      - name: is_included_in_arr_calc
+      - name: effective_start_date
+      - name: effective_end_date
+      - name: effective_start_month
+      - name: effective_end_month
+      - name: charge_created_date
+      - name: charge_updated_date
+      - name: dim_subscription_id
+      - name: subscription_created_by_id
+      - name: subscription_updated_by_id
+      - name: subscription_start_date
+      - name: subscription_end_date
+      - name: subscription_start_month
+      - name: subscription_end_month
+      - name: subscription_end_fiscal_year
+      - name: subscription_created_date
+      - name: subscription_updated_date
+      - name: second_active_renewal_month
+      - name: term_start_date
+      - name: term_end_date
+      - name: term_start_month
+      - name: term_end_month
+      - name: subscription_status
+      - name: subscription_sales_type
+      - name: subscription_name_slugify
+      - name: oldest_subscription_in_cohort
+      - name: subscription_lineage
+      - name: auto_renew_native_hist
+      - name: auto_renew_customerdot_hist
+      - name: turn_on_cloud_licensing
+      - name: turn_on_operational_metrics
+      - name: contract_operational_metrics
+      - name: contract_auto_renewal
+      - name: turn_on_auto_renewal
+      - name: contract_seat_reconciliation
+      - name: turn_on_seat_reconciliation
+      - name: invoice_owner_account
+      - name: creator_account
+      - name: dim_billing_account_id
+      - name: sold_to_country
+      - name: billing_account_name
+      - name: billing_account_number
+      - name: ssp_channel
+      - name: po_required
+      - name: auto_pay
+      - name: default_payment_method_type
+      - name: dim_crm_user_id
+      - name: crm_user_sales_segment
+      - name: dim_crm_account_id
+        description: '{{ doc("dim_crm_account_id") }}'
+      - name: crm_account_name
+        description: '{{ doc("crm_account_name") }}'
+      - name: dim_parent_crm_account_id
+        description: '{{ doc("dim_parent_crm_account_id") }}'
+      - name: parent_crm_account_name
+        description: '{{ doc("parent_crm_account_name") }}'
+      - name: parent_crm_account_upa_country
+      - name: parent_crm_account_sales_segment
+      - name: parent_crm_account_industry
+      - name: parent_crm_account_territory
+      - name: parent_crm_account_region
+      - name: parent_crm_account_area
+      - name: health_score_color
+      - name: health_number
+      - name: is_jihu_account
+      - name: subscription_cohort_month
+      - name: subscription_cohort_quarter
+      - name: billing_account_cohort_month
+      - name: billing_account_cohort_quarter
+      - name: crm_account_cohort_month
+      - name: crm_account_cohort_quarter
+      - name: parent_account_cohort_month
+      - name: parent_account_cohort_quarter
+      - name: dim_product_detail_id
+      - name: product_tier_name
+        description: '{{ doc("product_tier_name") }}'
+      - name: product_delivery_type
+        description: '{{ doc("product_delivery_type") }}'
+      - name: product_ranking
+        description: '{{ doc("product_ranking") }}'
+      - name: service_type
+      - name: product_rate_plan_name
+      - name: is_licensed_user
+        description: '{{ doc("is_licensed_user") }}'
+      - name: is_licensed_user_base_product
+        description: '{{ doc("is_licensed_user_base_product") }}'
+      - name: is_licensed_user_add_on
+        description: '{{ doc("is_licensed_user_add_on") }}'
+      - name: is_arpu
+      - name: dim_amendment_id_subscription
+      - name: dim_amendment_id_charge
+      - name: subscription_amendment_effective_date
+      - name: subscription_amendment_type
+      - name: subscription_amendment_name
+      - name: charge_amendment_type
+      - name: type_of_arr_change
+        description: '{{ doc("type_of_arr_change") }}'
+      - name: mrr
+      - name: previous_mrr
+      - name: delta_mrr
+      - name: arr
+      - name: previous_arr
+      - name: delta_arr
+      - name: quantity
+      - name: previous_quantity
+      - name: delta_quantity
+      - name: delta_tcv
+      - name: estimated_total_future_billings
+      - name: product_deployment_type
+        description: How a product is deployed to the customer; Self-Managed, GitLab.com or Dedicated (or Other)
+      - name: product_category
+        description: Categorizes Zuora products as either Add On Services or Base Products
+      - name: product_rate_plan_category
+        description: On created opportunities (Web store/Sales assisted), the Product category field is be populated at the Rate plan level in Salesforce. Aides identification of Agile Planning and Duo Pro SKUs, flowing from salesforce.
+      - name: dim_crm_opportunity_id
+        description: opportunity_id related to the given subscription version
+
+
+  - name: mart_crm_account
+    description: Model containing Salesforce crm accounts details for existing and historical customers.
+    columns:
+      - name: dim_crm_account_id
+        data_tests:
+            - not_null
+            - unique
+      - name: gs_health_user_engagement
+        description: ' {{ doc("gs_health_user_engagement") }} '
+      - name: gs_health_cd
+        description: ' {{ doc("gs_health_cd") }} '
+      - name: gs_health_devsecops
+        description: ' {{ doc("gs_health_devsecops") }} '
+      - name: gs_health_ci
+        description: ' {{ doc("gs_health_ci") }} '
+      - name: gs_health_scm
+        description: ' {{ doc("gs_health_scm") }} '
+      - name: eoa_sentiment
+        description: ' {{ doc("eoa_sentiment") }} '
+      - name: gs_first_value_date
+        description: ' {{ doc("gs_first_value_date") }} '
+      - name: gs_last_csm_activity_date
+        description: ' {{ doc("gs_last_csm_activity_date") }} '
+      - name: last_at_risk_update_comments
+        description: ' {{ doc("last_at_risk_update_comments") }} '
+      - name: bdr_prospecting_status
+        description: Indicates whether the account is actively being prospected by a BDR.
+      - name: six_sense_6_qa
+        description: The 6QA status of the account for the product.
+      - name: risk_rate_guid
+        description: The globally unique ID (GUID) for the third party record in NavEx RiskRate.
+      - name: six_sense_account_profile_fit
+        description: A measure of how similar a company is to the ideal customer profile.
+      - name: six_sense_account_reach_score
+        description: A measure of current outreach activities against optimal quality.
+      - name: six_sense_account_profile_score
+        description: A measure of how similar a company is to the ideal customer profile.
+      - name: six_sense_account_buying_stage
+        description: The 6QA buting stage of the account
+      - name: six_sense_account_numerical_reach_score
+        description:  measure of current outreach activities against optimal quality.
+      - name: six_sense_account_update_date
+        description: The latest update date and time when 6sense Scores were updated.
+      - name: six_sense_account_6_qa_end_date
+        description: The date the account was disqualified from 6QA status 
+      - name: six_sense_account_6_qa_age_days
+        description: The age of the Account's 6QA data, in days. 
+      - name: six_sense_account_6_qa_start_date
+        description: The date the account qualified for 6QA status 
+      - name: six_sense_account_intent_score
+        description: A measure, between 0 and 100, of how much an account is behaving like accounts with which there is a history of previously opened opportunities.
+      - name: six_sense_segments
+        description: The Account's 6QA segment. 
+      - name: pte_score
+        description: Propensity to expand scores from pte_scores_source
+      - name: pte_decile
+      - name: pte_score_group
+      - name: ptc_score
+        description: Propensity to contract and churn scores from ptc_scores_source
+      - name: ptc_decile
+      - name: ptc_score_group
+      - name: tam_manager
+        description: The name of the manager for technical account manager who manages the account
+      - name: gs_health_csm_sentiment
+        description: This is what the TAM thinks the health of this account should be - Formerly was just Health Score - Gainsight is the SSOT for this field and its value can only be updated in Gainsight.
+      - name: crm_account_owner_manager
+        description: The name of the manager of the crm account owner
+      - name: executive_sponsor
+        description: executive sponsor of this account
+      - name: bdr_next_steps
+        description: Outlines the next steps that connect to the prospecting strategy for this account.
+      - name: bdr_account_research
+        description: Displays the research that was made on account to justify the account's addition to a prospecting list.
+      - name: bdr_account_strategy
+        description: Aggregates the path for approaching the account into some more general buckets
+      - name: account_bdr_assigned_user_role
+        description: The region and segment specific role of the BDR assigned to an account.
+      - name: bdr_recycle_date
+        description: Automatically populates two months out from the actively working start date to indicate when an outbound account should be considered for removal from the outbound pipeline.
+      - name: actively_working_start_date
+        description: Automatically datestamps the date and time that an account was moved to a BDRs outbound prospecting list.
+      - name: qualified_days_since_last_activity
+        description: Qualified's calculation, in days, of time elapsed since last activity on the account. 
+      - name: qualified_signals_active_session_time
+        description: Qualified's calculation of active session time. 
+      - name: qualified_signals_bot_conversation_count
+        description: Qualified's count of bot conversations. 
+      - name: qualified_condition
+        description: Qualified's Account condition
+      - name: qualified_score
+        description: Qualified's Account score
+      - name: qualified_trend
+        description: Qualified's Account trend
+      - name: qualified_meetings_booked
+        description: Qualified's count of booked meetings on the account
+      - name: qualified_signals_rep_conversation_count
+        description: Qualified's count of rep conversations
+      - name: qualified_signals_research_state
+        description: Qualified's Account research state.
+      - name: qualified_signals_research_score
+        description: Qualified's Account research score
+      - name: qualified_signals_session_count
+        description: Qualified's count of sessions on the account
+      - name: qualified_visitors_count
+        description: Qualified's count of visitors on the account
+      - name: account_domains
+        description: All domain names associated with this account, separated by a comma.
+      - name: dnb_match_confidence_score
+        description: This is a 1-10 number that describes the level of confidence in match quality between our Salesforce record and D&B's Company record. 10 means D&B is confident that this is a high quality match.
+      - name: dnb_match_grade
+        description: This is a series of letters (A, B, F, Z) that describe the match grade between our Salesforce record and D&B's Company record within particular fields. A means values match exactly, B means values are similar, F means values are different, and Z means values are missing. Fields are graded in this order - Account Name, Street number, Street Name, City, State/Region, Mailing Address, Telephone, Postal Code, Density, Uniqueness, Industry.
+      - name: dnb_connect_company_profile_id
+        description: This is the id of the D&B Connect Company Profile record that has been matched to this Salesforce Account record.
+      - name: dnb_duns
+        description: The Data Universal Numbering System (DUNS) is a 9-digit id number created by D&B to identify a business entity at a particular location.
+      - name: dnb_global_ultimate_duns
+        description: This is the DUNS of the highest global corporate linkage in this company hierarchy.
+      - name: dnb_domestic_ultimate_duns
+        description: This is the DUNS of the highest domestic corporate linkage (within each country) in this company hierarchy.
+      - name: dnb_exclude_company
+        description: This checkbox indicates that this Account record has been excluded from D&B enrichment.
+      - name: gs_csm_compensation_pool
+        description: CSM compensation pool for the account
+      - name: groove_notes
+        description: contains notes that are surfaced in Groove's sidebar by default
+      - name: groove_engagement_status
+        description: Indicates the status of CUSTOMER engagement such as email opens, phone conversations or meetings. The threshold between "recent" and "past" can be customized
+      - name: groove_inferred_status
+        description: Indicates the account status in the typical customer life cycle of an account. The status is automatically inferred by looking at activities, engagement signals and opportunities
+      - name: compensation_target_account
+        description: This field is used for compensation purposes only to identify pre-approved new logo target accounts
+      - name: ptp_insights
+        description: Provides detailed insights about factors influencing an account's Propensity to Purchase
+      - name: ptp_score_value
+        description: A numerical representation of the PTP score, ranging from 1 to 5, indicating the likelihood of purchase
+      - name: ptp_score
+        description: A visual representation of the Propensity to Purchase score
+      - name: pubsec_type
+        description: Identifies the account type as US-PubSec (public sector in the US), ROW-PubSec (public sector in the rest of the world), or non-PubSec.
+      - name: is_base_prospect_account
+        description: Boolean field to indicate if the account is a base prospect account in SFDC.
+      - name: number_of_active_namespaces
+        description: Total count of namespaces associated with the Account in SFDC. 
+      - name: last_updated_date_usage_data
+        description: The date the usage data was last updated. 
+      - name: first_ping_date
+        description: Date of the first telemetry ping received from this GitLab instance, indicating when usage tracking began.
+      - name: last_ping_date
+        description: Date of the most recent telemetry ping received from this GitLab instance. Helps identify active vs inactive instances.
+      - name: gitlab_version
+        description: Total count of active stages. 
+      - name: monthly_active_users
+        description: Total count of active users. 
+      - name: devops_score
+        description: Total count of active namespaces that are exceeding storage.
+      - name: collaboration_score
+      - name: security_score
+      - name: total_activity_score
+      - name: ptp_scores
+      - name: activity_level
+        description: Categorizes instance usage as Minimal, Light, Moderate, Active, or Power Users based on Total Activity Score percentile ranking.
+      - name: match_confidence
+        description: Indicates the reliability of matching this instance to this account (High/Medium/Low).
+      - name: gitlab_edition
+        description: Specifies which free GitLab edition is installed (e.g., Community Edition or Enterprise Edition). Helps identify the feature set available to the customer.
+      - name: product_usage_summary
+      - name: notable_product_usage_detail
+      - name: host_name
+        description: The domain name of the self-managed GitLab instance. This is the URL where the GitLab instance is hosted.
+      - name: ptp_insight
+        description: Detailed explanation of the ML model's scoring factors, highlighting key usage patterns and behaviors that suggest likelihood to convert to paid tier. Helps understand the PTP score rationale
+        
+  - name: mart_crm_opportunity
+    description:  >-
+      Model with single pane of glass over the sales and marketing metrics. Depending on your use case, you might use  `mart_crm_opportunity_stamped_hierarchy_hist` or `mart_crm_opportunity.`
+      `mart_crm_opportunity_stamped_hierarchy_hist` should be used for year-over-year comparisons as it accounts for yearly changes in the sales hierarchy, views all account hierarchies through the lens of the current year hierarchy, and it reflects how the sales hierarchy is applied in practice (ie. Hybrid users are assigned to the account's hierarchy)
+    columns:
+      - name: dim_crm_opportunity_id
+        data_tests:
+            - not_null
+            - unique
+        tags: ["tdf"]
+        description: '{{ doc("dim_crm_opportunity_id") }}'
+      - name: merged_crm_opportunity_id
+        description: '{{ doc("merged_crm_opportunity_id") }}'
+      - name: duplicate_opportunity_id
+        description: '{{ doc("duplicate_opportunity_id") }}'
+      - name: dim_crm_user_hierarchy_sk
+        description: '{{ doc("dim_crm_user_hierarchy_sk") }}'
+      - name: dim_crm_user_id
+        description: '{{ doc("dim_crm_user_id") }}'
+      - name: owner_id
+        description: '{{ doc("owner_id") }}'
+      - name: opportunity_owner
+        description: '{{ doc("opportunity_owner") }}'
+      - name: crm_sales_dev_rep_id
+        description: '{{ doc("crm_sales_dev_rep_id") }}'
+      - name: crm_business_dev_rep_id
+        description: '{{ doc("crm_business_dev_rep_id") }}'
+      - name: record_type_id
+        description: '{{ doc("record_type_id") }}'
+      - name: ssp_id
+        description: '{{ doc("ssp_id") }}'
+      - name: ga_client_id
+        description: '{{ doc("ga_client_id") }}'
+      - name: contract_reset_opportunity_id
+        description: '{{ doc("contract_reset_opportunity_id") }}'
+      - name: invoice_number
+        description: '{{ doc("invoice_number") }}'
+      - name: opportunity_name
+        description: '{{ doc("opportunity_name") }}'
+      - name: forecast_category_name
+        description: '{{ doc("forecast_category_name") }}'
+      - name: opportunity_category
+        description: '{{ doc("opportunity_category") }}'
+      - name: tam_notes
+        description: '{{ doc("tam_notes") }}'
+      - name: opportunity_term
+        description: '{{ doc("opportunity_term") }}'
+      - name: growth_type
+        description: '{{ doc("sfdc_opportunity_growth_type") }}'
+      - name: deployment_preference
+        description: '{{ doc("deployment_preference") }}'
+      - name: record_type_name
+        description: '{{ doc("record_type_name") }}'
+      - name: qsr_status
+        description: '{{ doc("qsr_status") }}'
+      - name: startup_type
+        description: '{{ doc("startup_type") }}'
+      - name: next_steps
+        description: '{{ doc("next_steps") }}'
+      - name: competitors
+        description: '{{ doc("competitors") }}'
+      - name: solutions_to_be_replaced
+        description: '{{ doc("solutions_to_be_replaced") }}'
+      - name: professional_services_value
+        description: '{{ doc("professional_services_value") }}'
+      - name: edu_services_value
+        description: '{{ doc("edu_services_value") }}'
+      - name: investment_services_value
+        description: '{{ doc("investment_services_value") }}'
+      - name: primary_solution_architect
+        description: '{{ doc("primary_solution_architect") }}'
+      - name: product_category
+        description: '{{ doc("sfdc_opportunity_product_category") }}'
+      - name: product_details
+        description: '{{ doc("product_details") }}'
+      - name: products_purchased
+        description: '{{ doc("products_purchased") }}'
+      - name: opportunity_health
+        description: '{{ doc("opportunity_health") }}'
+      - name: manager_confidence
+        description: '{{ doc("manager_confidence") }}'
+      - name: reason_for_loss
+        description: '{{ doc("reason_for_loss") }}'
+      - name: reason_for_loss_details
+        description: '{{ doc("reason_for_loss_details") }}'
+      - name: reason_for_loss_staged
+        description: '{{ doc("reason_for_loss_staged") }}'
+      - name: reason_for_loss_calc
+        description: '{{ doc("reason_for_loss_calc") }}'
+      - name: downgrade_reason
+        description: '{{ doc("downgrade_reason") }}'
+      - name: churn_contraction_type
+        description: '{{ doc("churn_contraction_type") }}'
+      - name: churn_contraction_net_arr_bucket
+        description: '{{ doc("churn_contraction_net_arr_bucket") }}'
+      - name: auto_renewal_status
+        description: '{{ doc("auto_renewal_status") }}'
+      - name: renewal_risk_category
+        description: '{{ doc("renewal_risk_category") }}'
+      - name: renewal_swing_arr
+        description: '{{ doc("renewal_swing_arr") }}'
+      - name: renewal_manager
+        description: '{{ doc("renewal_manager") }}'
+      - name: renewal_forecast_health
+        description: '{{ doc("renewal_forecast_health") }}'
+      - name: is_won
+        description: '{{ doc("is_won") }}'
+      - name: is_closed
+        description: '{{ doc("is_closed") }}'
+      - name: is_lost
+        description: '{{ doc("is_lost") }}'
+      - name: is_open
+        description: '{{ doc("is_open") }}'
+      - name: is_active
+        description: '{{ doc("sfdc_opportunity_is_active") }}'
+      - name: is_stage_1_plus
+        description: '{{ doc("is_stage_1_plus") }}'
+      - name: is_stage_3_plus
+        description: '{{ doc("is_stage_3_plus") }}'
+      - name: is_stage_4_plus
+        description: '{{ doc("is_stage_4_plus") }}'
+      - name: is_closed_won
+        description: '{{ doc("is_closed_won") }}'
+      - name: is_edu_oss
+        description: '{{ doc("is_edu_oss") }}'
+      - name: is_ps_opp
+        description: '{{ doc("is_ps_opp") }}'
+      - name: is_public_sector_opp
+        description: '{{ doc("is_public_sector_opp") }}'
+      - name: is_sao
+        description: '{{ doc("is_sao") }}'
+      - name: is_new_logo_first_order
+        description: '{{ doc("is_new_logo_first_order") }}'
+      - name: is_renewal
+        description: '{{ doc("is_renewal") }}'
+      - name: is_refund
+        description: '{{ doc("is_refund") }}'
+      - name: is_web_portal_purchase
+        description: '{{ doc("is_web_portal_purchase") }}'
+      - name: is_registration_from_portal
+        description: '{{ doc("is_registration_from_portal") }}'
+      - name: is_credit
+        description: '{{ doc("is_credit") }}'
+      - name: is_downgrade
+        description: '{{ doc("is_downgrade") }}'
+      - name: is_contract_reset
+        description: '{{ doc("is_contract_reset") }}'
+      - name: fpa_master_bookings_flag
+        description: '{{ doc("fpa_master_bookings_flag") }}'
+      - name: is_net_arr_pipeline_created
+        description: '{{ doc("is_net_arr_pipeline_created") }}'
+      - name: is_net_arr_closed_deal
+        description: '{{ doc("is_net_arr_closed_deal") }}'
+      - name: is_booked_net_arr
+        description: '{{ doc("is_booked_net_arr") }}'
+      - name: is_win_rate_calc
+        description: '{{ doc("is_win_rate_calc") }}'
+      - name: is_risky
+        description: '{{ doc("is_risky") }}'
+      - name: critical_deal_flag
+        description: '{{ doc("critical_deal_flag") }}'
+      - name: valid_deal_count
+        description: '{{ doc("valid_deal_count") }}'
+      - name: is_abm_tier_sao
+        description: '{{ doc("is_abm_tier_sao") }}'
+      - name: is_abm_tier_closed_won
+        description: '{{ doc("is_abm_tier_closed_won") }}'
+      - name: is_deleted
+        description: '{{ doc("sfdc_opportunity_is_deleted") }}'
+      - name: is_duplicate
+        description: '{{ doc("sfdc_opportunity_is_duplicate") }}'
+      - name: is_excluded_from_pipeline_created
+        description: '{{ doc("is_excluded_from_pipeline_created") }}'
+      - name: is_comp_new_logo_override
+        description: '{{ doc("is_comp_new_logo_override") }}'
+      - name: is_eligible_open_pipeline
+        description: '{{ doc("is_eligible_open_pipeline") }}'
+      - name: is_eligible_asp_analysis
+        description: '{{ doc("is_eligible_asp_analysis") }}'
+      - name: is_eligible_age_analysis
+        description: '{{ doc("is_eligible_age_analysis") }}'
+      - name: is_eligible_churn_contraction
+        description: '{{ doc("is_eligible_churn_contraction") }}'
+      - name: competitors_other_flag
+        description: '{{ doc("competitors_other_flag") }}'
+      - name: competitors_gitlab_core_flag
+        description: '{{ doc("competitors_gitlab_core_flag") }}'
+      - name: competitors_none_flag
+        description: '{{ doc("competitors_none_flag") }}'
+      - name: competitors_github_enterprise_flag
+        description: '{{ doc("competitors_github_enterprise_flag") }}'
+      - name: competitors_bitbucket_server_flag
+        description: '{{ doc("competitors_bitbucket_server_flag") }}'
+      - name: competitors_unknown_flag
+        description: '{{ doc("competitors_unknown_flag") }}'
+      - name: competitors_github_flag
+        description: '{{ doc("competitors_github_flag") }}'
+      - name: competitors_gitlab_flag
+        description: '{{ doc("competitors_gitlab_flag") }}'
+      - name: competitors_jenkins_flag
+        description: '{{ doc("competitors_jenkins_flag") }}'
+      - name: competitors_azure_devops_flag
+        description: '{{ doc("competitors_azure_devops_flag") }}'
+      - name: competitors_svn_flag
+        description: '{{ doc("competitors_svn_flag") }}'
+      - name: competitors_bitbucket_flag
+        description: '{{ doc("competitors_bitbucket_flag") }}'
+      - name: competitors_atlassian_flag
+        description: '{{ doc("competitors_atlassian_flag") }}'
+      - name: competitors_perforce_flag
+        description: '{{ doc("competitors_perforce_flag") }}'
+      - name: competitors_visual_studio_flag
+        description: '{{ doc("competitors_visual_studio_flag") }}'
+      - name: competitors_azure_flag
+        description: '{{ doc("competitors_azure_flag") }}'
+      - name: competitors_amazon_code_commit_flag
+        description: '{{ doc("competitors_amazon_code_commit_flag") }}'
+      - name: competitors_circleci_flag
+        description: '{{ doc("competitors_circleci_flag") }}'
+      - name: competitors_bamboo_flag
+        description: '{{ doc("competitors_bamboo_flag") }}'
+      - name: competitors_aws_flag
+        description: '{{ doc("competitors_aws_flag") }}'
+      - name: opportunity_owner_role
+        description: '{{ doc("opportunity_owner_role") }}'
+      - name: opportunity_owner_manager
+        description: '{{ doc("opportunity_owner_manager") }}'
+      - name: opportunity_owner_department
+        description: '{{ doc("opportunity_owner_department") }}'
+      - name: opportunity_owner_title
+        description: '{{ doc("opportunity_owner_title") }}'
+      - name: sales_qualified_source_name
+        description: '{{ doc("sales_qualified_source_name") }}'
+      - name: sales_qualified_source_grouped
+        description: '{{ doc("sales_qualified_source_grouped") }}'
+      - name: sqs_bucket_engagement
+        description: '{{ doc("sfdc_opportunity_sqs_bucket_engagement") }}'
+      - name: sales_qualified_source_name_simplified
+        description: '{{ doc("sales_qualified_source_name_simplified") }}'
+      - name: order_type
+        description: '{{ doc("order_type") }}'
+      - name: order_type_current
+        description: '{{ doc("order_type_current") }}'
+      - name: order_type_grouped
+        description: '{{ doc("order_type_grouped") }}'
+      - name: dr_partner_engagement_name
+        description: '{{ doc("dr_partner_engagement_name") }}'
+      - name: dr_partner_deal_type
+        description: '{{ doc("dr_partner_deal_type") }}'
+      - name: dr_partner_engagement
+        description: '{{ doc("dr_partner_engagement") }}'
+      - name: dr_status
+        description: '{{ doc("dr_status") }}'
+      - name: dr_primary_registration
+        description: '{{ doc("dr_primary_registration") }}'
+      - name: dr_deal_id
+        description: '{{ doc("dr_deal_id") }}'
+      - name: aggregate_partner
+        description: '{{ doc("aggregate_partner") }}'
+      - name: calculated_partner_track
+        description: '{{ doc("calculated_partner_track") }}'
+      - name: partner_account
+        description: '{{ doc("partner_account") }}'
+      - name: partner_discount
+        description: '{{ doc("partner_discount") }}'
+      - name: partner_discount_calc
+        description: '{{ doc("partner_discount_calc") }}'
+      - name: partner_margin_percentage
+        description: '{{ doc("partner_margin_percentage") }}'
+      - name: partner_track
+        description: '{{ doc("partner_track") }}'
+      - name: platform_partner
+        description: '{{ doc("platform_partner") }}'
+      - name: resale_partner_track
+        description: '{{ doc("resale_partner_track") }}'
+      - name: resale_partner_name
+        description: '{{ doc("resale_partner_name") }}'
+      - name: fulfillment_partner
+        description: '{{ doc("fulfillment_partner") }}'
+      - name: influence_partner
+        description: '{{ doc("influence_partner") }}'
+      - name: distributor
+        description: '{{ doc("distributor") }}'
+      - name: fulfillment_partner_name
+        description: '{{ doc("fulfillment_partner_name") }}'
+      - name: partner_account_name
+        description: '{{ doc("partner_account_name") }}'
+      - name: partner_gitlab_program
+        description: '{{ doc("partner_gitlab_program") }}'
+      - name: alliance_type_name
+        description: '{{ doc("alliance_type_name") }}'
+      - name: alliance_type_short_name
+        description: '{{ doc("alliance_type_short_name") }}'
+      - name: sdr_or_bdr
+        description: '{{ doc("sdr_or_bdr") }}'
+      - name: iqm_submitted_by_role
+        description: '{{ doc("iqm_submitted_by_role") }}'
+      - name: sdr_pipeline_contribution
+        description: '{{ doc("sdr_pipeline_contribution") }}'
+      - name: channel_type_name
+        description: '{{ doc("channel_type_name") }}'
+      - name: deal_path_name
+        description: '{{ doc("deal_path_name") }}'
+      - name: opportunity_deal_size
+        description: '{{ doc("opportunity_deal_size") }}'
+      - name: deal_category
+        description: '{{ doc("deal_category") }}'
+      - name: deal_group
+        description: '{{ doc("deal_group") }}'
+      - name: deal_size
+        description: '{{ doc("deal_size") }}'
+      - name: calculated_deal_size
+        description: '{{ doc("calculated_deal_size") }}'
+      - name: deal_path_engagement
+        description: '{{ doc("deal_path_engagement") }}'
+      - name: stage_name
+        description: '{{ doc("sfdc_opportunity_stage_name") }}'
+      - name: stage_name_3plus
+        description: '{{ doc("stage_name_3plus") }}'
+      - name: stage_name_4plus
+        description: '{{ doc("stage_name_4plus") }}'
+      - name: stage_category
+        description: '{{ doc("stage_category") }}'
+      - name: days_in_0_pending_acceptance
+        description: '{{ doc("days_in_0_pending_acceptance") }}'
+      - name: days_in_1_discovery
+        description: '{{ doc("days_in_1_discovery") }}'
+      - name: days_in_2_scoping
+        description: '{{ doc("days_in_2_scoping") }}'
+      - name: days_in_3_technical_evaluation
+        description: '{{ doc("days_in_3_technical_evaluation") }}'
+      - name: days_in_4_proposal
+        description: '{{ doc("days_in_4_proposal") }}'
+      - name: days_in_5_negotiating
+        description: '{{ doc("days_in_5_negotiating") }}'
+      - name: days_in_stage
+        description: '{{ doc("days_in_stage") }}'
+      - name: calculated_age_in_days
+        description: '{{ doc("calculated_age_in_days") }}'
+      - name: days_in_sao
+        description: '{{ doc("days_in_sao") }}'
+      - name: days_since_last_activity
+        description: '{{ doc("days_since_last_activity") }}'
+      - name: first_order_open_1plus_pipeline
+        description: '{{ doc("first_order_open_1plus_pipeline") }}'
+      - name: first_order_open_3plus_pipeline
+        description: '{{ doc("first_order_open_3plus_pipeline") }}'
+      - name: first_order_open_4plus_pipeline
+        description: '{{ doc("first_order_open_4plus_pipeline") }}'
+      - name: first_order_pipeline_generated
+        description: '{{ doc("first_order_pipeline_generated") }}'
+      - name: first_order_bookings
+        description: '{{ doc("first_order_bookings") }}'
+      - name: first_order_open_1plus_saos
+        description: '{{ doc("first_order_open_1plus_saos") }}'
+      - name: first_order_open_3plus_saos
+        description: '{{ doc("first_order_open_3plus_saos") }}'
+      - name: first_order_open_4plus_saos
+        description: '{{ doc("first_order_open_4plus_saos") }}'
+      - name: first_order_saos_generated
+        description: '{{ doc("first_order_saos_generated") }}'
+      - name: first_order_booked_deals
+        description: '{{ doc("first_order_booked_deals") }}'
+      - name: vsa_readout
+        description: '{{ doc("vsa_readout") }}'
+      - name: vsa_start_date_net_arr
+        description: '{{ doc("vsa_start_date_net_arr") }}'
+      - name: vsa_start_date
+        description: '{{ doc("vsa_start_date") }}'
+      - name: vsa_url
+        description: '{{ doc("vsa_url") }}'
+      - name: vsa_status
+        description: '{{ doc("vsa_status") }}'
+      - name: vsa_end_date
+        description: '{{ doc("vsa_end_date") }}'
+      - name: won_arr_basis_for_clari
+        description: '{{ doc("won_arr_basis_for_clari") }}'
+      - name: arr_basis_for_clari
+        description: '{{ doc("arr_basis_for_clari") }}'
+      - name: forecasted_churn_for_clari
+        description: '{{ doc("forecasted_churn_for_clari") }}'
+      - name: override_arr_basis_clari
+        description: '{{ doc("override_arr_basis_clari") }}'
+      - name: downgrade_details
+        description: '{{ doc("downgrade_details") }}'
+      - name: intended_product_tier
+        description: '{{ doc("intended_product_tier") }}'
+      - name: dim_parent_crm_opportunity_id
+        description: '{{ doc("dim_parent_crm_opportunity_id") }}'
+      - name: qsr_notes
+        description: '{{ doc("qsr_notes") }}'
+      - name: parent_crm_account_geo
+        description: '{{ doc("parent_crm_account_geo") }}'
+      - name: parent_crm_account_geo_pubsec_segment
+        description: '{{ doc("parent_crm_account_geo_pubsec_segment") }}'
+      - name: parent_crm_account_region
+        description: '{{ doc("parent_crm_account_region") }}'
+      - name: parent_crm_account_area
+        description: '{{ doc("parent_crm_account_area") }}'
+      - name: parent_crm_account_business_unit
+        description: '{{ doc("parent_crm_account_business_unit") }}'
+      - name: parent_crm_account_role_type
+        description: '{{ doc("parent_crm_account_role_type") }}'
+      - name: parent_crm_account_max_family_employee
+        description: '{{ doc("parent_crm_account_max_family_employee") }}'
+      - name: parent_crm_account_upa_country
+        description: '{{ doc("parent_crm_account_upa_country") }}'
+      - name: parent_crm_account_upa_state
+        description: '{{ doc("parent_crm_account_upa_state") }}'
+      - name: parent_crm_account_upa_city
+        description: '{{ doc("parent_crm_account_upa_city") }}'
+      - name: parent_crm_account_upa_street
+        description: '{{ doc("parent_crm_account_upa_street") }}'
+      - name: parent_crm_account_upa_postal_code
+        description: '{{ doc("parent_crm_account_upa_postal_code") }}'
+      - name: account_user_role
+        description: '{{ doc("account_user_role") }}'
+      - name: crm_account_employee_count
+        description: '{{ doc("crm_account_employee_count") }}'
+      - name: crm_account_zi_technologies
+        description: '{{ doc("crm_account_zi_technologies") }}'
+      - name: is_jihu_account
+        description: '{{ doc("is_jihu_account") }}'
+      - name: admin_manual_source_number_of_employees
+        description: '{{ doc("admin_manual_source_number_of_employees") }}'
+      - name: admin_manual_source_account_address
+        description: '{{ doc("admin_manual_source_account_address") }}'
+      - name: parent_crm_account_lam_dev_count
+        description: '{{ doc("parent_crm_account_lam_dev_count") }}'
+      - name: is_compensation_target_account
+        description: '{{ doc("is_compensation_target_account") }}'
+      - name: is_base_prospect_account
+        description: '{{ doc("is_base_prospect_account") }}'
+      - name: is_mid_market_plus
+        description: '{{ doc("is_mid_market_plus") }}'
+      - name: pipe_council_grouping
+        description: '{{ doc("pipe_council_grouping") }}'
+      - name: base_account_report_segment
+        description: '{{ doc("base_account_report_segment") }}'
+      - name: report_segment
+        description: '{{ doc("report_segment") }}'
+      - name: report_geo
+        description: '{{ doc("report_geo") }}'
+      - name: report_geo_pubsec_segment
+        description: '{{ doc("report_geo_pubsec_segment") }}'
+      - name: report_region
+        description: '{{ doc("report_region") }}'
+      - name: report_area
+        description: '{{ doc("report_area") }}'
+      - name: report_business_unit
+        description: '{{ doc("report_business_unit") }}'
+      - name: report_role_name
+        description: '{{ doc("report_role_name") }}'
+      - name: report_role_level_1
+        description: '{{ doc("report_role_level_1") }}'
+      - name: report_role_level_2
+        description: '{{ doc("report_role_level_2") }}'
+      - name: report_role_level_3
+        description: '{{ doc("report_role_level_3") }}'
+      - name: report_role_level_4
+        description: '{{ doc("report_role_level_4") }}'
+      - name: report_role_level_5
+        description: '{{ doc("report_role_level_5") }}'
+      - name: cp_why_do_anything_at_all
+        description: '{{ doc("cp_why_do_anything_at_all") }}'
+      - name: cp_why_now
+        description: '{{ doc("cp_why_now") }}'
+      - name: cp_identify_pain
+        description: '{{ doc("cp_identify_pain") }}'
+      - name: cp_metrics
+        description: '{{ doc("cp_metrics") }}'
+      - name: cp_value_driver
+        description: '{{ doc("cp_value_driver") }}'
+      - name: cp_why_gitlab
+        description: '{{ doc("cp_why_gitlab") }}'
+      - name: cp_champion
+        description: '{{ doc("cp_champion") }}'
+      - name: cp_economic_buyer
+        description: '{{ doc("cp_economic_buyer") }}'
+      - name: cp_partner
+        description: '{{ doc("cp_partner") }}'
+      - name: cp_decision_process
+        description: '{{ doc("cp_decision_process") }}'
+      - name: cp_decision_criteria
+        description: '{{ doc("cp_decision_criteria") }}'
+      - name: cp_paper_process
+        description: '{{ doc("cp_paper_process") }}'
+      - name: cp_use_cases
+        description: '{{ doc("cp_use_cases") }}'
+      - name: cp_help
+        description: '{{ doc("cp_help") }}'
+      - name: cp_close_plan
+        description: '{{ doc("cp_close_plan") }}'
+      - name: cp_review_notes
+        description: '{{ doc("cp_review_notes") }}'
+      - name: cp_risks
+        description: '{{ doc("cp_risks") }}'
+      - name: cp_score
+        description: '{{ doc("cp_score") }}'
+      - name: primary_campaign_source_id
+        description: '{{ doc("primary_campaign_source_id") }}'
+      - name: generated_source
+        description: '{{ doc("generated_source") }}'
+      - name: sales_path
+        description: '{{ doc("sales_path") }}'
+      - name: subscription_type
+        description: '{{ doc("subscription_type") }}'
+      - name: number_of_sa_activity_tasks
+        description: '{{ doc("number_of_sa_activity_tasks") }}'
+      - name: sa_tech_evaluation_close_status
+        description: '{{ doc("sa_tech_evaluation_close_status") }}'
+      - name: sa_tech_evaluation_end_date
+        description: '{{ doc("sa_tech_evaluation_end_date") }}'
+      - name: sa_tech_evaluation_start_date
+        description: '{{ doc("sa_tech_evaluation_start_date") }}'
+      - name: ptc_predicted_arr
+        description: '{{ doc("ptc_predicted_arr") }}'
+      - name: ptc_predicted_renewal_risk_category
+        description: '{{ doc("ptc_predicted_renewal_risk_category") }}'
+      - name: created_date
+        description: '{{ doc("sfdc_opportunity_created_date") }}'
+      - name: created_month
+        description: '{{ doc("sfdc_opportunity_created_month") }}'
+      - name: created_fiscal_quarter_date
+        description: '{{ doc("sfdc_opportunity_created_fiscal_quarter_date") }}'
+      - name: created_fiscal_quarter_name
+        description: '{{ doc("sfdc_opportunity_created_fiscal_quarter_name") }}'
+      - name: created_fiscal_year
+        description: '{{ doc("sfdc_opportunity_created_fiscal_year") }}'
+      - name: sales_accepted_date
+        description: '{{ doc("sales_accepted_date") }}'
+      - name: sales_accepted_month
+        description: '{{ doc("sales_accepted_month") }}'
+      - name: sales_accepted_fiscal_quarter_date
+        description: '{{ doc("sales_accepted_fiscal_quarter_date") }}'
+      - name: sales_accepted_fiscal_quarter_name
+        description: '{{ doc("sales_accepted_fiscal_quarter_name") }}'
+      - name: sales_accepted_fiscal_year
+        description: '{{ doc("sales_accepted_fiscal_year") }}'
+      - name: close_date
+        description: '{{ doc("close_date") }}'
+      - name: close_month
+        description: '{{ doc("close_month") }}'
+      - name: close_fiscal_quarter_date
+        description: '{{ doc("close_fiscal_quarter_date") }}'
+      - name: close_fiscal_quarter_name
+        description: '{{ doc("close_fiscal_quarter_name") }}'
+      - name: close_fiscal_year
+        description: '{{ doc("close_fiscal_year") }}'
+      - name: stage_0_pending_acceptance_date
+        description: '{{ doc("stage_0_pending_acceptance_date") }}'
+      - name: stage_0_pending_acceptance_month
+        description: '{{ doc("stage_0_pending_acceptance_month") }}'
+      - name: stage_0_pending_acceptance_fiscal_quarter_date
+        description: '{{ doc("stage_0_pending_acceptance_fiscal_quarter_date") }}'
+      - name: stage_0_pending_acceptance_fiscal_quarter_name
+        description: '{{ doc("stage_0_pending_acceptance_fiscal_quarter_name") }}'
+      - name: stage_0_pending_acceptance_fiscal_year
+        description: '{{ doc("stage_0_pending_acceptance_fiscal_year") }}'
+      - name: stage_1_discovery_date
+        description: '{{ doc("stage_1_discovery_date") }}'
+      - name: stage_1_discovery_month
+        description: '{{ doc("stage_1_discovery_month") }}'
+      - name: stage_1_discovery_fiscal_quarter_date
+        description: '{{ doc("stage_1_discovery_fiscal_quarter_date") }}'
+      - name: stage_1_discovery_fiscal_quarter_name
+        description: '{{ doc("stage_1_discovery_fiscal_quarter_name") }}'
+      - name: stage_1_discovery_fiscal_year
+        description: '{{ doc("stage_1_discovery_fiscal_year") }}'
+      - name: stage_2_scoping_date
+        description: '{{ doc("stage_2_scoping_date") }}'
+      - name: stage_2_scoping_month
+        description: '{{ doc("stage_2_scoping_month") }}'
+      - name: stage_2_scoping_fiscal_quarter_date
+        description: '{{ doc("stage_2_scoping_fiscal_quarter_date") }}'
+      - name: stage_2_scoping_fiscal_quarter_name
+        description: '{{ doc("stage_2_scoping_fiscal_quarter_name") }}'
+      - name: stage_2_scoping_fiscal_year
+        description: '{{ doc("stage_2_scoping_fiscal_year") }}'
+      - name: stage_3_technical_evaluation_date
+        description: '{{ doc("stage_3_technical_evaluation_date") }}'
+      - name: stage_3_technical_evaluation_month
+        description: '{{ doc("stage_3_technical_evaluation_month") }}'
+      - name: stage_3_technical_evaluation_fiscal_quarter_date
+        description: '{{ doc("stage_3_technical_evaluation_fiscal_quarter_date") }}'
+      - name: stage_3_technical_evaluation_fiscal_quarter_name
+        description: '{{ doc("stage_3_technical_evaluation_fiscal_quarter_name") }}'
+      - name: stage_3_technical_evaluation_fiscal_year
+        description: '{{ doc("stage_3_technical_evaluation_fiscal_year") }}'
+      - name: stage_4_proposal_date
+        description: '{{ doc("stage_4_proposal_date") }}'
+      - name: stage_4_proposal_month
+        description: '{{ doc("stage_4_proposal_month") }}'
+      - name: stage_4_proposal_fiscal_quarter_date
+        description: '{{ doc("stage_4_proposal_fiscal_quarter_date") }}'
+      - name: stage_4_proposal_fiscal_quarter_name
+        description: '{{ doc("stage_4_proposal_fiscal_quarter_name") }}'
+      - name: stage_4_proposal_fiscal_year
+        description: '{{ doc("stage_4_proposal_fiscal_year") }}'
+      - name: stage_5_negotiating_date
+        description: '{{ doc("stage_5_negotiating_date") }}'
+      - name: stage_5_negotiating_month
+        description: '{{ doc("stage_5_negotiating_month") }}'
+      - name: stage_5_negotiating_fiscal_quarter_date
+        description: '{{ doc("stage_5_negotiating_fiscal_quarter_date") }}'
+      - name: stage_5_negotiating_fiscal_quarter_name
+        description: '{{ doc("stage_5_negotiating_fiscal_quarter_name") }}'
+      - name: stage_5_negotiating_fiscal_year
+        description: '{{ doc("stage_5_negotiating_fiscal_year") }}'
+      - name: stage_6_awaiting_signature_date_date
+        description: '{{ doc("stage_6_awaiting_signature_date_date") }}'
+      - name: stage_6_awaiting_signature_date_month
+        description: '{{ doc("stage_6_awaiting_signature_date_month") }}'
+      - name: stage_6_awaiting_signature_date_fiscal_quarter_date
+        description: '{{ doc("stage_6_awaiting_signature_date_fiscal_quarter_date") }}'
+      - name: stage_6_awaiting_signature_date_fiscal_quarter_name
+        description: '{{ doc("stage_6_awaiting_signature_date_fiscal_quarter_name") }}'
+      - name: stage_6_awaiting_signature_date_fiscal_year
+        description: '{{ doc("stage_6_awaiting_signature_date_fiscal_year") }}'
+      - name: stage_6_closed_won_date
+        description: '{{ doc("stage_6_closed_won_date") }}'
+      - name: stage_6_closed_won_month
+        description: '{{ doc("stage_6_closed_won_month") }}'
+      - name: stage_6_closed_won_fiscal_quarter_date
+        description: '{{ doc("stage_6_closed_won_fiscal_quarter_date") }}'
+      - name: stage_6_closed_won_fiscal_quarter_name
+        description: '{{ doc("stage_6_closed_won_fiscal_quarter_name") }}'
+      - name: stage_6_closed_won_fiscal_year
+        description: '{{ doc("stage_6_closed_won_fiscal_year") }}'
+      - name: stage_6_closed_lost_date
+        description: '{{ doc("stage_6_closed_lost_date") }}'
+      - name: stage_6_closed_lost_month
+        description: '{{ doc("stage_6_closed_lost_month") }}'
+      - name: stage_6_closed_lost_fiscal_quarter_date
+        description: '{{ doc("stage_6_closed_lost_fiscal_quarter_date") }}'
+      - name: stage_6_closed_lost_fiscal_quarter_name
+        description: '{{ doc("stage_6_closed_lost_fiscal_quarter_name") }}'
+      - name: stage_6_closed_lost_fiscal_year
+        description: '{{ doc("stage_6_closed_lost_fiscal_year") }}'
+      - name: subscription_start_date
+        description: '{{ doc("sfdc_opportunity_subscription_start_date") }}'
+      - name: subscription_start_month
+        description: '{{ doc("sfdc_opportunity_subscription_start_month") }}'
+      - name: subscription_start_fiscal_quarter_date
+        description: '{{ doc("sfdc_opportunity_subscription_start_fiscal_quarter_date") }}'
+      - name: subscription_start_fiscal_quarter_name
+        description: '{{ doc("sfdc_opportunity_subscription_start_fiscal_quarter_name") }}'
+      - name: subscription_start_fiscal_year
+        description: '{{ doc("sfdc_opportunity_subscription_start_fiscal_year") }}'
+      - name: subscription_end_date
+        description: '{{ doc("sfdc_opportunity_subscription_end_date") }}'
+      - name: subscription_end_month
+        description: '{{ doc("sfdc_opportunity_subscription_end_month") }}'
+      - name: subscription_end_fiscal_quarter_date
+        description: '{{ doc("sfdc_opportunity_subscription_end_fiscal_quarter_date") }}'
+      - name: subscription_end_fiscal_quarter_name
+        description: '{{ doc("sfdc_opportunity_subscription_end_fiscal_quarter_name") }}'
+      - name: subscription_end_fiscal_year
+        description: '{{ doc("sfdc_opportunity_subscription_end_fiscal_year") }}'
+      - name: subscription_renewal_date
+        description: '{{ doc("subscription_renewal_date") }}'
+      - name: sales_qualified_date
+        description: '{{ doc("sales_qualified_date") }}'
+      - name: sales_qualified_month
+        description: '{{ doc("sales_qualified_month") }}'
+      - name: sales_qualified_fiscal_quarter_date
+        description: '{{ doc("sales_qualified_fiscal_quarter_date") }}'
+      - name: sales_qualified_fiscal_quarter_name
+        description: '{{ doc("sales_qualified_fiscal_quarter_name") }}'
+      - name: sales_qualified_fiscal_year
+        description: '{{ doc("sales_qualified_fiscal_year") }}'
+      - name: last_activity_date
+        description: '{{ doc("last_activity_date") }}'
+      - name: last_activity_month
+        description: '{{ doc("last_activity_month") }}'
+      - name: last_activity_fiscal_quarter_date
+        description: '{{ doc("last_activity_fiscal_quarter_date") }}'
+      - name: last_activity_fiscal_quarter_name
+        description: '{{ doc("last_activity_fiscal_quarter_name") }}'
+      - name: last_activity_fiscal_year
+        description: '{{ doc("last_activity_fiscal_year") }}'
+      - name: sales_last_activity_date
+        description: '{{ doc("sales_last_activity_date") }}'
+      - name: sales_last_activity_month
+        description: '{{ doc("sales_last_activity_month") }}'
+      - name: sales_last_activity_fiscal_quarter_date
+        description: '{{ doc("sales_last_activity_fiscal_quarter_date") }}'
+      - name: sales_last_activity_fiscal_quarter_name
+        description: '{{ doc("sales_last_activity_fiscal_quarter_name") }}'
+      - name: sales_last_activity_fiscal_year
+        description: '{{ doc("sales_last_activity_fiscal_year") }}'
+      - name: technical_evaluation_date
+        description: '{{ doc("technical_evaluation_date") }}'
+      - name: technical_evaluation_month
+        description: '{{ doc("technical_evaluation_month") }}'
+      - name: technical_evaluation_fiscal_quarter_date
+        description: '{{ doc("technical_evaluation_fiscal_quarter_date") }}'
+      - name: technical_evaluation_fiscal_quarter_name
+        description: '{{ doc("technical_evaluation_fiscal_quarter_name") }}'
+      - name: technical_evaluation_fiscal_year
+        description: '{{ doc("technical_evaluation_fiscal_year") }}'
+      - name: arr_created_date
+        description: '{{ doc("arr_created_date") }}'
+      - name: arr_created_month
+        description: '{{ doc("arr_created_month") }}'
+      - name: arr_created_fiscal_quarter_date
+        description: '{{ doc("arr_created_fiscal_quarter_date") }}'
+      - name: arr_created_fiscal_quarter_name
+        description: '{{ doc("arr_created_fiscal_quarter_name") }}'
+      - name: arr_created_fiscal_year
+        description: '{{ doc("arr_created_fiscal_year") }}'
+      - name: pipeline_created_date
+        description: '{{ doc("pipeline_created_date") }}'
+      - name: pipeline_created_month
+        description: '{{ doc("pipeline_created_month") }}'
+      - name: pipeline_created_fiscal_quarter_date
+        description: '{{ doc("pipeline_created_fiscal_quarter_date") }}'
+      - name: pipeline_created_fiscal_quarter_name
+        description: '{{ doc("pipeline_created_fiscal_quarter_name") }}'
+      - name: pipeline_created_fiscal_year
+        description: '{{ doc("pipeline_created_fiscal_year") }}'
+      - name: net_arr_created_date
+        description: '{{ doc("net_arr_created_date") }}'
+      - name: net_arr_created_month
+        description: '{{ doc("net_arr_created_month") }}'
+      - name: net_arr_created_fiscal_quarter_date
+        description: '{{ doc("net_arr_created_fiscal_quarter_date") }}'
+      - name: net_arr_created_fiscal_quarter_name
+        description: '{{ doc("net_arr_created_fiscal_quarter_name") }}'
+      - name: net_arr_created_fiscal_year
+        description: '{{ doc("net_arr_created_fiscal_year") }}'
+      - name: amount
+        description: '{{ doc("sfdc_opportunity_amount") }}'
+      - name: recurring_amount
+        description: '{{ doc("sfdc_opportunity_recurring_amount") }}'
+      - name: arr
+        description: '{{ doc("sfdc_opportunity_arr") }}'
+      - name: true_up_amount
+        description: '{{ doc("true_up_amount") }}'
+      - name: proserv_amount
+        description: '{{ doc("proserv_amount") }}'
+      - name: other_non_recurring_amount
+        description: '{{ doc("other_non_recurring_amount") }}'
+      - name: renewal_amount
+        description: '{{ doc("renewal_amount") }}'
+      - name: total_contract_value
+        description: '{{ doc("total_contract_value") }}'
+      - name: calculated_discount
+        description: '{{ doc("calculated_discount") }}'
+      - name: arr_basis
+        description: '{{ doc("arr_basis") }}'
+      - name: created_arr
+        description: '{{ doc("created_arr") }}'
+      - name: raw_net_arr
+        description: '{{ doc("raw_net_arr") }}'
+      - name: net_arr
+        description: '{{ doc("net_arr") }}'
+      - name: net_arr_stage_1
+        description: '{{ doc("net_arr_stage_1") }}'
+      - name: enterprise_agile_planning_net_arr
+        description: '{{ doc("enterprise_agile_planning_net_arr") }}'
+      - name: duo_net_arr
+        description: '{{ doc("duo_net_arr") }}'
+      - name: open_1plus_net_arr
+        description: '{{ doc("open_1plus_net_arr") }}'
+      - name: open_3plus_net_arr
+        description: '{{ doc("open_3plus_net_arr") }}'
+      - name: open_4plus_net_arr
+        description: '{{ doc("open_4plus_net_arr") }}'
+      - name: booked_net_arr
+        description: '{{ doc("booked_net_arr") }}'
+      - name: positive_open_net_arr
+        description: '{{ doc("positive_open_net_arr") }}'
+      - name: positive_booked_net_arr
+        description: '{{ doc("positive_booked_net_arr") }}'
+      - name: closed_net_arr
+        description: '{{ doc("closed_net_arr") }}'
+      - name: created_and_won_same_quarter_net_arr
+        description: '{{ doc("created_and_won_same_quarter_net_arr") }}'
+      - name: new_logo_count
+        description: '{{ doc("new_logo_count") }}'
+      - name: calculated_deal_count
+        description: '{{ doc("calculated_deal_count") }}'
+      - name: open_1plus_deal_count
+        description: '{{ doc("open_1plus_deal_count") }}'
+      - name: open_3plus_deal_count
+        description: '{{ doc("open_3plus_deal_count") }}'
+      - name: open_4plus_deal_count
+        description: '{{ doc("open_4plus_deal_count") }}'
+      - name: booked_deal_count
+        description: '{{ doc("booked_deal_count") }}'
+      - name: positive_booked_deal_count
+        description: '{{ doc("positive_booked_deal_count") }}'
+      - name: positive_open_deal_count
+        description: '{{ doc("positive_open_deal_count") }}'
+      - name: closed_deals
+        description: '{{ doc("closed_deals") }}'
+      - name: closed_won_opps
+        description: '{{ doc("closed_won_opps") }}'
+      - name: closed_opps
+        description: '{{ doc("closed_opps") }}'
+      - name: created_deals
+        description: '{{ doc("created_deals") }}'
+      - name: churned_contraction_deal_count
+        description: '{{ doc("churned_contraction_deal_count") }}'
+      - name: churned_contraction_net_arr
+        description: '{{ doc("churned_contraction_net_arr") }}'
+      - name: booked_churned_contraction_deal_count
+        description: '{{ doc("booked_churned_contraction_deal_count") }}'
+      - name: booked_churned_contraction_net_arr
+        description: '{{ doc("booked_churned_contraction_net_arr") }}'
+      - name: iacv
+        description: '{{ doc("iacv") }}'
+      - name: net_iacv
+        description: '{{ doc("net_iacv") }}'
+      - name: opportunity_based_iacv_to_net_arr_ratio
+        description: '{{ doc("opportunity_based_iacv_to_net_arr_ratio") }}'
+      - name: segment_order_type_iacv_to_net_arr_ratio
+        description: '{{ doc("segment_order_type_iacv_to_net_arr_ratio") }}'
+      - name: calculated_from_ratio_net_arr
+        description: '{{ doc("calculated_from_ratio_net_arr") }}'
+      - name: weighted_linear_iacv
+        description: '{{ doc("weighted_linear_iacv") }}'
+      - name: closed_buckets
+        description: '{{ doc("closed_buckets") }}'
+      - name: count_campaigns
+        description: '{{ doc("count_campaigns") }}'
+      - name: count_crm_attribution_touchpoints
+        description: '{{ doc("count_crm_attribution_touchpoints") }}'
+      - name: xdr_net_arr_stage_1
+        description: '{{ doc("xdr_net_arr_stage_1") }}'
+      - name: xdr_net_arr_stage_3
+        description: '{{ doc("xdr_net_arr_stage_3") }}'
+      - name: potential_seat_count
+        description: '{{ doc("potential_seat_count") }}'
+      - name: is_net_most_likely_opportunity
+        description: '{{ doc("is_net_most_likely_opportunity") }}'
+      - name: net_arr_stage_1
+        description: The total Net Arr of the SFDC opportunity, as they move to/past Stage 1.
+      - name: sales_dev_rep_user_role_level_1
+        description: The Sales Dev Rep's role hierarchy level 1
+      - name: sales_dev_rep_user_role_level_2
+        description: The Sales Dev Rep's role hierarchy level 2
+      - name: sales_dev_rep_user_role_level_3
+        description: The Sales Dev Rep's role hierarchy level 3
+      - name: sales_dev_rep_leader_full_name
+        description: The Sales Dev Rep's Leader's full name. 
+      - name: sales_dev_manager_full_name
+        description: The Sales Dev Rep's Manager's full name. 
+      - name: sales_dev_rep_user_full_name
+        description: The Sales Dev Rep's Full Name
+      - name: booked_ps_value
+        description: '{{ doc("booked_ps_value") }}'
+      - name: revenue_play
+        description: '{{ doc("revenue_play") }}'
+
+  - name: mart_crm_opportunity_daily_snapshot
+    description: Model with single pane of glass sales and marketing metrics, snapshotted daily.
+    columns:
+      - name: crm_opportunity_snapshot_id
+        data_tests:
+            - not_null
+            - unique
+            - relationships:
+                to: ref('fct_crm_opportunity_daily_snapshot')
+                field: crm_opportunity_snapshot_id
+        tags: ["tdf"]
+      - name: dim_crm_opportunity_id
+        data_tests:
+            - not_null
+      - name: snapshot_date
+        data_tests:
+          - not_null
+      - name: order_type
+        description: '{{ doc("order_type") }}'
+      - name: order_type_current
+        description: '{{ doc("order_type_current") }}'
+      - name: vsa_readout
+        description: '{{ doc("vsa_readout") }}'
+      - name: vsa_start_date_net_arr
+        description: '{{ doc("vsa_start_date_net_arr") }}'
+      - name: vsa_start_date
+        description: '{{ doc("vsa_start_date") }}'
+      - name: vsa_url
+        description: '{{ doc("vsa_url") }}'
+      - name: vsa_status
+        description: '{{ doc("vsa_status") }}'
+      - name: vsa_end_date
+        description: '{{ doc("vsa_end_date") }}'
+      - name: won_arr_basis_for_clari
+        description: '{{ doc("won_arr_basis_for_clari") }}'
+      - name: arr_basis_for_clari
+        description: '{{ doc("arr_basis_for_clari") }}'
+      - name: forecasted_churn_for_clari
+        description: '{{ doc("forecasted_churn_for_clari") }}'
+      - name: override_arr_basis_clari
+        description: '{{ doc("override_arr_basis_clari") }}'
+      - name: downgrade_details
+        description: '{{ doc("downgrade_details") }}'
+      - name: cycle_time_in_days
+        description: '{{ doc("cycle_time_in_days") }}'
+      - name: cycle_time_in_days
+        description: '{{ doc("cycle_time_in_days") }}'  
+      - name: ptc_predicted_arr
+        description: This field contains the predicted amount of ARR after renewal, generated by a machine learning model when the subscription is within 6 months of renewal date.
+      - name: ptc_predicted_renewal_risk_category
+        description: This field contains the predicted renewal risk category, generated by a machine learning model when the subscription is within 6 months of renewal date.
+      - name: xdr_net_arr_stage_1
+        description: The XDR influenced value of an Opportunity's Net ARR as of Stage 1 in SFDC.
+      - name: xdr_net_arr_stage_3
+        description: The XDR influenced value of an Opportunity's Net ARR as of Stage 3 in SFDC.
+      - name: net_arr_stage_1
+        description: The total Net Arr of the SFDC opportunity, as they move to/past Stage 1.
+      - name: professional_services_value
+        description: Amount on an opportunity that is from Professional Services only
+      - name: edu_services_value
+        description: Amount on an opportunity that is from Educational Services only
+      - name: investment_services_value
+        description: Amount on an opportunity that is from Investment Services only
+      - name: aggregate_partner
+        description: The Aggregate Partner field shows the primary partner, using the Resale Partner first, or the Deal Registration partner if the Resale Partner isn't available.
+      - name: booked_ps_value
+        description: '{{ doc("booked_ps_value") }}'
+
+  - name: mart_crm_opportunity_stamped_hierarchy_hist
+    description: >-
+      Model with single pane of glass over the sales and marketing metrics.
+      `mart_crm_opportunity_stamped_hierarchy_hist` accounts for yearly changes in the sales hierarchy, views all account hierarchies through the lens of the current year hierarchy, and it reflects how the sales hierarchy is applied in practice (ie. Hybrid users are assigned to the account's hierarchy).
+      Also, for the `alliance_type` field it has the current state of the field instead of the historical version of it. For example,
+      instead of showing the value Non-Alliance it shows Channel Partners.
+    columns:
+      - name: dim_crm_opportunity_id
+        data_tests:
+            - not_null
+            - unique
+        tags: ["tdf"]
+      - name: order_type
+        description: '{{ doc("order_type") }}'
+      - name: order_type_current
+        description: '{{ doc("order_type_current") }}'
+      - name: vsa_readout
+        description: '{{ doc("vsa_readout") }}'
+      - name: vsa_start_date_net_arr
+        description: '{{ doc("vsa_start_date_net_arr") }}'
+      - name: vsa_start_date
+        description: '{{ doc("vsa_start_date") }}'
+      - name: vsa_url
+        description: '{{ doc("vsa_url") }}'
+      - name: vsa_status
+        description: '{{ doc("vsa_status") }}'
+      - name: vsa_end_date
+        description: '{{ doc("vsa_end_date") }}'
+      - name: won_arr_basis_for_clari
+        description: '{{ doc("won_arr_basis_for_clari") }}'
+      - name: arr_basis_for_clari
+        description: '{{ doc("arr_basis_for_clari") }}'
+      - name: forecasted_churn_for_clari
+        description: '{{ doc("forecasted_churn_for_clari") }}'
+      - name: override_arr_basis_clari
+        description: '{{ doc("override_arr_basis_clari") }}'
+      - name: downgrade_details
+        description: '{{ doc("downgrade_details") }}' 
+      - name: next_steps
+        description: Free text field that provides insight into the next step to continue progressing the Opportunity through the Sales Pipeline.
+      - name: auto_renewal_status
+        description: Flag with on/off. Indicates whether a current subscription will automatically renew for the same term as their current subscription after the expiration of the current term
+      - name: qsr_notes
+        description: '{{ doc("qsr_notes") }}'
+      - name: qsr_status  
+        description: Quarterly Subscription Reconciliation status (Pending, failed, processed)
+      - name: manager_confidence
+      - name: renewal_risk_category
+        description: Renewal forecasting field indicating whether the customer will renew, churn or contract (actionable or not)
+      - name: renewal_swing_arr
+        description: The revenue the Account team believes can be saved on an at-risk Renewal if action is taken
+      - name: renewal_manager
+        description:  Renewals Manager supporting this Opportunity
+      - name: renewal_forecast_health
+        description: Red, Yellow, Green health rating based on the Net ARR field
+      - name: xdr_net_arr_stage_1
+        description: The XDR influenced value of an Opportunity's Net ARR as of Stage 1 in SFDC.
+      - name: xdr_net_arr_stage_3
+        description: The XDR influenced value of an Opportunity's Net ARR as of Stage 3 in SFDC.
+      - name: net_arr_stage_1
+        description: The total Net Arr of the SFDC opportunity, as they move to/past Stage 1.
+      - name: valid_deal_count
+        description: A Salesforce Opportunity field that gives a -1, 0, or 1 value based on whether or not it should be counted as a true closed won for accounting/reporting purposes
+
+  - name: mart_sales_funnel_target
+    description: Model with Sales targets used for planning the go to market Sales and Marketing motion.
+    columns:
+      - name: sales_funnel_target_id
+        data_tests:
+            - not_null
+            - unique
+        tags: ["tdf"]
+
+  - name: mart_sales_funnel_target_daily
+    description: Model with Sales targets at a daily level and with QTD (Quater To Date), MTD (Month To Date) and YTD (Year To Date) target calculations.
+    columns:
+      - name: primary_key
+        data_tests:
+            - not_null
+            - unique
+        tags: ["tdf"]
+      - name: report_target_date
+        description: '{{ doc("report_target_date") }}'
+      - name: wtd_allocated_target
+        description: '{{ doc("wtd_allocated_target") }}'
+      - name: mtd_allocated_target
+        description: '{{ doc("mtd_allocated_target") }}'
+      - name: qtd_allocated_target
+        description: '{{ doc("qtd_allocated_target") }}'
+      - name: ytd_allocated_target
+        description: '{{ doc("ytd_allocated_target") }}'
+
+  - name: mart_delta_arr_parent_month
+    description: "Mart table by month pursuant to the ARR Analysis Framework at the parent customer level"
+    columns:
+      - name: primary_key
+        data_tests:
+          - not_null
+          - unique
+        tags: ["tdf"]
+
+  - name: mart_delta_arr_parent_product_month
+    description: "Mart table by month pursuant to the ARR Analysis Framework at the parent customer || product category level"
+    columns:
+      - name: primary_key
+        data_tests:
+          - not_null
+          - unique
+        tags: ["tdf"]
+      - name: product_tier_name
+        data_tests:
+          - not_null
+        tags: ["tdf"]
+      - name: product_delivery_type
+        data_tests:
+          - not_null
+        tags: ["tdf"]
+      - name: product_ranking
+        data_tests:
+          - not_null
+        tags: ["tdf"]
+
+  - name: mart_delta_arr_subscription_product_month
+    description: "Mart table by month purusant to the ARR Analysis Framework at the subscription || product_category level"
+    columns:
+      - name: primary_key
+        data_tests:
+          - not_null
+          - unique
+        tags: ["tdf"]
+      - name: product_category
+        data_tests:
+          - not_null
+        tags: ["tdf"]
+      - name: delivery
+        data_tests:
+          - not_null
+        tags: ["tdf"]
+      - name: product_ranking
+        data_tests:
+          - not_null
+        tags: ["tdf"]
+
+  - name: mart_delta_arr_subscription_month
+    description: "Mart table by month purusant to the ARR Analysis Framework at the subscription level"
+    columns:
+      - name: primary_key
+        data_tests:
+          - not_null
+          - unique
+        tags: ["tdf"]
+
+  - name: mart_retention_parent_account_product
+    description: "Mart table to support retention analysis at the ultimate_parent_account || product level."
+    columns:
+      - name: primary_key
+        data_tests:
+          - not_null
+          - unique
+        tags: ["tdf"]
+
+  - name: mart_retention_crm_account
+    description: "Mart table to support drillable retention analysis by the CRM account grain."
+    columns:
+    - name: fct_retention_id
+      description: A unique identifier of the retention record.
+      data_tests:
+        - not_null
+        - unique
+      tags: ["tdf"]
+
+  - name: mart_retention_parent_account
+    description: "Mart table to support drillable retention analysis by the Parent CRM account grain"
+    columns:
+    - name: fct_retention_id
+      description: A unique identifier of the retention record.
+      data_tests:
+        - not_null
+        - unique
+      tags: ["tdf"]
+
+
+  - name: mart_arr_with_zero_dollar_charges
+    description: '{{ doc("mart_arr_with_zero_dollar_charges") }}'
+    columns:
+      - name: primary_key
+        data_tests:
+          - not_null
+          - unique
+      - name: arr_month
+        data_tests:
+          - not_null
+      - name: fiscal_quarter_name_fy
+      - name: fiscal_year
+      - name: subscription_start_month
+      - name: subscription_end_month
+      - name: dim_crm_opportunity_id
+        description: opportunity_id related to the given subscription version
+      - name: sold_to_country
+      - name: billing_account_number
+      - name: ssp_channel
+      - name: po_required
+      - name: auto_pay
+      - name: default_payment_method_type
+      - name: dim_parent_crm_account_id
+      - name: parent_crm_account_name
+      - name: parent_crm_account_sales_segment
+      - name: arr
+        description: "Calculated as 12 * MRR value"
+      - name: is_reseller
+        description: Identify whether a crm_account is a reseller.
+      - name: subscription_sales_type
+        description: Identifies whether a subscription is Sales-Assisted or Self-Service / Web Direct.
+      - name: billing_account_number
+        data_tests:
+          - not_null
+      - name: subscription_name_slugify
+        data_tests:
+          - not_null
+      - name: subscription_name
+        data_tests:
+          - not_null
+      - name: oldest_subscription_in_cohort
+      - name: subscription_lineage
+      - name: subscription_cohort_month
+      - name: subscription_cohort_quarter
+      - name: mrr
+        data_tests:
+          - not_null
+      - name: months_since_subscription_cohort_start
+      - name: quarters_since_subscription_cohort_start
+      - name: dim_billing_account_id
+        data_tests:
+          - not_null
+      - name: billing_account_name
+        data_tests:
+          - not_null
+      - name: product_tier_name
+        data_tests:
+          - not_null
+      - name: unit_of_measure
+      - name: quantity
+      - name: dim_crm_account_id
+      - name: crm_account_name
+      - name: ultimate_parent_account_id
+      - name: ultimate_parent_account_name
+      - name: billing_account_cohort_month
+      - name: billing_account_cohort_quarter
+      - name: crm_account_cohort_month
+      - name: crm_account_cohort_quarter
+        description: '{{ doc("mart_arr_col_parent_account_cohort_month") }}'
+      - name: parent_account_cohort_quarter
+        description: '{{ doc("mart_arr_col_parent_account_cohort_quarter") }}'
+      - name: months_since_billing_account_cohort_start
+      - name: quarters_since_billing_account_cohort_start
+      - name: months_since_crm_account_cohort_start
+      - name: quarters_since_crm_account_cohort_start
+      - name: months_since_parent_account_cohort_start
+        description: '{{ doc("mart_arr_col_months_since_parent_cohort_start") }}'
+      - name: quarters_since_parent_account_cohort_start
+        description: '{{ doc("mart_arr_col_quarters_since_parent_cohort_start") }}'
+      - name: dim_subscription_id
+      - name: dim_subscription_id_original
+      - name: was_purchased_through_reseller
+        description: Boolean field that indicates whether the subscription was purchased through a reseller. If TRUE, the `invoice_owner_account` will contain the name of the reseller.
+      - name: is_licensed_user
+        description: '{{ doc("is_licensed_user") }}'
+      - name: is_licensed_user_base_product
+        description: '{{ doc("is_licensed_user_base_product") }}'
+      - name: is_licensed_user_add_on
+        description: '{{ doc("is_licensed_user_add_on") }}'
+      - name: is_arpu
+        description: Flag to identify what counts towards Annual Revenue Per User (ARPU). It works by excluding `Storage` product_tier and `EDU` product_rate_plan.
+      - name: dim_charge_id
+        description: Unique identifier for a rate plan charge in Zuora. Can be joined to dim_charge.
+      - name: product_deployment_type
+        description: How a product is deployed to the customer; Self-Managed, GitLab.com or Dedicated (or Other).
+      - name: product_category
+        description: Categorizes Zuora products as either Add On Services or Base Products
+      - name: product_rate_plan_category
+        description: On created opportunities (Web store/Sales assisted), the Product category field is be populated at the Rate plan level in Salesforce. Aides identification of Agile Planning and Duo Pro SKUs, flowing from salesforce.
+      - name: is_oss_or_edu_rate_plan
+        description: boolean field indicating edu or oss rate plan
+      - name: is_landed_arr_first_order
+        description: Landed ARR is calculated by looking at the first 'ARR _Month' at the ultimate parent level, and delineating the landed ARR value from that first month's documented ARR. The EDU/OSS orders are excluded from these orders using the dim_product_detail.is_oss_or_edu_rate_plan flag.
+
+
+  - name: mart_targets_actuals_daily_snapshot
+    columns: 
+      - name: targets_actuals_daily_snapshot_pk
+        data_tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('fct_targets_actuals_daily_snapshot')
+              field: targets_actuals_daily_snapshot_pk
+
+  - name: mart_crm_opportunity_daily_snapshot_aggregate
+    description: mart model derived from `fct_crm_opportunity_daily_snapshot_aggregate`. Hierarchy fields and additional date fields are added to the fact model. 
+    columns:
+      - name: opportunity_daily_snapshot_aggregate_pk
+        data_tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('fct_crm_opportunity_daily_snapshot_aggregate')
+              field: opportunity_daily_snapshot_aggregate_pk
+
+  - name: mart_arr_discount
+    description: '{{ doc("mart_arr_discount") }}'
+    columns:
+      - name: fiscal_quarter_name_fy
+      - name: invoice_month
+        data_tests:
+          - not_null
+      - name: dim_parent_crm_account_id
+        data_tests:
+          - not_null
+      - name: parent_crm_account_name
+      - name: dim_crm_opportunity_id
+      - name: invoice_number
+      - name: invoice_item_id
+        data_tests:
+          - not_null
+          - unique
+      - name: dim_subscription_id
+        data_tests:
+          - not_null
+      - name: subscription_name
+        data_tests:
+          - not_null
+      - name: resale_partner_name
+      - name: parent_crm_account_segment
+      - name: parent_crm_account_geo
+      - name: parent_crm_account_region
+      - name: parent_crm_account_country
+      - name: product_name
+      - name: product_delivery_type
+      - name: product_tier_name
+      - name: rate_plan_charge_description
+      - name: deal_path_name
+      - name: subscription_type
+      - name: order_type
+      - name: seats_bucket
+      - name: list_price_buckets
+      - name: end_user_discount_buckets
+      - name: quantity
+      - name: list_price
+      - name: arr
+      - name: arr_with_channel_margin
+      - name: programmatic_discount
+        data_tests:
+          - dbt_utils.accepted_range:
+              min_value: -0.00005
+              max_value: 1
+      - name: discount_end_user
+        data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 1
+      - name: discount_overall
+        data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 1
+      - name: opportunity_name
+      - name: report_geo_updated
+      - name: report_area
+      - name: report_region
+      - name: report_segment
+      - name: opportunity_owner_id
+      - name: dim_crm_account_id
+      - name: opportunity_owner
+      - name: opportunity_owner_email
+      - name: opportunity_owner_manager_name
+      - name: opportunity_owner_manager_email
+      - name: opportunity_owner_3rd_line_manager_email
+      - name: opportunity_owner_4th_line_manager_email
+      - name: is_oss_or_edu_rate_plan
+        description: boolean field indicating edu or oss rate plan
+      - name: is_landed_arr_first_order
+        description: Landed ARR is calculated by looking at the first 'ARR _Month' at the ultimate parent level, and delineating the landed ARR value from that first month's documented ARR. The EDU/OSS orders are excluded from these orders using the dim_product_detail.is_oss_or_edu_rate_plan flag.
+
+
+  - name: mart_retention_parent_account_snapshot_model
+    description: This is an incremental snapshot model of customer retention data, tracking changes over time at the parent account level for each subscription and product per month. It joins a date dimension table with a base retention table to create a historical spine, ensuring each record is valid for specific time periods starting from March 2020.

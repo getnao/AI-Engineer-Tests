@@ -1,0 +1,482 @@
+version: 2
+
+models:
+    - name: snowplow_fishtown_good_events_source
+      description: This is the source table for snowplow events captured by Fishtown's infrastructure.
+    
+    - name: snowplow_fishtown_good_events_sample_source
+      description: This is the source table for a subset of snowplow events captured by Fishtown's infrastructure.
+    
+    - name: snowplow_fishtown_bad_events_source
+      description: This is the source table for bad event data sent to Fishtown's infrastructure.
+
+    - name: snowplow_gitlab_good_events_source
+      description: This is the source table for snowplow events captured by GitLab's infrastructure.
+    
+    - name: snowplow_gitlab_good_events_sample_source
+      description: This is the source table for a subset of snowplow events captured by GitLab's infrastructure.
+
+    - name: snowplow_gitlab_bad_events_source
+      description: This is the source table for bad event data sent to GitLab's infrastructure.
+
+    - name: snowplow_event_counts
+      description: This model counts the number of occurrences for each unique event ID in the Snowplow GitLab good events source. It is materialized incrementally and uses a merge strategy to update event counts.
+      columns:
+        - name: clean_event_id
+          description: A cleaned version of the event ID, ensuring it matches the UUID format.
+        - name: event_count
+          description: The number of times each unique event ID appears in the source data.
+        - name: last_checked
+          description: Timestamp indicating when the count was last updated.
+
+    - name: snowplow_events_source
+      description: Source model for GitLab events where we perform renaming and create derived columns
+      columns:
+      - name: app_id
+        description: ' {{ doc("app_id") }} '
+      - name: browser_color_depth
+        description: ' {{ doc("browser_color_depth") }} '
+      - name: has_browser_cookies
+        description: ' {{ doc("has_browser_cookies") }} '
+      - name: browser_name
+        description: ' {{ doc("browser_name") }} '
+      - name: has_browser_features_director
+        description: ' {{ doc("has_browser_features_director") }} '
+      - name: has_browser_features_flash
+        description: ' {{ doc("has_browser_features_flash") }} '
+      - name: has_browser_features_gears
+        description: ' {{ doc("has_browser_features_gears") }} '
+      - name: has_browser_features_java
+        description: ' {{ doc("has_browser_features_java") }} '
+      - name: has_browser_features_pdf
+        description: ' {{ doc("has_browser_features_pdf") }} '
+      - name: has_browser_features_quicktime
+        description: ' {{ doc("has_browser_features_quicktime") }} '
+      - name: has_browser_features_realplayer
+        description: ' {{ doc("has_browser_features_realplayer") }} '
+      - name: has_browser_features_silverlight
+        description: ' {{ doc("has_browser_features_silverlight") }} '
+      - name: has_browser_features_windowsmedia
+        description: ' {{ doc("has_browser_features_windowsmedia") }} '
+      - name: browser_language
+        description: ' {{ doc("browser_language") }} '
+      - name: browser_major_version
+        description: ' {{ doc("browser_major_version") }} '
+      - name: browser_engine
+        description: ' {{ doc("browser_engine") }} '
+      - name: browser_type
+        description: ' {{ doc("browser_type") }} '
+      - name: browser_minor_version
+        description: ' {{ doc("browser_minor_version") }} '
+      - name: browser_view_height
+        description: ' {{ doc("browser_view_height") }} '
+      - name: browser_view_width
+        description: ' {{ doc("browser_view_width") }} '
+      - name: collector_timestamp
+        description: ' {{ doc("collector_timestamp") }} '
+      - name: contexts
+        description: ' {{ doc("contexts") }} '
+      - name: behavior_at
+        description: ' {{ doc("behavior_at") }} '
+      - name: doc_charset
+        description: ' {{ doc("doc_charset") }} '
+      - name: doc_height
+        description: ' {{ doc("doc_height") }} '
+      - name: doc_width
+        description: ' {{ doc("doc_width") }} '
+      - name: session_id
+        description: ' {{ doc("session_id") }} '
+      - name: session_index
+        description: ' {{ doc("session_index") }} '
+      - name: user_snowplow_domain_id
+        description: ' {{ doc("user_snowplow_domain_id") }} '
+      - name: device_created_timestamp
+        description: ' {{ doc("device_created_timestamp") }} '
+      - name: is_device_mobile
+        description: ' {{ doc("is_device_mobile") }} '
+      - name: device_screen_height
+        description: ' {{ doc("device_screen_height") }} '
+      - name: device_screen_width
+        description: ' {{ doc("device_screen_width") }} '
+      - name: device_sent_timestamp
+        description: ' {{ doc("device_sent_timestamp") }} '
+      - name: device_type
+        description: ' {{ doc("device_type") }} '
+      - name: etl_timestamp
+        description: ' {{ doc("etl_timestamp") }} '
+      - name: event_type
+        description: ' {{ doc("event_type") }} '
+      - name: event_format
+        description: ' {{ doc("event_format") }} '
+      - name: event_id
+        description: ' {{ doc("event_id") }} '
+      - name: event_name
+        description: ' {{ doc("event_name") }} '
+      - name: event_vendor
+        description: ' {{ doc("event_vendor") }} '
+      - name: event_version
+        description: ' {{ doc("event_version") }} '
+      - name: user_city
+        description: ' {{ doc("user_city") }} '
+      - name: user_country
+        description: ' {{ doc("user_country") }} '
+      - name: user_region
+        description: ' {{ doc("user_region") }} '
+      - name: user_region_name
+        description: ' {{ doc("user_region_name") }} '
+      - name: user_timezone_name
+        description: ' {{ doc("user_timezone_name") }} '
+      - name: name_tracker
+        description: ' {{ doc("name_tracker") }} '
+      - name: network_user_id
+        description: ' {{ doc("network_user_id") }} '
+      - name: os
+        description: ' {{ doc("os") }} '
+      - name: os_manufacturer
+        description: ' {{ doc("os_manufacturer") }} '
+      - name: os_name
+        description: ' {{ doc("os_name") }} '
+      - name: os_timezone
+        description: ' {{ doc("os_timezone") }} '
+      - name: referrer_url
+        description: ' {{ doc("referrer_url") }} '
+      - name: page_title
+        description: ' {{ doc("page_title") }} '
+      - name: page_url
+        description: ' {{ doc("page_url") }} '
+      - name: page_url_fragment
+        description: ' {{ doc("page_url_fragment") }} '
+      - name: page_url_host
+        description: ' {{ doc("page_url_host") }} '
+      - name: page_url_path
+        description: ' {{ doc("page_url_path") }} '
+      - name: page_url_port
+        description: ' {{ doc("page_url_port") }} '
+      - name: page_url_query
+        description: ' {{ doc("page_url_query") }} '
+      - name: page_url_scheme
+        description: ' {{ doc("page_url_scheme") }} '
+      - name: platform
+        description: ' {{ doc("platform") }} '
+      - name: pp_xoffset_max
+        description: ' {{ doc("pp_xoffset_max") }} '
+      - name: pp_xoffset_min
+        description: ' {{ doc("pp_xoffset_min") }} '
+      - name: pp_yoffset_max
+        description: ' {{ doc("pp_yoffset_max") }} '
+      - name: pp_yoffset_min
+        description: ' {{ doc("pp_yoffset_min") }} '
+      - name: referrer_url_fragment
+        description: ' {{ doc("referrer_url_fragment") }} '
+      - name: referrer_url_host
+        description: ' {{ doc("referrer_url_host") }} '
+      - name: referrer_url_path
+        description: ' {{ doc("referrer_url_path") }} '
+      - name: referrer_url_port
+        description: ' {{ doc("referrer_url_port") }} '
+      - name: referrer_url_query
+        description: ' {{ doc("referrer_url_query") }} '
+      - name: referrer_url_scheme
+        description: ' {{ doc("referrer_url_scheme") }} '
+      - name: event_action
+        description: ' {{ doc("event_action") }} '
+      - name: event_category
+        description: ' {{ doc("event_category") }} '
+      - name: event_label
+        description: ' {{ doc("event_label") }} '
+      - name: event_property
+        description: ' {{ doc("event_property") }} '
+      - name: event_value
+        description: ' {{ doc("event_value") }} '
+      - name: unstructured_event
+        description: ' {{ doc("unstructured_event") }} '
+      - name: user_fingerprint
+        description: ' {{ doc("user_fingerprint") }} '
+      - name: useragent
+        description: ' {{ doc("useragent") }} '
+      - name: collector_version
+        description: ' {{ doc("collector_version") }} '
+      - name: etl_version
+        description: ' {{ doc("etl_version") }} '
+      - name: tracker_version
+        description: ' {{ doc("tracker_version") }} '
+      - name: link_click_elementclasses
+        description: ' {{ doc("link_click_element_classes") }} '
+      - name: link_click_element_content
+        description: ' {{ doc("link_click_element_content") }} '
+      - name: link_click_elementid
+        description: ' {{ doc("link_click_element_id") }} '
+      - name: link_click_elementtarget
+        description: ' {{ doc("link_click_element_target") }} '
+      - name: link_click_targeturl
+        description: ' {{ doc("link_click_target_url") }} '
+      - name: ssubmit_form_elements
+        description: ' {{ doc("submit_form_elements") }} '
+      - name: submit_form_formclasses
+        description: ' {{ doc("submit_form_classes") }} '
+      - name: submit_form_formid
+        description: ' {{ doc("submit_form_id") }} '
+      - name: change_form_formid
+        description: ' {{ doc("change_form_id") }} '
+      - name: change_form_type
+        description: ' {{ doc("change_form_type") }} '
+      - name: change_form_elementid
+        description: ' {{ doc("change_form_element_id") }} '
+      - name: change_form_elementclasses
+        description: ' {{ doc("change_form_element_classes") }} '
+      - name: change_form_nodename
+        description: ' {{ doc("change_form_node_name") }} '
+      - name: change_form_value
+        description: ' {{ doc("change_form_value") }} '
+      - name: focus_form_elementid
+        description: ' {{ doc("focus_form_element_id") }} '
+      - name: focus_form_nodename
+        description: ' {{ doc("focus_form_node_name") }} '
+      - name: focus_form_elementclasses
+        description: ' {{ doc("focus_form_element_classes") }} '
+      - name: focus_form_elementtype
+        description: ' {{ doc("focus_form_element_type") }} '
+      - name: focus_form_formid
+        description: ' {{ doc("focus_form_form_id") }} '
+      - name: focus_form_value
+        description: ' {{ doc("focus_form_value") }} '
+      - name: track_timing_category
+        description: ' {{ doc("track_timing_category") }} '
+      - name: track_timing_label
+        description: ' {{ doc("track_timing_label") }} '
+      - name: track_timing_timing
+        description: ' {{ doc("track_timing_timing") }} '
+      - name: track_timing_variable
+        description: ' {{ doc("track_timing_variable") }} '
+      - name: uploaded_at
+        description: ' {{ doc("uploaded_at") }} '
+      - name: gitlab_standard_environment
+        description: ' {{ doc("environment") }} '
+      - name: gitlab_standard_extra
+        description: ' {{ doc("extra") }} '
+      - name: gitlab_standard_namespace_id
+        description: ' {{ doc("dim_namespace_id") }} '
+      - name: gitlab_standard_plan
+        description: ' {{ doc("plan_name") }} '
+      - name: gitlab_standard_google_analytics_id
+        description: ' {{ doc("google_analytics_id") }} '
+      - name: gitlab_standard_project_id
+        description: ' {{ doc("dim_project_id") }} '
+      - name: gitlab_standard_user_id
+        description: ' {{ doc("pseudonymized_user_id") }} '
+      - name: gitlab_standard_source
+        description: ' {{ doc("source") }} '
+      - name: gitlab_standard_is_gitlab_team_member
+        description: ' {{ doc("is_gitlab_team_member") }} '
+      - name: gitlab_standard_feature_enabled_by_namespace_ids
+        description: ' {{ doc("feature_enabled_by_namespace_ids") }} '
+      - name: gitlab_standard_correlation_id
+        description: ' {{ doc("correlation_id") }} '
+      - name: gitlab_standard_interface
+        description: ' {{ doc("interface") }} '
+      - name: gitlab_standard_client_type
+        description: ' {{ doc("client_type") }} '
+      - name: gitlab_standard_client_name
+        description: ' {{ doc("client_name") }} '
+      - name: gitlab_standard_client_version
+        description: ' {{ doc("client_version") }} '
+      - name: gitlab_standard_feature_category
+        description: ' {{ doc("feature_category") }} '
+      - name: gitlab_standard_total_tokens
+        description: ' {{ doc("total_tokens") }} '
+      - name: gitlab_standard_model_provider
+        description: ' {{ doc("model_provider") }} '
+      - name: gitlab_standard_unique_instance_id
+        description: ' {{ doc("unique_instance_id") }} '
+      - name: gitlab_standard_ultimate_parent_namespace_id
+        description: ' {{ doc("dim_ultimate_parent_namespace_id") }} '
+      - name: web_page_id
+        description: ' {{ doc("web_page_id") }} '
+      - name: gitlab_experiment_name
+        description: ' {{ doc("experiment_name") }} '
+      - name: gitlab_experiment_context_key
+        description: ' {{ doc("experiment_context_key") }} '
+      - name: gitlab_experiment_variant
+        description: ' {{ doc("experiment_variant") }} '
+      - name: gitlab_experiment_migration_keys
+        description: ' {{ doc("experiment_migration_keys") }} '
+      - name: code_suggestions_context_prefix_length
+        description: ' {{ doc("prefix_length") }} '
+      - name: code_suggestions_context_suffix_length
+        description: ' {{ doc("suffix_length") }} '
+      - name: code_suggestions_context_language
+        description: ' {{ doc("language") }} '
+      - name: code_suggestions_context_user_agent
+        description: ' {{ doc("user_agent") }} '
+      - name: code_suggestions_context_api_status_code
+        description: ' {{ doc("api_status_code") }} '
+      - name: code_suggestions_context_gitlab_saas_namespace_ids
+        description: ' {{ doc("code_suggestions_saas_namespace_ids") }} '
+      - name: code_suggestions_context_gitlab_saas_duo_pro_namespace_ids
+        description: ' {{ doc("code_suggestions_duo_namespace_ids") }} '
+      - name: code_suggestions_context_is_streaming
+        description: ' {{ doc("is_streaming") }} '
+      - name: code_suggestions_context_suggestion_source
+        description: ' {{ doc("suggestion_source") }} '
+      - name: code_suggestions_context_is_invoked
+        description: ' {{ doc("is_invoked") }} '
+      - name: code_suggestions_context_options_count
+        description: ' {{ doc("options_count") }} '
+      - name: code_suggestions_context_accepted_option
+        description: ' {{ doc("accepted_option") }} '
+      - name: code_suggestions_context_has_advanced_context
+        description: ' {{ doc("has_advanced_context") }} '
+      - name: code_suggestions_context_is_direct_connection
+        description: ' {{ doc("is_direct_connection") }} '
+      - name: code_suggestions_context_total_context_size_bytes
+        description: ' {{ doc("total_context_size_bytes") }} '
+      - name: code_suggestions_context_content_above_cursor_size_bytes
+        description: ' {{ doc("content_above_cursor_size_bytes") }} '
+      - name: code_suggestions_context_content_below_cursor_size_bytes
+        description: ' {{ doc("content_below_cursor_size_bytes") }} '
+      - name: code_suggestions_context_context_items
+        description: ' {{ doc("context_items") }} '
+      - name: code_suggestions_context_context_tokens_sent
+        description: ' {{ doc("context_tokens_sent") }} '
+      - name: code_suggestions_context_context_tokens_used
+        description: ' {{ doc("context_tokens_used") }} '
+      - name: code_suggestions_context_debounce_interval
+        description: ' {{ doc("debounce_interval") }} '
+      - name: code_suggestions_context_region
+        description: ' {{ doc("region") }} '
+      - name: code_suggestions_context_context_items_resolution_strategies_summary
+        description: ' {{ doc("context_items_resolution_strategies_summary") }} '
+      - name: ide_extension_version_extension_name
+        description: ' {{ doc("extension_name") }} '
+      - name: ide_extension_version_extension_version
+        description: ' {{ doc("extension_version") }} '
+      - name: ide_extension_version_ide_name
+        description: ' {{ doc("ide_name") }} '
+      - name: ide_extension_version_ide_vendor
+        description: ' {{ doc("ide_vendor") }} '
+      - name: ide_extension_version_ide_version
+        description: ' {{ doc("ide_version") }} '
+      - name: ide_extension_version_language_server_version
+        description: ' {{ doc("language_server_version") }} '
+      - name: gitlab_service_ping_event_name
+        description: ' {{ doc("redis_event_name") }} '
+      - name: gitlab_service_ping_key_path
+        description: ' {{ doc("key_path") }} '
+      - name: gitlab_service_ping_data_source
+        description: ' {{ doc("data_source") }} '
+      - name: performance_timing_connectend
+        description: ' {{ doc("connect_end") }} '
+      - name: performance_timing_connectstart
+        description: ' {{ doc("connect_start") }} '
+      - name: performance_timing_domcomplete
+        description: ' {{ doc("dom_complete") }} '
+      - name: performance_timing_domcontentloadedeventend
+        description: ' {{ doc("dom_content_loaded_event_end") }} '
+      - name: performance_timing_domcontentloadedeventstart
+        description: ' {{ doc("dom_content_loaded_event_start") }} '
+      - name: performance_timing_dominteractive
+        description: ' {{ doc("dom_interactive") }} '
+      - name: performance_timing_domloading
+        description: ' {{ doc("dom_loading") }} '
+      - name: performance_timing_domainlookupend
+        description: ' {{ doc("domain_lookup_end") }} '
+      - name: performance_timing_domainlookupstart
+        description: ' {{ doc("domain_lookup_start") }} '
+      - name: performance_timing_fetchstart
+        description: ' {{ doc("fetch_start") }} '
+      - name: performance_timing_loadeventend
+        description: ' {{ doc("load_event_end") }} '
+      - name: performance_timing_loadeventstart
+        description: ' {{ doc("load_event_start") }} '
+      - name: performance_timing_navigationstart
+        description: ' {{ doc("navigation_start") }} '
+      - name: performance_timing_redirectend
+        description: ' {{ doc("redirect_end") }} '
+      - name: performance_timing_redirectstart
+        description: ' {{ doc("redirect_start") }} '
+      - name: performance_timing_requeststart
+        description: ' {{ doc("request_start") }} '
+      - name: performance_timing_responseend
+        description: ' {{ doc("response_end") }} '
+      - name: performance_timing_responsestart
+        description: ' {{ doc("response_start") }} '
+      - name: performance_timing_secureconnectionstart
+        description: ' {{ doc("secure_connection_start") }} '
+      - name: performance_timing_unloadeventend
+        description: ' {{ doc("unload_event_end") }} '
+      - name: performance_timing_unloadeventstart
+        description: ' {{ doc("unload_event_start") }} '
+      - name: has_code_suggestions_context
+        description: ' {{ doc("has_code_suggestions_context") }} '
+      - name: has_ide_extension_version_context
+        description: ' {{ doc("has_ide_extension_version_context") }} '
+      - name: has_gitlab_standard_context
+        description: ' {{ doc("has_gitlab_standard_context") }} '
+      - name: has_gitlab_experiment_context
+        description: ' {{ doc("has_gitlab_experiment_context") }} '
+      - name: has_web_page_context
+        description: ' {{ doc("has_web_page_context") }} '
+      - name: has_gitlab_service_ping_context
+        description: ' {{ doc("has_gitlab_service_ping_context") }} '
+      - name: has_performance_timing_context
+        description: ' {{ doc("has_performance_timing_context") }} '
+      - name: instance_version
+        description: ' {{ doc("instance_version") }} '
+      - name: dim_instance_id
+        description: ' {{ doc("dim_instance_id") }} '
+      - name: host_name
+        description: ' {{ doc("host_name") }} '
+      - name: gitlab_global_user_id
+        description: ' {{ doc("gitlab_global_user_id") }} '
+      - name: context_items_count
+        description: ' {{ doc("context_items_count") }} '
+      - name: model_engine
+        description: ' {{ doc("model_engine") }} '
+      - name: model_name
+        description: ' {{ doc("model_name") }} '
+      - name: input_tokens
+        description: ' {{ doc("input_tokens") }} '
+      - name: output_tokens
+        description: ' {{ doc("output_tokens") }} '
+      - name: feature_enablement_type
+        description: ' {{ doc("feature_enablement_type") }} '
+      - name: product_delivery_type
+        description: ' {{ doc("product_delivery_type") }} '
+      - name: google_analytics_client_id
+        description: ' {{ doc("google_analytics_client_id") }} '
+      - name: namespace_ids
+        description: ' {{ doc("namespace_ids") }} '
+      - name: clean_event_label
+        description: ' {{ doc("clean_event_label") }} '
+      - name: clean_url_path
+        description: ' {{ doc("clean_url_path") }} '
+      - name: product_deployment_type
+        description: ' {{ doc("product_deployment_type") }} '
+      - name: page_url_host_path
+        description: ' {{ doc("page_url_host_path") }} '
+      - name: referrer_url_host_path
+        description: ' {{ doc("referrer_url_host_path") }} '
+      - name: glm_source
+        description: ' {{ doc("glm_source") }} '
+      - name: is_staging_event
+        description: ' {{ doc("is_staging_event") }} '
+      - name: is_bad_unstructed_event
+        description: ' {{ doc("is_bad_unstructed_event") }} '
+      - name: is_good_snowplow_record
+        description: ' {{ doc("is_good_snowplow_record") }} '
+      - name: is_page_view_event
+        description: ' {{ doc("is_page_view_event") }} '
+      - name: code_suggestions_context
+        description: ' {{ doc("code_suggestions_context") }} '
+      - name: ide_extension_version_context
+        description: ' {{ doc("ide_extension_version_context") }} '
+      - name: gitlab_standard_context
+        description: ' {{ doc("gitlab_standard_context") }} '
+      - name: gitlab_experiment_context
+        description: ' {{ doc("gitlab_experiment_context") }} '
+      - name: web_page_context
+        description: ' {{ doc("web_page_context") }} '
+      - name: gitlab_service_ping_context
+        description: ' {{ doc("gitlab_service_ping_context") }} '
+      - name: performance_timing_context
+        description: ' {{ doc("performance_timing_context") }} '

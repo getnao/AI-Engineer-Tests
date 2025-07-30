@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: gitlab_dotcom_bulk_import_entities_dedupe_source
+    description: '{{ doc("gitlab_dotcom_dedupe_source_scd") }}'
+  - name: gitlab_dotcom_clusters_integration_prometheus_dedupe_source
+    description: '{{ doc("gitlab_dotcom_dedupe_source_scd") }}'
+  - name: gitlab_dotcom_group_import_states_dedupe_source
+    description: '{{ doc("gitlab_dotcom_dedupe_source_scd") }}'
+  - name: gitlab_dotcom_jira_connect_installations_dedupe_source
+    description: '{{ doc("gitlab_dotcom_dedupe_source_scd") }}'
+  - name: gitlab_dotcom_lfs_file_locks_dedupe_source
+    description: '{{ doc("gitlab_dotcom_dedupe_source_scd") }}'
+  - name: gitlab_dotcom_path_locks_dedupe_source
+    description: '{{ doc("gitlab_dotcom_dedupe_source_scd") }}'
+  - name: gitlab_dotcom_merge_request_diff_commit_users_dedupe_source
+    description: '{{ doc("gitlab_dotcom_dedupe_source_scd") }}'
+  - name: gitlab_dotcom_vulnerability_reads_dedupe_source
+    description: '{{ doc("gitlab_dotcom_dedupe_docs") }}'
+  - name: gitlab_dotcom_service_desk_settings_dedupe_source
+    description: '{{ doc("gitlab_dotcom_dedupe_docs") }}'
+  - name: gitlab_dotcom_approval_project_rules_protected_branches_dedupe_source
+    description: '{{ doc("gitlab_dotcom_dedupe_docs") }}'
+  - name: gitlab_dotcom_security_policy_requirements_dedupe_source
+    description: '{{ doc("gitlab_dotcom_dedupe_docs") }}'

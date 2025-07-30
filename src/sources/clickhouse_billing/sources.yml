@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  - name: clickhouse_billing
+    database: '{{ env_var("SNOWFLAKE_LOAD_DATABASE") }}'
+    schema: clickhouse_billing
+    loaded_at_field: uploaded_at
+    loader: custom
+    description: clickhouse_billing data (loaded by custom connector)
+
+    quoting:
+      database: true
+      schema: false
+      identifier: false
+
+
+    tables:
+      - name: usage_cost

@@ -1,0 +1,393 @@
+version: 2
+  
+models:
+
+  - name: gitlab_dotcom_environments_xf
+    description: '{{ doc("gitlab_dotcom_environments_xf") }}'
+    columns:
+      - name: environment_id
+        data_tests:
+          - not_null
+          - unique
+      - name: project_id
+        data_tests:
+          - not_null        
+
+  - name: gitlab_dotcom_internal_notes_xf
+    description: '{{ doc("gitlab_dotcom_internal_notes_xf") }}'
+    columns:
+      - name: note_id
+        data_tests:
+          - not_null
+          - unique
+      - name: created_at
+        data_tests:
+          - not_null
+      - name: updated_at
+        data_tests:
+          - not_null
+      - name: noteable_type
+        data_tests:
+          - accepted_values:
+                      values: ['Commit', 'Epic', 'Issue', 'MergeRequest', 'Snippet', 'Wiki', 'DesignManagement::Design']
+
+  - name: gitlab_dotcom_labels_xf
+    description: '{{ doc("gitlab_dotcom_labels_xf") }}'
+    columns:
+      - name: label_id
+        data_tests:
+          - not_null
+      - name: masked_label_title
+        description: '{{ doc("xf_visibility_documentation") }}'
+
+  - name: gitlab_dotcom_groups_xf
+    description: '{{ doc("gitlab_dotcom_groups_xf") }}'
+    columns:
+      - name: group_id
+        data_tests:
+          - not_null
+          - unique
+      - name: group_plan_is_paid
+        description: Whether or not the group is subscribed to a paid plan. A subgroup inherits from the subscription of its ultimate parent group
+      - name: member_count
+        description: Do not use this count, it is incorrect. Use [gitlab_dotcom_memberships](https://dbt.gitlabdata.com/#!/model/model.gitlab_snowflake.gitlab_dotcom_memberships) for member counts.
+      - name: project_count
+        description: The number of projects that are presently associated with the group.
+
+  - name: gitlab_dotcom_memberships
+    description: '{{ doc("gitlab_dotcom_memberships") }}'
+    columns:
+      - name: ultimate_parent_id
+        data_tests:
+          - not_null
+      - name: namespace_id
+        data_tests:
+          - not_null
+      - name: user_id
+        data_tests:
+          - not_null
+      - name: access_level
+        data_tests:
+          - not_null
+      - name: membership_source_type
+        description: This describes how the access is being granted ('group_membership', 'project_membership', 'group_group_links', 'project_group_links').
+        data_tests:
+          - not_null
+      - name: membership_source_id
+        description: The id of the record that is granting the access. If membership_source_type='group_membership', then this is the group_id.
+        data_tests:
+          - not_null
+      - name: is_active
+        data_tests:
+          - not_null
+      - name: is_guest
+        data_tests:
+          - not_null
+      - name: is_billable
+        data_tests:
+          - not_null
+
+  - name: gitlab_dotcom_events_monthly_active_users
+    description: '{{ doc("gitlab_dotcom_events_monthly_active_users") }}'
+    data_tests:
+      - unique:
+          column_name: "concat(day, plan_id_at_event_date, plan_was_paid_at_event_date)"
+    columns:
+      - name: day
+        data_tests:
+          - not_null
+      - name: is_last_day_of_month
+        data_tests:
+          - not_null
+      - name: count_audit_events_active_users_last_28_days
+        description: The number of unique active users (from audit events table) in the previous 28 days (inclusive).
+      - name: count_audit_events_active_users_last_28_days
+        description: The number of unique active users (from events table) in the previous 28 days (inclusive).
+
+  - name: gitlab_dotcom_merge_request_assignment_events
+    description: '{{ doc("gitlab_dotcom_merge_request_assignment_events") }}'
+    columns:
+      - name: merge_request_id
+        data_tests: 
+          - not_null
+
+  - name: gitlab_dotcom_merge_requests_merged_authors_xf
+    description: This is a dbt model of notes that signify a merge request being merged.
+    columns:
+      - name: project_id
+      - name: namespace_id
+      - name: merge_request_internal_id
+        data_tests: 
+          - not_null
+      - name: merge_request_id
+        data_tests: 
+          - not_null
+      - name: note_author_id
+        data_tests: 
+          - not_null
+      - name: user_name
+        data_tests: 
+          - not_null
+
+  - name: gitlab_dotcom_namespaces_xf
+    description: '{{ doc("gitlab_dotcom_namespaces_xf") }}'
+    columns:
+      - name: namespace_id
+        data_tests:
+          - not_null
+          - unique
+      - name: namespace_path
+      - name: namespace_type
+        description: '{{ doc("namespace_type") }}'
+        data_tests:
+          - not_null
+      - name: plan_id
+        description: The **plan_id** associated with the namespace's subscription. This can be inheritted from the namespaces's ultimate parent.
+        data_tests:
+          - not_null:
+              severity: warn
+      - name: plan_title
+        description: Whether or not the namespace associated with the project is subscribed to a paid plan. This can be inheritted from the namespaces's ultimate parent.
+        data_tests:
+          - not_null:
+              severity: warn
+      - name: plan_is_paid
+        description: Whether or not the namespace associated with the project is subscribed to a paid plan. This can be inheritted from the namespaces's ultimate parent.
+        data_tests:
+          - not_null:
+              severity: warn
+      - name: member_count
+        description: Do not use this count, it is incorrect. Use [gitlab_dotcom_memberships](https://dbt.gitlabdata.com/#!/model/model.gitlab_snowflake.gitlab_dotcom_memberships) for member counts.
+      - name: project_count
+        description: The number of projects that are presently associated with the namespace.
+
+  - name: gitlab_dotcom_projects_xf
+    description: '{{ doc("gitlab_dotcom_projects_xf") }}'
+    columns:
+      - name: project_id
+        data_tests:
+          - not_null
+          - unique
+      - name: member_count
+        description: Do not use this count, it is incorrect. Use [gitlab_dotcom_memberships](https://dbt.gitlabdata.com/#!/model/model.gitlab_snowflake.gitlab_dotcom_memberships) for member counts.
+      - name: active_service_types
+        description: The types of services currently active and associated with the project.
+      - name: namespace_plan_is_paid
+        description: Whether or not the namespace associated with the project is subscribed to a paid plan.
+      - name: namespace_plan_id_at_project_creation
+        description: '{{ doc("namespace_plan_id_at_creation") }}'
+
+  - name: gitlab_dotcom_resource_label_events_xf
+    description: xf model for gitlab_dotcom_resource_milestone_events joining with issues, epics and mrs.
+    columns:
+        - name: resource_label_event_id
+          data_tests:
+            - not_null
+            - unique
+  - name: gitlab_dotcom_resource_milestone_events_xf
+    description: xf model for gitlab_dotcom_resource_milestone_events joining with issues and mrs.
+    columns:
+        - name: resource_milestone_event_id
+          data_tests:
+            - not_null
+            - unique
+  - name: gitlab_dotcom_resource_weight_events_xf
+    description: xf model for gitlab_dotcom_resource_milestone_events joining with issues
+    columns:
+        - name: resource_weight_event_id
+          data_tests:
+            - not_null
+            - unique
+
+  - name: gitlab_dotcom_saml_providers_xf
+    description: '{{ doc("gitlab_dotcom_saml_providers_xf") }}'
+    columns:
+      - name: saml_provider_id
+        data_tests:
+          - not_null
+          - unique
+  - name: gitlab_dotcom_secure_stage_ci_jobs
+    description: '{{ doc("gitlab_dotcom_secure_stage_ci_jobs") }}'
+    columns:
+      - name: ci_build_id
+        data_tests:
+          - not_null
+          - unique
+        description: Identifier that you can join on gitlab_dotcom_ci_builds.ci_build_id if needed.
+      - name: secure_ci_job_type
+        description: This field is populated by doing a LIKE case statement from gitlab_dotcom_ci_builds.ci_build_name in order to try and catch as many jobs as possible. Since users can customize this field, using a like potentially excludes some of the customized entires, and may include entries named similarly but not actually our scanners.
+      - name: artifacts_file
+        description: NULL - To get this data join on ci_build_id for legacy.gitlab_dotcom_ci_job_artifacts.file. Note that you will need to add a match for file like '%.json' and then use case statement likes to correlate the correct files to the correct scans or categories.
+      - name: artifacts_size
+        description: NULL - To get this data join on ci_build_id for legacy.gitlab_dotcom_ci_job_artifacts.size
+      - name: ci_build_project_id
+        description: Join on project_id to legacy.gitlab_dotcom_projects_xf to be able to get tier (namespace_plan_title) and paid state (namespace_plan_is_paid). Note that there are ongoing improvements to better trace accurate tier and payment at specific dates and times and this recommendation may change as a result.
+
+  - name: gitlab_dotcom_users_xf
+    description: '{{ doc("gitlab_dotcom_users_xf") }}'
+    columns:
+      - name: user_id
+        data_tests:
+          - not_null
+          - unique
+      - name: days_active
+        description: days between user creation and last activity
+      - name: account_age_cohort
+        description: cohorting of time between last dbt run and user creation date.
+
+  - name: gitlab_dotcom_notes_xf
+    description: '{{ doc("gitlab_dotcom_notes_xf") }}'
+    columns:
+      - name: note_id
+        description: '{{ doc("dim_note_id") }}'
+      - name: noteable_type
+        description: '{{ doc("noteable_type") }}'
+      - name: note_author_id
+        description: '{{ doc("author_id") }}'
+      - name: created_at
+        description: '{{ doc("created_at") }}'
+      - name: updated_at
+        description: '{{ doc("updated_at") }}'
+      - name: project_id
+        description: '{{ doc("dim_project_id") }}'
+      - name: attachment
+        description: '{{ doc("attachment") }}'
+      - name: line_code
+        description: '{{ doc("line_code") }}'
+      - name: commit_id
+        description: '{{ doc("commit_id") }}'
+      - name: noteable_id
+        description: '{{ doc("noteable_id") }}'
+      - name: system
+        description: '{{ doc("is_system_note") }}'
+      - name: note_updated_by_id
+        description: '{{ doc("note_updated_by_id") }}'
+      - name: position
+        description: '{{ doc("position_number") }}'
+      - name: original_position
+        description: '{{ doc("original_position") }}'
+      - name: resolved_at
+        description: '{{ doc("resolved_at") }}'
+      - name: resolved_by_id
+        description: '{{ doc("resolved_by_id") }}'
+      - name: discussion_id
+        description: '{{ doc("discussion_id") }}'
+      - name: cached_markdown_version
+        description: '{{ doc("cached_markdown_version") }}'
+      - name: resolved_by_push
+        description: '{{ doc("resolved_by_push") }}'
+      - name: note
+        description: The content of the note. Masked as 'confidential - masked' if the note is from a non-public, non-internal project.
+      - name: note_html
+        description: HTML representation of the note content. Masked as 'confidential - masked' if the note is from a non-public, non-internal project.
+      - name: ultimate_parent_id
+        description: '{{ doc("dim_ultimate_parent_namespace_id") }}'
+      - name: action_type_array
+        description: Array of action types associated with this note if it's a system note, providing additional context about automated actions.
+
+  - name: gitlab_dotcom_milestones_xf
+    description: '{{ doc("gitlab_dotcom_milestones_xf") }}'
+    columns:
+      - name: milestone_id
+        description: '{{ doc("milestone_id") }}'
+      - name: milestone_description
+        description: '{{ doc("milestone_description") }}'
+      - name: milestone_title
+        description: '{{ doc("milestone_title") }}'
+      - name: due_date
+        description: The date by which the milestone is expected to be completed.
+      - name: group_id
+        description: The identifier of the group associated with the milestone if it's a group milestone.
+      - name: milestone_created_at
+        description: '{{ doc("milestone_created_at") }}'
+      - name: milestone_updated_at
+        description: '{{ doc("milestone_updated_at") }}'
+      - name: milestone_status
+        description: '{{ doc("milestone_status") }}'
+      - name: namespace_id
+        description: The identifier of the namespace (group or project namespace) associated with the milestone.
+      - name: project_id
+        description: The identifier of the project associated with the milestone if it's a project milestone.
+      - name: start_date
+        description: The date when work on the milestone is scheduled to begin.
+
+  - name: gitlab_dotcom_events
+    description: '{{ doc("gitlab_dotcom_events") }}'
+    columns:
+      - name: event_id
+        description: '{{ doc("event_id") }}'
+      - name: project_id
+        description: '{{ ("dim_project_id") }}'
+      - name: author_id
+        description: The identifier of the user who performed the action that triggered the event.
+      - name: target_id
+        description: The identifier of the target object affected by the event (e.g., issue ID, merge request ID).
+      - name: target_type
+        description: The type of object targeted by the event (e.g., Issue, MergeRequest, Note).
+      - name: created_at
+        description: '{{ doc("created_at") }}'
+      - name: updated_at
+        description: '{{ doc("updated_at") }}'
+      - name: event_action_type_id
+        description: Numeric identifier representing the type of action performed.
+      - name: event_action_type
+        description: Text description of the action performed (e.g., created, closed, merged).
+      - name: ultimate_parent_id
+        description: '{{ doc("dim_ultimate_parent_namespace_id") }}'
+      - name: plan_id_at_event_date
+        description: '{{ doc("plan_id_at_event_date") }}'
+      - name: plan_name_at_event_date
+        description: '{{ doc("plan_name_at_event_date") }}'
+      - name: plan_was_paid_at_event_date
+        description: '{{ doc("plan_was_paid_at_event_date") }}'
+      - name: user_created_at
+        description: '{{ doc("user_created_at") }}'
+
+  - name: gitlab_dotcom_epic_notes_xf
+    description: '{{ doc("gitlab_dotcom_epic_notes_xf") }}'
+    columns:
+      - name: note_id
+        description: '{{ doc("dim_note_id") }}'
+      - name: noteable_type
+        description: '{{ doc("noteable_type") }}'
+      - name: note_author_id
+        description: '{{ doc("author_id") }}'
+      - name: created_at
+        description: '{{ doc("created_at") }}'
+      - name: updated_at
+        description: '{{ doc("updated_at") }}'
+      - name: project_id
+        description: '{{ doc("dim_project_id") }}'
+      - name: attachment
+        description: '{{ doc("attachment") }}'
+      - name: line_code
+        description: '{{ doc("line_code") }}'
+      - name: commit_id
+        description: '{{ doc("commit_id") }}'
+      - name: noteable_id
+        description: '{{ doc("noteable_id") }}'
+      - name: system
+        description: '{{ doc("is_system_note") }}'
+      - name: note_updated_by_id
+        description: '{{ doc("note_updated_by_id") }}'
+      - name: position
+        description: '{{ doc("position_number") }}'
+      - name: original_position
+        description: '{{ doc("original_position") }}'
+      - name: resolved_at
+        description: '{{ doc("resolved_at") }}'
+      - name: resolved_by_id
+        description: '{{ doc("resolved_by_id") }}'
+      - name: discussion_id
+        description: '{{ doc("discussion_id") }}'
+      - name: cached_markdown_version
+        description: '{{ doc("cached_markdown_version") }}'
+      - name: resolved_by_push
+        description: '{{ doc("resolved_by_push") }}'
+      - name: note_html
+        description: HTML representation of the note content.
+      - name: note
+        description: The content of the note. Masked as 'confidential - masked' if the note is from a non-public, non-internal namespace.
+      - name: ultimate_parent_id
+        description: '{{ doc("dim_ultimate_parent_namespace_id") }}'
+

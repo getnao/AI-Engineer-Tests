@@ -1,0 +1,34 @@
+version: 2
+models:
+
+  - name: temp_gitlab_dotcom_notes_filtered
+    description: '{{ doc("temp_gitlab_dotcom_notes_filtered") }}'
+    columns:
+      - name: note_author_id
+        description: The identifier of the user who authored the note.
+      - name: project_id
+        description: '{{ doc("dim_project_id") }}'
+      - name: note_id
+        description: Unique identifier for the note record.
+      - name: created_at
+        description: '{{ doc("created_at") }}'
+      - name: noteable_type
+        description: '{{ doc("noteable_type") }}'
+
+  - name: temp_gitlab_dotcom_events_filtered
+    description: '{{ doc("temp_gitlab_dotcom_events_filtered") }}'
+    columns:
+      - name: event_action_type
+        description: Text description of the action performed (e.g., pushed, created, updated).
+      - name: event_action_type_id
+        description: Numeric identifier representing the type of action performed.
+      - name: target_type
+        description: The type of object targeted by the event (e.g., DesignManagement::Design, WikiPage::Meta).
+      - name: created_at
+        description: '{{ doc("created_at") }}'
+      - name: author_id
+        description: '{{ doc("author_id") }}'
+      - name: project_id
+        description: '{{ doc("dim_project_id") }}'
+      - name: event_id
+        description: '{{ doc("event_id") }}'

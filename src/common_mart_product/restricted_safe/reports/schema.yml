@@ -1,0 +1,989 @@
+version: 2
+
+models:
+  - name: rpt_user_request_crm_account_issue_epic
+    description: '{{ doc("rpt_user_request_crm_account_issue_epic") }}'
+    columns:
+      - name: primary_key
+        description: '{{ doc("primary_key") }}'
+        data_tests:
+          - not_null
+          - unique
+      - name: issue_id
+        description: '{{ doc("issue_id") }}'
+      - name: epic_id
+        description: '{{ doc("epic_id") }}'
+      - name: user_request_in
+        description: '{{ doc("user_request_in") }}'
+      - name: dim_crm_account_id
+        description: '{{ doc("dim_crm_account_id") }}'
+      - name: issue_epic_title
+        description: '{{ doc("issue_epic_title") }}'
+      - name: issue_epic_url
+        description: '{{ doc("issue_epic_url") }}'
+      - name: issue_epic_created_at
+        description: '{{ doc("issue_epic_created_at") }}'
+      - name: issue_epic_created_date
+        description: '{{ doc("issue_epic_created_date") }}'
+      - name: issue_epic_created_month
+        description: '{{ doc("issue_epic_created_month") }}'
+      - name: issue_epic_state_name
+        description: '{{ doc("issue_epic_state_name") }}'
+      - name: issue_epic_closed_at
+        description: '{{ doc("issue_epic_closed_at") }}'
+      - name: issue_epic_closed_date
+        description: '{{ doc("issue_epic_closed_date") }}'
+      - name: issue_epic_closed_month
+        description: '{{ doc("issue_epic_closed_month") }}'
+      - name: milestone_title
+        description: '{{ doc("milestone_title") }}'
+      - name: milestone_due_date
+        description: '{{ doc("milestone_due_date") }}'
+      - name: issue_epic_labels
+        description: '{{ doc("issue_epic_labels") }}'
+      - name: deliverable
+        description: '{{ doc("issue_deliverable") }}'
+      - name: product_group_extended
+        description: '{{ doc("issue_product_group_extended") }}'
+      - name: product_group
+        description: '{{ doc("issue_product_group") }}'
+      - name: product_category
+        description: '{{ doc("issue_product_category") }}'
+      - name: product_stage
+        description: '{{ doc("issue_product_stage") }}'
+      - name: issue_epic_type
+        description: '{{ doc("issue_epic_type") }}'
+      - name: issue_status
+        description: '{{ doc("issue_status") }}'
+      - name: theme_labels
+        description: '{{ doc("issue_theme_labels") }}'
+      - name: epic_status
+        description: '{{ doc("epic_status") }}'
+      - name: parent_epic_path
+        description: '{{ doc("parent_epic_path") }}'
+      - name: parent_epic_title
+        description: '{{ doc("parent_epic_title") }}'
+      - name: upvote_count
+        description: '{{ doc("upvote_count") }}'
+      - name: issue_epic_weight
+        description: '{{ doc("issue_epic_weight") }}'
+      - name: crm_account_name
+        description: '{{ doc("crm_account_name") }}'
+      - name: crm_account_next_renewal_month
+        description: '{{ doc("crm_account_next_renewal_month") }}'
+      - name: crm_account_health_score_color
+        description: '{{ doc("crm_account_health_score_color") }}'
+      - name: parent_crm_account_sales_segment
+        description: '{{ doc("parent_crm_account_sales_segment") }}'
+      - name: technical_account_manager
+        description: '{{ doc("technical_account_manager") }}'
+      - name: strategic_account_leader
+        description: '{{ doc("strategic_account_leader") }}'
+      - name: customer_reach
+        description: '{{ doc("customer_reach") }}'
+      - name: crm_account_arr
+        description: '{{ doc("crm_account_arr") }}'
+      - name: crm_account_open_opp_net_arr
+        description: The net ARR of open opportunities associated with the CRM account.
+      - name: crm_account_open_opp_net_arr_fo
+        description: The net ARR of open first-order opportunities associated with the CRM account.
+      - name: crm_account_open_opp_net_arr_growth
+        description: The growth in net ARR from open opportunities associated with the CRM account.
+      - name: opportunity_reach
+        description: Metric indicating the reach or impact of opportunities associated with the CRM account.
+      - name: crm_account_lost_opp_net_arr
+        description: The net ARR of lost opportunities associated with the CRM account.
+      - name: crm_account_lost_customer_arr
+        description: The ARR of lost customers associated with the CRM account.
+      - name: lost_arr
+        description: The total lost ARR associated with the CRM account.
+      - name: sum_request_priority
+        description: '{{ doc("sum_request_priority") }}'
+      - name: sum_linked_crm_opp_net_arr
+        description: '{{ doc("sum_linked_crm_opp_net_arr") }}'
+      - name: sum_linked_crm_opp_open_net_arr
+        description: '{{ doc("sum_linked_crm_opp_open_net_arr") }}'
+      - name: sum_linked_crm_opp_seats
+        description: '{{ doc("sum_linked_crm_opp_seats") }}'
+      - name: sum_linked_crm_opp_open_seats
+        description: '{{ doc("sum_linked_crm_opp_open_seats") }}'
+      - name: opportunity_id_array
+        description: '{{ doc("opportunity_id_array") }}'
+      - name: zendesk_ticket_id_array
+        description: '{{ doc("zendesk_ticket_id_array") }}'
+      - name: account_retention_score
+        description: Score indicating the retention potential of the account based on the issue or epic.
+      - name: account_growth_score
+        description: Score indicating the growth potential of the account based on the issue or epic.
+      - name: account_combined_score
+        description: Combined score of retention and growth for the account based on the issue or epic.
+      - name: account_priority_score
+        description: Priority score assigned to the account based on the issue or epic.
+      - name: account_weighted_priority_score
+        description: Priority score weighted by the issue or epic effort (issue_epic_weight).
+      - name: account_weighted_priority_score_input
+        description: Formatted string containing the weighted priority score or a message to input effort if missing.
+      - name: created_by
+        description: '{{ doc("created_by") }}'
+      - name: updated_by
+        description: '{{ doc("updated_by") }}'
+      - name: model_created_date
+        description: '{{ doc("model_created_date") }}'
+      - name: model_updated_date
+        description: '{{ doc("model_updated_date") }}'
+      - name: dbt_updated_at
+        description: '{{ doc("dbt_updated_at") }}'
+      - name: dbt_created_at
+        description: '{{ doc("dbt_created_at") }}'
+
+  - name: rpt_user_request_issue_epic
+    description: '{{ doc("rpt_user_request_issue_epic") }}'
+    columns:
+      - name: primary_key
+        description: '{{ doc("primary_key") }}'
+        data_tests:
+          - not_null
+          - unique
+      - name: issue_id
+        description: '{{ doc("issue_id") }}'
+      - name: epic_id
+        description: '{{ doc("epic_id") }}'
+      - name: user_request_in
+        description: '{{ doc("user_request_in") }}'
+      - name: issue_epic_title
+        description: '{{ doc("issue_epic_title") }}'
+      - name: issue_epic_url
+        description: '{{ doc("issue_epic_url") }}'
+      - name: issue_epic_created_at
+        description: '{{ doc("issue_epic_created_at") }}'
+      - name: issue_epic_created_date
+        description: '{{ doc("issue_epic_created_date") }}'
+      - name: issue_epic_created_month
+        description: '{{ doc("issue_epic_created_month") }}'
+      - name: issue_epic_state_name
+        description: '{{ doc("issue_epic_state_name") }}'
+      - name: issue_epic_closed_at
+        description: '{{ doc("issue_epic_closed_at") }}'
+      - name: issue_epic_closed_date
+        description: '{{ doc("issue_epic_closed_date") }}'
+      - name: issue_epic_closed_month
+        description: '{{ doc("issue_epic_closed_month") }}'
+      - name: milestone_title
+        description: '{{ doc("milestone_title") }}'
+      - name: milestone_due_date
+        description: '{{ doc("milestone_due_date") }}'
+      - name: issue_epic_labels
+        description: '{{ doc("issue_epic_labels") }}'
+      - name: deliverable
+        description: '{{ doc("issue_deliverable") }}'
+      - name: product_group_extended
+        description: '{{ doc("issue_product_group_extended") }}'
+      - name: product_group
+        description: '{{ doc("issue_product_group") }}'
+      - name: product_category
+        description: '{{ doc("issue_product_category") }}'
+      - name: product_stage
+        description: '{{ doc("issue_product_stage") }}'
+      - name: issue_epic_type
+        description: '{{ doc("issue_epic_type") }}'
+      - name: issue_status
+        description: '{{ doc("issue_status") }}'
+      - name: theme_labels
+        description: '{{ doc("issue_theme_labels") }}'
+      - name: epic_status
+        description: '{{ doc("epic_status") }}'
+      - name: parent_epic_path
+        description: '{{ doc("parent_epic_path") }}'
+      - name: parent_epic_title
+        description: '{{ doc("parent_epic_title") }}'
+      - name: upvote_count
+        description: '{{ doc("upvote_count") }}'
+      - name: issue_epic_weight
+        description: '{{ doc("issue_epic_weight") }}'
+      - name: sum_request_priority
+        description: '{{ doc("sum_request_priority") }}'
+      - name: unique_accounts
+        description: '{{ doc("unique_accounts") }}'
+      - name: crm_account_name_array
+        description: '{{ doc("crm_account_name_array") }}'
+      - name: crm_account_health_score_color_array
+        description: '{{ doc("crm_account_health_score_color_array") }}'
+      - name: crm_account_parent_sales_segment_array
+        description: '{{ doc("crm_account_parent_sales_segment_array") }}'
+      - name: crm_account_tam_array
+        description: '{{ doc("crm_account_tam_array") }}'
+      - name: crm_account_strategic_account_leader_array
+        description: '{{ doc("crm_account_strategic_account_leader_array") }}'
+      - name: sum_customer_reach
+        description: '{{ doc("sum_customer_reach") }}'
+      - name: sum_crm_account_arr
+        description: '{{ doc("sum_crm_account_arr") }}'
+      - name: sum_crm_account_open_opp_net_arr
+        description: '{{ doc("sum_crm_account_open_opp_net_arr") }}'
+      - name: sum_crm_account_open_opp_net_arr_fo
+        description: '{{ doc("sum_crm_account_open_opp_net_arr_fo") }}'
+      - name: sum_crm_account_open_opp_net_arr_growth
+        description: '{{ doc("sum_crm_account_open_opp_net_arr_growth") }}'
+      - name: sum_opportunity_reach
+        description: '{{ doc("sum_opportunity_reach") }}'
+      - name: sum_crm_account_lost_opp_net_arr
+        description: '{{ doc("sum_crm_account_lost_opp_net_arr") }}'
+      - name: sum_crm_account_lost_customer_arr
+        description: '{{ doc("sum_crm_account_lost_customer_arr") }}'
+      - name: sum_lost_arr
+        description: '{{ doc("sum_lost_arr") }}'
+      - name: sum_linked_crm_opp_net_arr
+        description: '{{ doc("sum_linked_crm_opp_net_arr") }}'
+      - name: sum_linked_crm_opp_open_net_arr
+        description: '{{ doc("sum_linked_crm_opp_open_net_arr") }}'
+      - name: sum_linked_crm_opp_seats
+        description: '{{ doc("sum_linked_crm_opp_seats") }}'
+      - name: sum_linked_crm_opp_open_seats
+        description: '{{ doc("sum_linked_crm_opp_open_seats") }}'
+      - name: retention_score
+        description: '{{ doc("retention_score") }}'
+      - name: growth_score
+        description: '{{ doc("growth_score") }}'
+      - name: combined_score
+        description: '{{ doc("combined_score") }}'
+      - name: priority_score
+        description: '{{ doc("priority_score") }}'
+      - name: weighted_priority_score
+        description: '{{ doc("weighted_priority_score") }}'
+      - name: weighted_priority_score_input
+        description: '{{ doc("weighted_priority_score_input") }}'
+      - name: unique_opportunities
+        description: '{{ doc("unique_opportunities") }}'
+      - name: unique_open_opportunities
+        description: '{{ doc("unique_open_opportunities") }}'
+      - name: opportunity_id_array
+        description: '{{ doc("opportunity_id_array") }}'
+      - name: zendesk_ticket_id_array
+        description: '{{ doc("zendesk_ticket_id_array") }}'
+      - name: created_by
+        description: '{{ doc("created_by") }}'
+      - name: updated_by
+        description: '{{ doc("updated_by") }}'
+      - name: model_created_date
+        description: '{{ doc("model_created_date") }}'
+      - name: model_updated_date
+        description: '{{ doc("model_updated_date") }}'
+      - name: dbt_updated_at
+        description: '{{ doc("dbt_updated_at") }}'
+      - name: dbt_created_at
+        description: '{{ doc("dbt_created_at") }}'
+
+  - name: rpt_product_usage_health_score_account_calcs
+    description: '{{ doc("rpt_product_usage_health_score_account_calcs") }}'
+    columns:
+      - name: primary_key
+        description: '{{ doc("primary_key") }}'
+        data_tests:
+            - not_null
+            - unique
+      - name: snapshot_month
+        description: '{{ doc("snapshot_month") }}'
+      - name: crm_account_name
+        description: '{{ doc("crm_account_name") }}'
+      - name: dim_crm_account_id
+        description: '{{ doc("dim_crm_account_id") }}'
+      - name: customer_since_date
+        description: '{{ doc("customer_since_date") }}'
+      - name: account_age_months
+        description: '{{ doc("account_age_months") }}'
+      - name: subscription_age_months
+        description: '{{ doc("subscription_age_months") }}'
+      - name: combined_instance_creation_date
+        description: '{{ doc("combined_instance_creation_date") }}'
+      - name: instance_age_days
+        description: '{{ doc("instance_age_days") }}'
+      - name: instance_age_months
+        description: '{{ doc("instance_age_months") }}'
+      - name: subscription_start_date
+        description: '{{ doc("subscription_start_date") }}'
+      - name: subscription_name
+        description: '{{ doc("subscription_name") }}'
+      - name: dim_subscription_id_original
+        description: '{{ doc("dim_subscription_id_original") }}'
+      - name: dim_subscription_id
+        description: '{{ doc("dim_subscription_id") }}'
+      - name: ultimate_subscription_flag
+        description: '{{ doc("ultimate_subscription_flag") }}'
+      - name: is_oss_program
+        description: '{{ doc("is_oss_program") }}'
+      - name: delivery_type
+        description: '{{ doc("product_delivery_type") }}'
+      - name: deployment_type
+        description: '{{ doc("ping_deployment_type") }}'
+      - name: instance_type
+        description: '{{ doc("instance_type") }}'
+      - name: included_in_health_measures_str
+        description: '{{ doc("included_in_health_measures_str") }}'
+      - name: uuid
+        description: '{{ doc("uuid_ping_model") }}'
+      - name: hostname
+        description: '{{ doc("hostname") }}'
+      - name: dim_namespace_id
+        description: '{{ doc("dim_namespace_id") }}'
+      - name: dim_installation_id
+        description: '{{ doc("dim_installation_id") }}'
+      - name: instance_identifier
+        description: '{{ doc("instance_identifier") }}'
+      - name: hostname_or_namespace_id
+        description: '{{ doc("hostname_or_namespace_id") }}'
+      - name: ping_created_at
+        description: '{{ doc("ping_created_at") }}'
+      - name: cleaned_version
+        description: '{{ doc("cleaned_version") }}'
+      - name: license_utilization
+        description: '{{ doc("license_utilization") }}'
+      - name: billable_user_count
+        description: '{{ doc("billable_user_count") }}'
+      - name: license_user_count
+        description: '{{ doc("license_user_count") }}'
+      - name: license_user_count_source
+        description: '{{ doc("license_user_count_source") }}'
+      - name: duo_pro_license_user_count
+        description: '{{ doc("duo_pro_license_user_count") }}'
+      - name: duo_pro_billable_user_count
+        description: '{{ doc("duo_pro_billable_user_count") }}'
+      - name: duo_pro_license_utilization
+        description: '{{ doc("duo_pro_license_utilization") }}'
+      - name: duo_enterprise_license_user_count
+        description: '{{ doc("duo_enterprise_license_user_count") }}'
+      - name: duo_enterprise_billable_user_count
+        description: '{{ doc("duo_enterprise_billable_user_count") }}'
+      - name: duo_enterprise_license_utilization
+        description: '{{ doc("duo_enterprise_license_utilization") }}'
+      - name: duo_amazon_q_license_user_count
+        description: '{{ doc("duo_amazon_q_license_user_count") }}'
+      - name: duo_amazon_q_billable_user_count
+        description: '{{ doc("duo_amazon_q_billable_user_count") }}'
+      - name: duo_amazon_q_license_utilization
+        description: '{{ doc("duo_amazon_q_license_utilization") }}'
+      - name: duo_total_billable_user_count
+        description: '{{ doc("duo_total_billable_user_count") }}'
+      - name: duo_total_license_user_count
+        description: '{{ doc("duo_total_license_user_count") }}'
+      - name: duo_total_license_utilization
+        description: '{{ doc("duo_total_license_utilization") }}'
+      - name: license_utilization_score
+        description: '{{ doc("license_utilization_score") }}'
+      - name: license_utilization_color
+        description: '{{ doc("license_utilization_color") }}'
+      - name: last_activity_28_days_user
+        description: '{{ doc("last_activity_28_days_user_desc") }}'
+      - name: user_engagement
+        description: '{{ doc("user_engagement") }}'
+      - name: user_engagement_score
+        description: '{{ doc("user_engagement_score") }}'
+      - name: user_engagement_color
+        description: '{{ doc("user_engagement_color") }}'
+      - name: action_monthly_active_users_project_repo_28_days_user_clean
+        description: '{{ doc("action_monthly_active_users_project_repo_28_days_user_clean") }}'
+      - name: git_operation_utilization
+        description: '{{ doc("git_operation_utilization") }}'
+      - name: scm_score
+        description: '{{ doc("scm_score") }}'
+      - name: scm_color
+        description: '{{ doc("scm_color") }}'
+      - name: ci_pipelines_28_days_user
+        description: '{{ doc("ci_pipelines_28_days_user_desc") }}'
+      - name: ci_pipeline_utilization
+        description: '{{ doc("ci_pipeline_utilization") }}'
+      - name: ci_builds_28_days_user
+        description: '{{ doc("ci_builds_28_days_user_desc") }}'
+      - name: ci_builds_all_time_user
+        description: '{{ doc("ci_builds_all_time_user_desc") }}'
+      - name: ci_builds_all_time_event
+        description: '{{ doc("ci_builds_all_time_event_desc") }}'
+      - name: ci_runners_all_time_event
+        description: '{{ doc("ci_runners_all_time_event") }}'
+      - name: ci_builds_28_days_event
+        description: '{{ doc("ci_builds_28_days_event_desc") }}'
+      - name: ci_pipeline_utilization_score
+        description: '{{ doc("ci_pipeline_utilization_score") }}'
+      - name: ci_pipeline_utilization_color
+        description: '{{ doc("ci_pipeline_utilization_color") }}'
+      - name: ci_score
+        description: '{{ doc("ci_score") }}'
+      - name: ci_color
+        description: '{{ doc("ci_color") }}'
+      - name: ci_builds_28_days_event_post_16_9
+        description: '{{ doc("ci_builds_28_days_event_post_16_9_desc") }}'
+      - name: ci_builds_per_billable_user
+        description: Ratio of CI builds to billable users, indicating CI usage intensity.
+      - name: ci_builds_per_billable_user_score
+        description: Numeric score assigned to CI builds per billable user based on established thresholds.
+      - name: ci_builds_per_billable_user_color
+        description: Color-coded status (Red, Yellow, Green) for CI builds per billable user.
+      - name: ci_lighthouse_score
+        description: Aggregated numeric score calculated from CI-related metrics, serving as a CI maturity indicator.
+      - name: ci_lighthouse_color
+        description: Color-coded status (Red, Yellow, Green) for the CI lighthouse score.
+      - name: deployments_28_days_user
+        description: '{{ doc("deployments_28_days_user") }}'
+      - name: deployments_28_days_event
+        description: '{{ doc("deployments_28_days_event") }}'
+      - name: successful_deployments_28_days_event
+        description: '{{ doc("successful_deployments_28_days_event_desc") }}'
+      - name: failed_deployments_28_days_event
+        description: '{{ doc("failed_deployments_28_days_event_desc") }}'
+      - name: completed_deployments_l28d
+        description: '{{ doc("completed_deployments_l28d") }}'
+      - name: projects_all_time_event
+        description: '{{ doc("projects_all_time_event") }}'
+      - name: environments_all_time_event
+        description: '{{ doc("environments_all_time_event_desc") }}'
+      - name: deployments_utilization
+        description: '{{ doc("deployments_utilization") }}'
+      - name: deployments_utilization_score
+        description: '{{ doc("deployments_utilization_score") }}'
+      - name: deployments_utilization_color
+        description: '{{ doc("deployments_utilization_color") }}'
+      - name: deployments_per_user_l28d
+        description: '{{ doc("deployments_per_user_l28d") }}'
+      - name: deployments_per_user_l28d_score
+        description: '{{ doc("deployments_per_user_l28d_score") }}'
+      - name: deployments_per_user_l28d_color
+        description: '{{ doc("deployments_per_user_l28d_color") }}'
+      - name: successful_deployments_pct
+        description: '{{ doc("successful_deployments_pct") }}'
+      - name: successful_deployments_pct_score
+        description: '{{ doc("successful_deployments_pct_score") }}'
+      - name: successful_deployments_pct_color
+        description: '{{ doc("successful_deployments_pct_color") }}'
+      - name: cd_measure_count
+        description: '{{ doc("cd_measure_count") }}'
+      - name: cd_score
+        description: '{{ doc("cd_score") }}'
+      - name: cd_color
+        description: '{{ doc("cd_color") }}'
+      - name: user_unique_users_all_secure_scanners_28_days_user
+        description: '{{ doc("user_unique_users_all_secure_scanners_28_days_user") }}'
+      - name: ci_internal_pipelines_28_days_event
+        description: '{{ doc("ci_internal_pipelines_28_days_event_desc") }}'
+      - name: secret_detection_scans_28_days_event
+        description: '{{ doc("secret_detection_scans_28_days_event_desc") }}'
+      - name: dependency_scanning_scans_28_days_event
+        description: '{{ doc("dependency_scanning_scans_28_days_event_desc") }}'
+      - name: container_scanning_scans_28_days_event
+        description: '{{ doc("container_scanning_scans_28_days_event_desc") }}'
+      - name: dast_scans_28_days_event
+        description: '{{ doc("dast_scans_28_days_event_desc") }}'
+      - name: sast_scans_28_days_event
+        description: '{{ doc("sast_scans_28_days_event_desc") }}'
+      - name: coverage_fuzzing_scans_28_days_event
+        description: '{{ doc("coverage_fuzzing_scans_28_days_event_desc") }}'
+      - name: api_fuzzing_scans_28_days_event
+        description: '{{ doc("api_fuzzing_scans_28_days_event_desc") }}'
+      - name: sum_of_all_scans_l28d
+        description: '{{ doc("sum_of_all_scans_l28d") }}'
+      - name: secret_detection_scan_percentage
+        description: '{{ doc("secret_detection_scan_percentage") }}'
+      - name: dependency_scanning_scan_percentage
+        description: '{{ doc("dependency_scanning_scan_percentage") }}'
+      - name: container_scanning_scan_percentage
+        description: '{{ doc("container_scanning_scan_percentage") }}'
+      - name: dast_scan_percentage
+        description: '{{ doc("dast_scan_percentage") }}'
+      - name: sast_scan_percentage
+        description: '{{ doc("sast_scan_percentage") }}'
+      - name: coverage_fuzzing_scan_percentage
+        description: '{{ doc("coverage_fuzzing_scan_percentage") }}'
+      - name: api_fuzzing_scan_percentage
+        description: '{{ doc("api_fuzzing_scan_percentage") }}'
+      - name: secure_scanners_utilization
+        description: '{{ doc("secure_scanners_utilization") }}'
+      - name: secure_scanners_utilization_score
+        description: '{{ doc("secure_scanners_utilization_score") }}'
+      - name: secure_scanners_utilization_color
+        description: '{{ doc("secure_scanners_utilization_color") }}'
+      - name: average_scans_per_pipeline
+        description: '{{ doc("average_scans_per_pipeline") }}'
+      - name: average_scans_per_pipeline_score
+        description: '{{ doc("average_scans_per_pipeline_score") }}'
+      - name: average_scans_per_pipeline_color
+        description: '{{ doc("average_scans_per_pipeline_color") }}'
+      - name: secret_detection_usage_flag
+        description: '{{ doc("secret_detection_usage_flag") }}'
+      - name: dependency_scanning_usage_flag
+        description: '{{ doc("dependency_scanning_usage_flag") }}'
+      - name: container_scanning_usage_flag
+        description: '{{ doc("container_scanning_usage_flag") }}'
+      - name: dast_usage_flag
+        description: '{{ doc("dast_usage_flag") }}'
+      - name: sast_usage_flag
+        description: '{{ doc("sast_usage_flag") }}'
+      - name: coverage_fuzzing_usage_flag
+        description: '{{ doc("coverage_fuzzing_usage_flag") }}'
+      - name: api_fuzzing_usage_flag
+        description: '{{ doc("api_fuzzing_usage_flag") }}'
+      - name: number_of_scanner_types
+        description: '{{ doc("number_of_scanner_types") }}'
+      - name: number_of_scanner_types_score
+        description: '{{ doc("number_of_scanner_types_score") }}'
+      - name: number_of_scanner_types_color
+        description: '{{ doc("number_of_scanner_types_color") }}'
+      - name: security_measure_count
+        description: '{{ doc("security_measure_count") }}'
+      - name: security_score
+        description: '{{ doc("security_score") }}'
+      - name: security_color
+        description: '{{ doc("security_color") }}'
+      - name: security_score_ultimate_only
+        description: '{{ doc("security_score_ultimate_only") }}'
+      - name: security_color_ultimate_only
+        description: '{{ doc("security_color_ultimate_only") }}'
+      - name: license_utilization_weight
+        description: '{{ doc("license_utilization_weight") }}'
+      - name: user_engagement_weight
+        description: '{{ doc("user_engagement_weight") }}'
+      - name: scm_weight
+        description: '{{ doc("scm_weight") }}'
+      - name: ci_weight
+        description: '{{ doc("ci_weight") }}'
+      - name: cd_weight
+        description: '{{ doc("cd_weight") }}'
+      - name: security_weight
+        description: '{{ doc("security_weight") }}'
+      - name: remaining_weight
+        description: '{{ doc("remaining_weight") }}'
+      - name: adjusted_license_utilization_weight
+        description: '{{ doc("adjusted_license_utilization_weight") }}'
+      - name: adjusted_user_engagement_weight
+        description: '{{ doc("adjusted_user_engagement_weight") }}'
+      - name: adjusted_scm_weight
+        description: '{{ doc("adjusted_scm_weight") }}'
+      - name: adjusted_ci_weight
+        description: '{{ doc("adjusted_ci_weight") }}'
+      - name: adjusted_cd_weight
+        description: '{{ doc("adjusted_cd_weight") }}'
+      - name: adjusted_security_weight
+        description: '{{ doc("adjusted_security_weight") }}'
+      - name: adjusted_license_utilization_score
+        description: '{{ doc("adjusted_license_utilization_score") }}'
+      - name: adjusted_user_engagement_score
+        description: '{{ doc("adjusted_user_engagement_score") }}'
+      - name: adjusted_scm_score
+        description: '{{ doc("adjusted_scm_score") }}'
+      - name: adjusted_ci_score
+        description: '{{ doc("adjusted_ci_score") }}'
+      - name: adjusted_cd_score
+        description: '{{ doc("adjusted_cd_score") }}'
+      - name: adjusted_security_score
+        description: '{{ doc("adjusted_security_score") }}'
+      - name: overall_product_score
+        description: '{{ doc("overall_product_score") }}'
+      - name: overall_product_color
+        description: '{{ doc("overall_product_color") }}'
+      - name: scm_adopted
+        description: '{{ doc("scm_adopted") }}'
+      - name: ci_adopted
+        description: '{{ doc("ci_adopted") }}'
+      - name: cd_adopted
+        description: '{{ doc("cd_adopted") }}'
+      - name: security_adopted
+        description: '{{ doc("security_adopted") }}'
+      - name: total_use_cases_adopted
+        description: '{{ doc("total_use_cases_adopted") }}'
+      - name: adopted_use_case_names_array
+        description: '{{ doc("adopted_use_case_names_array") }}'
+      - name: adopted_use_case_names_string
+        description: '{{ doc("adopted_use_case_names_string") }}'
+      - name: is_primary_instance_subscription
+        description: '{{ doc("is_primary_instance_subscription") }}'
+      - name: ci_color_previous_month
+        description: '{{ doc("ci_color_previous_month") }}'
+      - name: ci_color_previous_3_month
+        description: '{{ doc("ci_color_previous_3_month") }}'
+      - name: ci_lighthouse_color_previous_month
+        description: Color-coded CI lighthouse status from the previous month for trend comparison.
+      - name: ci_lighthouse_color_previous_3_month
+        description: Color-coded CI lighthouse status from three months ago for trend comparison.
+      - name: ci_pipeline_utilization_previous_month
+        description: '{{ doc("ci_pipeline_utilization_previous_month") }}'
+      - name: ci_pipeline_utilization_previous_3_month
+        description: '{{ doc("ci_pipeline_utilization_previous_3_month") }}'
+      - name: ci_builds_per_billable_user_previous_month
+        description: CI builds per billable user from the previous month for trend comparison.
+      - name: ci_builds_per_billable_user_previous_3_month
+        description: CI builds per billable user from three months ago for trend comparison.
+      - name: scm_color_previous_month
+        description: '{{ doc("scm_color_previous_month") }}'
+      - name: scm_color_previous_3_month
+        description: '{{ doc("scm_color_previous_3_month") }}'
+      - name: git_operation_utilization_previous_month
+        description: Git operation utilization from the previous month for trend comparison.
+      - name: git_operation_utilization_previous_3_month
+        description: Git operation utilization from three months ago for trend comparison.
+      - name: cd_color_previous_month
+        description: '{{ doc("cd_color_previous_month") }}'
+      - name: cd_color_previous_3_month
+        description: '{{ doc("cd_color_previous_3_month") }}'
+      - name: security_color_previous_month
+        description: '{{ doc("security_color_previous_month") }}'
+      - name: security_color_previous_3_month
+        description: '{{ doc("security_color_previous_3_month") }}'
+      - name: reporting_month
+        description: '{{ doc("reporting_month") }}'
+      - name: arr_month
+        description: The month from which ARR (Annual Recurring Revenue) data was pulled.
+      - name: dim_crm_account_id_mart_arr_all
+        description: The CRM account ID from the mart_arr_all table.
+      - name: mart_arr_all_account_name
+        description: The account name from the mart_arr_all table.
+      - name: fy25_account_rank
+        description: The account's rank based on ARR for the fiscal year 2025.
+      - name: is_fy25_top_100_account
+        description: Boolean flag indicating whether the account is in the top 100 for fiscal year 2025.
+      - name: total_account_subscription_arr
+        description: Total Annual Recurring Revenue (ARR) from all the account's subscriptions.
+      - name: total_account_base_products_arr
+        description: Total ARR from base products for the account.
+      - name: total_account_ultimate_arr
+        description: Total ARR from Ultimate tier subscriptions for the account.
+      - name: total_account_add_on_arr
+        description: Total ARR from add-on products for the account.
+      - name: number_of_subscriptions
+        description: Total count of subscriptions associated with the account.
+      - name: number_of_base_products_subscriptions
+        description: Count of base product subscriptions associated with the account.
+      - name: number_of_ultimate_subscriptions
+        description: Count of Ultimate tier subscriptions associated with the account.
+      - name: number_of_add_on_subscriptions
+        description: Count of add-on product subscriptions associated with the account.
+      - name: account_arr_reporting_usage_data
+        description: '{{ doc("account_arr_reporting_usage_data") }}'
+      - name: account_ultimate_arr_reporting_usage_data
+        description: '{{ doc("account_ultimate_arr_reporting_usage_data") }}'
+      - name: pct_of_account_arr_reporting_usage_data
+        description: '{{ doc("pct_of_account_arr_reporting_usage_data") }}'
+      - name: pct_of_account_ultimate_arr_reporting_usage_data
+        description: '{{ doc("pct_of_account_ultimate_arr_reporting_usage_data") }}'
+      - name: account_weighted_license_utilization
+        description: '{{ doc("account_weighted_license_utilization") }}'
+      - name: account_weighted_user_engagement
+        description: '{{ doc("account_weighted_user_engagement") }}'
+      - name: account_weighted_scm_utilization
+        description: '{{ doc("account_weighted_scm_utilization") }}'
+      - name: account_weighted_ci_utilization
+        description: '{{ doc("account_weighted_ci_utilization") }}'
+      - name: account_weighted_ci_builds_per_billable_user
+        description: '{{ doc("account_weighted_ci_builds_per_billable_user") }}'
+      - name: account_weighted_cd_utilization
+        description: '{{ doc("account_weighted_cd_utilization") }}'
+      - name: account_weighted_security_utilization
+        description: '{{ doc("account_weighted_security_utilization") }}'
+      - name: account_level_license_utilization_color
+        description: '{{ doc("account_level_license_utilization_color") }}'
+      - name: account_level_user_engagement_color
+        description: '{{ doc("account_level_user_engagement_color") }}'
+      - name: account_level_scm_color
+        description: '{{ doc("account_level_scm_color") }}'
+      - name: account_level_ci_color
+        description: '{{ doc("account_level_ci_color") }}'
+      - name: account_level_ci_lighthouse_color
+        description: '{{ doc("account_level_ci_lighthouse_color") }}'
+      - name: account_level_cd_color
+        description: '{{ doc("account_level_cd_color") }}'
+      - name: account_level_security_color
+        description: '{{ doc("account_level_security_color") }}'
+      - name: max_ping_created_at
+        description: '{{ doc("max_ping_created_at") }}'
+      - name: account_level_ci_color_previous_month
+        description: Account-level color-coded CI status from the previous month for trend comparison.
+      - name: account_level_ci_color_previous_3_month
+        description: Account-level color-coded CI status from three months ago for trend comparison.
+      - name: account_level_ci_lighthouse_color_previous_month
+        description: Account-level color-coded CI lighthouse status from the previous month for trend comparison.
+      - name: account_level_ci_lighthouse_color_previous_3_month
+        description: Account-level color-coded CI lighthouse status from three months ago for trend comparison.
+      - name: account_level_scm_color_previous_month
+        description: Account-level color-coded SCM status from the previous month for trend comparison.
+      - name: account_level_scm_color_previous_3_month
+        description: Account-level color-coded SCM status from three months ago for trend comparison.
+      - name: account_level_cd_color_previous_month
+        description: Account-level color-coded CD status from the previous month for trend comparison.
+      - name: account_level_cd_color_previous_3_month
+        description: Account-level color-coded CD status from three months ago for trend comparison.
+      - name: account_level_security_color_previous_month
+        description: Account-level color-coded security status from the previous month for trend comparison.
+      - name: account_level_security_color_previous_3_month
+        description: Account-level color-coded security status from three months ago for trend comparison.
+
+  - name: rpt_license_billable_users_daily
+    description: '{{ doc("rpt_license_billable_users_daily") }}'
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - reporting_date
+            - dim_namespace_id
+            - dim_installation_id
+    columns:
+      - name: reporting_date
+        description: Date of reported license/billable user count associated with Duo Pro and Duo Enterprise and EAP.
+      - name: dim_installation_id
+        description: Unique identifier for Self-Managed/Dedicated installations.
+      - name: dim_namespace_id
+        description: Unique identifier for GitLab.com namespaces.
+      - name: duo_pro_license_users_zuora
+        description: Number of GitLab Duo Pro license users reported in Zuora.
+      - name: duo_pro_license_users_seat_link
+        description: Number of GitLab Duo Pro license users reported by Seat Link.
+      - name: duo_pro_license_users_service_ping
+        description: Number of GitLab Duo Pro license users reported by Service Ping.
+      - name: duo_enterprise_license_users_zuora
+        description: Number of GitLab Duo Enterprise license users reported in Zuora.
+      - name: duo_enterprise_license_users_seat_link
+        description: Number of GitLab Duo Enterprise license users reported by Seat Link.
+      - name: duo_enterprise_license_users_service_ping
+        description: Number of GitLab Duo Enterprise license users reported by Service Ping.
+      - name: duo_pro_billable_users_seat_link
+        description: Number of GitLab Duo Pro billable users reported by Seat Link.
+      - name: duo_pro_billable_users_service_ping
+        description: Number of GitLab Duo Pro billable users reported by Service Ping.
+      - name: duo_enterprise_billable_users_seat_link
+        description: Number of GitLab Duo Enterprise billable users reported by Seat Link.
+      - name: duo_enterprise_billable_users_service_ping
+        description: Number of GitLab Duo Enterprise billable users reported by Service Ping.
+      - name: duo_pro_license_users_assignment_table
+        description: >
+          The number of license users assigned to GitLab.com Duo Pro add-on for the namespace on the reporting date.
+          This is based on the Postgres Assignment tables and represents the cumulative count of assigned seats.
+
+      - name: duo_pro_billable_users_assignment_table
+        description: >
+          The number of billable users for GitLab.com Duo Pro add-on for the namespace on the reporting date.
+          This count is derived from the Postgres Assignment tables and represents active assignments.
+
+      - name: duo_enterprise_license_users_assignment_table
+        description: >
+          The number of license users assigned to GitLab.com Duo Enterprise add-on for the namespace on the reporting date.
+          This is based on the Postgres Assignment tables and represents the cumulative count of assigned seats.
+
+      - name: duo_enterprise_billable_users_assignment_table
+        description: >
+          The number of billable users for GitLab.com Duo Enterprise add-on for the namespace on the reporting date.
+          This count is derived from the Postgres Assignment tables and represents active assignments.
+      - name: duo_amazon_q_license_users_zuora
+        description: Number of GitLab with Amazon Q license users reported in Zuora.
+      - name: duo_amazon_q_license_users_seat_link
+        description: Number of GitLab with Amazon Q license users reported by Seat Link.
+      - name: duo_amazon_q_license_users_service_ping
+        description: Number of GitLab Duo with Amazon Q license users reported by Service Ping.
+      - name: duo_amazon_q_billable_users_seat_link
+        description: Number of GitLab Duo with Amazon Q billable users reported by Seat Link. Since there is no seat assignment at launch, this is filled in with the base tier billable users reported by this installation.
+      - name: duo_amazon_q_billable_users_service_ping
+        description: Number of GitLab Duo with Amazon Q billable users reported by Service Ping. Since there is no seat assignment at launch, this is filled in with the base tier billable users reported by this installation.
+      - name: duo_pro_license_users_coalesced
+        description: '{{ doc("duo_pro_license_users_coalesced") }}'
+      - name: duo_pro_billable_users_coalesced
+        description: '{{ doc("duo_pro_billable_users_coalesced") }}'
+      - name: duo_enterprise_license_users_coalesced
+        description: '{{ doc("duo_enterprise_license_users_coalesced") }}'
+      - name: duo_enterprise_billable_users_coalesced
+        description: '{{ doc("duo_enterprise_billable_users_coalesced") }}'
+      - name: duo_amazon_q_license_users_coalesced
+        description: '{{ doc("duo_amazon_q_license_users_coalesced") }}'
+      - name: duo_amazon_q_billable_users_coalesced
+        description: '{{ doc("duo_amazon_q_billable_users_coalesced") }}'
+      - name: is_duo_pro_trial
+        description: Boolean flag indicating whether the Duo Pro product is in a trial period for the given installation/namespace and date.
+      - name: is_duo_enterprise_trial
+        description: Boolean flag indicating whether the Duo Enterprise product is in a trial period for the given installation/namespace and date.    
+      - name: namespace_is_internal
+        description: '{{ doc("namespace_is_internal") }}'
+      - name: is_duo_core_features_enabled
+        description: Boolean flag indicating whether GitLab Duo Core features are enabled for the namespace. This is determined from either service ping data or namespace settings.
+
+  - name: rpt_duo_license_utilization_monthly
+    description: This model provides reporting on monthly Duo seat utilization. Metric nuances described in column descriptions.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - reporting_month
+            - dim_subscription_id
+            - add_on_name
+    columns:
+      - name: reporting_month
+        description: Month of reported seats associated with Duo subscription and usage behavior.
+      - name: subscription_name
+        description: '{{ doc("subscription_name") }}'
+      - name: dim_subscription_id
+        description: Identifier to join on 
+      - name: crm_account_name
+        description: '{{ doc("crm_account_name") }}'
+      - name: dim_crm_account_id
+        description: '{{ doc("dim_crm_account_id") }}'
+      - name: dim_parent_crm_account_id
+        description: '{{ doc("dim_parent_crm_account_id") }}'
+      - name: product_deployment
+        description: Using the deployment listed in product_rate_plan_name from mart_arr and renaming 'SaaS' to 'Gitlab.com' for clarity. 
+      - name: add_on_name
+        description: Duo Pro or Duo Enterprise.
+      - name: paired_tier
+        description: Tier or tiers associated with the Duo Add On purchase with reported revenue in the same month that Duo revenue is reported within mart_arr.
+      - name: is_product_entity_associated_w_subscription
+        description: FALSE if installation or namespace identifier cannot be mapped to subscription.
+      - name: major_minor_version_id
+        description: Latest major_minor_version_id reported for SM or Dedicated installation within a month. Gitlab.com deployments are always up to date and managed by the internal GitLab team.
+      - name: paid_duo_seats
+        description: quantity associated with Duo subscription from mart_arr within a given reporting month.
+      - name: duo_active_users
+        description: >
+          Count of distinct users interacting with paid GitLab Duo features via the AI Gateway.
+          For paid Duo add-ons, This metric specifically counts users whose activities were enabled by paid add-ons.
+          For Duo Core, This metric specifically counts users whose activities were enabled by Duo Core.
+          Uses ZEROIFNULL to handle periods with no active users.
+      - name: count_seats_assigned
+        description: >
+          The maximum number of Duo seats assigned to users for a given product entity in the reporting month.
+          This value is derived from the `rpt_product_usage_health_score` model, using the installation
+          with the highest base tier billable user count for each subscription at the end of the month.
+          This approach aligns with GitLab's licensing policy for calculating billable users across multiple instances.
+          For Duo Core: Number of Duo Core Allocated Users, calculated as Base Billable Users minus Add-on Billable Users.
+      - name: chat_active_users
+        description: Calculation utilizes request_duo_chat_response in mart_behavior_structured_event, a snowplow data source for Gitlab.com chat utilization and redis_hll_counters.count_distinct_user_id_from_request_duo_chat_response_monthly a service ping data source for SM and Dedicated chat utilization. redis_hll_counters.count_distinct_user_id_from_request_duo_chat_response_monthly was implemented in GitLab version 16.11. To only include SM & Dedicated accounts eligible to report on this metric, filter to major_minor_version_id >= 1611. Array of namespaces that enabled event to occur are used to map the namespace to a subscription for GitLab.com deployments.
+      - name: code_suggestions_active_users
+        description: Calculation utilizes event_action = 'suggestion_requested' and app_id = 'gitlab_ai_gateway' from mart_behavior_structured_event_code_suggestion for all Deployment types. All ultimate_parent_namespace_ids and dim_installation_ids captured per event are flattened from their array format and joined to Duo Pro subscription data to achieve a utilization match. These entities captured represent how the the usage of code suggestions is enabled as opposed to WHERE code suggestion requests occurred. 
+      - name: max_duo_active_users
+        description: Because chat and code suggestions capture different user identifiers, an overall unique count cannot be calculated. This calculation takes the max count of users using code suggestions or chat as opposed to the total unique count of users. In the future a total unique count should be possible once a standard Cloud Connector event tracking methodology is available.
+      - name: pct_usage_seat_utilization
+        description: max_duo_active_users / paid_duo_seats
+      - name: pct_assignment_seat_utilization
+        description: number_of_seats_assigned / paid_duo_seats
+      - name: standard_pct_usage_seat_utilization
+        description: max_duo_active_users / paid_duo_seats Result cannot exceed 100%.
+      - name: standard_pct_assignment_seat_utilization
+        description: number_of_seats_assigned / paid_duo_seats, Result cannot exceed 100%.
+      - name: is_oss_or_edu_rate_plan
+        description: Flag for rate plans containing OSS or EDU.
+      - name: account_owner
+        description: Current account_owner from dim_crm_account
+      - name: parent_crm_account_geo
+        description: Current parent_crm_account from dim_crm_account
+      - name: parent_crm_account_sales_segment
+        description: Current parent_crm_account_sales_segment from dim_crm_account
+      - name: parent_crm_account_industry
+        description: Current parent_crm_account_industry from dim_crm_account
+      - name: technical_account_manager
+        description: Current parent_crm_account_manager from dim_crm_account
+      - name: turn_on_cloud_licensing
+        description: Categories 'Offline', 'No', 'Yes' from Zuora subscription object
+      - name: license_type
+        description: License type derived from turn_on_cloud_licensing field, indicating whether system uses offline cloud licensing ('Offline'), legacy file-based licensing ('No'), or standard cloud licensing ('Yes', '').
+
+  - name: rpt_duo_license_utilization_weekly
+    description: This model provides reporting on weekly Duo Pro seat utilization. Metric nuances described in column descriptions. 
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - reporting_week
+            - dim_subscription_id
+            - add_on_name
+    columns:
+      - name: reporting_week
+        description: Week of reported seats associated with Duo subscription and usage behavior starting on Monday.
+      - name: subscription_name
+        description: '{{ doc("subscription_name") }}'
+      - name: dim_subscription_id
+        description: Identifier to join on 
+      - name: crm_account_name
+        description: '{{ doc("crm_account_name") }}'
+      - name: dim_crm_account_id
+        description: '{{ doc("dim_crm_account_id") }}'
+      - name: dim_parent_crm_account_id
+        description: '{{ doc("dim_parent_crm_account_id") }}'
+      - name: product_deployment
+        description: Using the deployment listed in product_rate_plan_name from mart_arr and renaming 'SaaS' to 'Gitlab.com' for clarity. 
+      - name: add_on_name
+        description: Duo Pro or Duo Enterprise.
+      - name: paired_tier
+        description: Tier or tiers associated with the Duo Add On purchase with reported revenue in the same week that Duo revenue is reported within mart_arr.
+      - name: is_product_entity_associated_w_subscription
+        description: FALSE if installation or namespace identifier cannot be mapped to subscription.
+      - name: major_minor_version_id
+        description: Latest major_minor_version_id reported for SM or Dedicated installation within a week. Gitlab.com deployments are always up to date and managed by the internal GitLab team.
+      - name: paid_duo_seats
+        description: >
+          For paid Duo add-ons: quantity associated with Duo subscription from mart_arr within a given reporting week.
+          For Duo Core: Number of Duo Core Eligible Users, calculated as Base License Users minus Add-on Billable Users.
+      - name: duo_active_users
+        description: >
+          Count of distinct users interacting with paid GitLab Duo features via the AI Gateway.
+          For paid Duo add-ons, This metric specifically counts users whose activities were enabled by paid add-ons.
+          For Duo Core, This metric specifically counts users whose activities were enabled by Duo Core.
+          Uses ZEROIFNULL to handle periods with no active users.
+      - name: count_seats_assigned
+        description: >
+          For paid Duo add-ons: The maximum number of Duo seats assigned to users for a given product entity in the reporting week.
+          Due to current data model limitations, this uses the same "billable installation" identified at the end of the month
+          for all weeks within that month. The billable installation is the one with the highest base tier billable user count
+          for each subscription. This approach approximates GitLab's licensing policy for calculating billable users across
+          multiple instances, with plans to refine to true weekly data in the future.
+          For Duo Core: Number of Duo Core Allocated Users, calculated as Base Billable Users minus Add-on Billable Users.
+      - name: chat_active_users
+        description: Calculation utilizes request_duo_chat_response in mart_behavior_structured_event, a snowplow data source for Gitlab.com chat utilization and redis_hll_counters.count_distinct_user_id_from_request_duo_chat_response_monthly a service ping data source for SM and Dedicated chat utilization. redis_hll_counters.count_distinct_user_id_from_request_duo_chat_response_monthly was implemented in GitLab version 16.11. To only include SM & Dedicated accounts eligible to report on this metric, filter to major_minor_version_id >= 1611. Array of namespaces that enabled event to occur are used to map the namespace to a subscription for GitLab.com deployments.
+      - name: code_suggestions_active_users
+        description: Calculation utilizes event_action = 'suggestion_requested' and app_id = 'gitlab_ai_gateway' from mart_behavior_structured_event_code_suggestion for all Deployment types. All ultimate_parent_namespace_ids and dim_installation_ids captured per event are flattened from their array format and joined to Duo subscription data to achieve a utilization match. These entities captured represent how the the usage of code suggestions is enabled as opposed to WHERE code suggestion requests occurred. 
+      - name: max_duo_active_users
+        description: Because chat and code suggestions capture different user identifiers, an overall unique count cannot be calculated. This calculation takes the max count of users using code suggestions or chat as opposed to the total unique count of users. In the future a total unique count should be possible once a standard Cloud Connector event tracking methodology is available.
+      - name: pct_usage_seat_utilization
+        description: max_duo_active_users / paid_duo_seats
+      - name: pct_assignment_seat_utilization
+        description: number_of_seats_assigned / paid_duo_seats
+      - name: standard_pct_usage_seat_utilization
+        description: max_duo_active_users / paid_duo_seats Result cannot exceed 100%.
+      - name: standard_pct_assignment_seat_utilization
+        description: number_of_seats_assigned / paid_duo_seats Result cannot exceed 100%.
+      - name: is_oss_or_edu_rate_plan
+        description: Flag for rate plans containing OSS or EDU.
+      - name: account_owner
+        description: Current account_owner from dim_crm_account
+      - name: parent_crm_account_geo
+        description: Current parent_crm_account from dim_crm_account
+      - name: parent_crm_account_sales_segment
+        description: Current parent_crm_account_sales_segment from dim_crm_account
+      - name: parent_crm_account_industry
+        description: Current parent_crm_account_industry from dim_crm_account
+      - name: technical_account_manager
+        description: Current parent_crm_account_manager from dim_crm_account
+      - name: turn_on_cloud_licensing
+        description: Categories 'Offline', 'No', 'Yes' from Zuora subscription object
+      - name: license_type
+        description: License type derived from turn_on_cloud_licensing field, indicating whether system uses offline cloud licensing ('Offline'), legacy file-based licensing ('No'), or standard cloud licensing ('Yes', '').
+
+  - name: rpt_license_utilization_daily
+    description: '{{ doc("rpt_license_utilization_daily") }}'
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - reporting_date
+            - dim_namespace_id
+            - dim_installation_id
+    columns:
+      - name: reporting_date
+        description: Date of reported license/billable user count associated with Duo Pro and Duo Enterprise and EAP.
+      - name: dim_installation_id
+        description: Unique identifier for Self-Managed/Dedicated installations.
+      - name: dim_namespace_id
+        description: Unique identifier for GitLab.com namespaces.
+      - name: duo_pro_license_users_coalesced
+        description: '{{ doc("duo_pro_license_users_coalesced") }}'
+      - name: duo_pro_billable_users
+        description: '{{ doc("duo_pro_billable_users_coalesced") }}'
+      - name: duo_enterprise_license_users
+        description: '{{ doc("duo_enterprise_license_users_coalesced") }}'
+      - name: duo_enterprise_billable_users
+        description: '{{ doc("duo_enterprise_billable_users_coalesced") }}'
+      - name: duo_amazon_q_license_users
+        description: '{{ doc("duo_amazon_q_license_users_coalesced") }}'
+      - name: duo_amazon_q_billable_users
+        description: '{{ doc("duo_amazon_q_billable_users_coalesced") }}'
+      - name: is_duo_pro_trial
+        description: Boolean flag indicating whether the Duo Pro product is in a trial period for the given installation/namespace and date.
+      - name: is_duo_enterprise_trial
+        description: Boolean flag indicating whether the Duo Enterprise product is in a trial period for the given installation/namespace and date.    
+      - name: namespace_is_internal
+        description: '{{ doc("namespace_is_internal") }}'

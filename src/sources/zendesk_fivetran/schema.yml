@@ -1,0 +1,77 @@
+version: 2
+
+models:
+      
+  - name: zendesk_fivetran_organization_source
+    description: '{{ doc("zendesk_fivetran_organization_source") }}'
+    columns:
+    - name: organization_id
+      data_tests:
+      - not_null
+      - unique
+
+  - name: zendesk_fivetran_sla_policy_history_source
+    description: '{{ doc("zendesk_fivetran_sla_policy_history_source") }}'
+  - name: zendesk_fivetran_sla_policy_metric_history_source
+    description: '{{ doc("zendesk_fivetran_sla_policy_metric_history_source") }}'
+  - name: zendesk_fivetran_ticket_source
+    description: '{{ doc("zendesk_fivetran_ticket_source") }}'
+    columns:
+    - name: ticket_id
+      data_tests:
+      - not_null
+      - unique
+    - name: ticket_subject
+      description: Note this is RED data. This is a high level topic for the support ticket, like the subject of an email support ticket.  
+      meta: 
+        sensitive: true
+    - name: ticket_description
+      description: Note this is RED data. This is an end user-created description of what the support ticket is about. This gets populated via a free-form text field where users elaborate on their issue. 
+      meta: 
+        sensitive: true
+
+  - name: zendesk_fivetran_ticket_field_history_source
+    description: '{{ doc("zendesk_fivetran_ticket_field_history_source") }}'
+  - name: zendesk_fivetran_ticket_form_history_source
+    description: '{{ doc("zendesk_fivetran_ticket_form_history_source") }}'
+  - name: zendesk_fivetran_ticket_sla_policy_source
+    description: '{{ doc("zendesk_fivetran_ticket_sla_policy_source") }}'
+  - name: zendesk_fivetran_ticket_tag_source
+    description: '{{ doc("zendesk_fivetran_ticket_tag_source") }}'
+  - name: zendesk_fivetran_user_source
+    description: '{{ doc("zendesk_fivetran_user_source") }}'
+    columns:
+    - name: user_id
+      data_tests:
+      - not_null
+      - unique
+
+  - name: zendesk_fivetran_schedule_source
+    description: '{{ doc("zendesk_fivetran_schedule_source") }}'
+  
+  - name: zendesk_fivetran_schedule_holiday_source
+    description: '{{ doc("zendesk_fivetran_schedule_holiday_source") }}'
+    
+  - name: zendesk_fivetran_ticket_schedule_source
+    description: '{{ doc("zendesk_fivetran_ticket_schedule_source") }}'
+
+  - name: zendesk_fivetran_ticket_comment_source
+    description: '{{ doc("zendesk_fivetran_ticket_comment_source") }}'
+    columns:
+    - name: ticket_comment_id
+      data_tests:
+      - not_null
+      - unique
+    - name: ticket_id
+      data_tests:
+      - not_null
+    - name: ticket_comment_body_text
+      description: Note this is RED data. This is the text contained in a given comment and may contain sensitive data.   
+      meta: 
+        sensitive: true
+
+  - name: zendesk_fivetran_organization_tag_source
+    description: '{{ doc("zendesk_fivetran_organization_tag_source") }}'
+
+  - name: zendesk_fivetran_user_tag_source
+    description: '{{ doc("zendesk_fivetran_user_tag_source") }}'

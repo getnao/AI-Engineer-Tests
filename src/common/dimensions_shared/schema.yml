@@ -1,0 +1,254 @@
+version: 2
+
+models:
+  - name: dim_subscription_snapshot_model
+    description: '{{ doc("dim_subscription_snapshot_model") }}'
+
+  - name: dim_plan
+    columns:
+      - name: dim_plan_sk
+        data_tests:
+          - not_null
+          - unique
+        description: '{{ doc("dim_plan_sk") }}'
+      - name: dim_plan_id
+        description: '{{ doc("dim_plan_id") }}'
+      - name: plan_id_modified
+        description: '{{ doc("plan_id_modified") }}'
+      - name: plan_name
+        description: '{{ doc("plan_name") }}'
+      - name: plan_name_modified
+        description: '{{ doc("plan_name_modified") }}'
+      - name: plan_title
+        description: '{{ doc("plan_title") }}'
+      - name: is_plan_paid
+        description: '{{ doc("is_plan_paid") }}'
+  - name: dim_current_hierarchy
+    description: Dimension table representing the current organizational hierarchy structure.
+      This model is built from prep_current_hierarchy and provides a comprehensive view
+      of teams, their managers, and their position within the 10-level organizational hierarchy.
+    columns:
+      - name: team_dim_id
+        description: Primary key - unique identifier for the team
+        tests:
+          - unique
+          - not_null
+      
+      - name: team_code
+        description: Code identifier for the team/supervisory organization
+        tests:
+          - not_null
+      
+      - name: team_name
+        description: Name of the team/supervisory organization
+        tests:
+          - not_null
+      
+      - name: team_manager_employee_id
+        description: Employee ID of the team manager
+      
+      - name: team_manager_name
+        description: Full name of the team manager
+      
+      - name: is_team_active
+        description: Boolean flag indicating if the team is currently active
+        tests:
+          - not_null
+      
+      - name: hierarchy_level
+        description: Numeric value (1-10) indicating the depth of the team in the organizational hierarchy
+        tests:
+          - not_null
+          - accepted_values:
+              values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+      
+      # Level 1-10 fields are documented similarly to prep_current_hierarchy
+      # Only showing level 1 as an example to save space
+      
+      # Level 1 (Top level) information
+      - name: lvl_1_team_id
+        description: ID of the level 1 (top level) team
+        
+      - name: lvl_1_team_code
+        description: Code of the level 1 team
+        
+      - name: lvl_1_team_name
+        description: Name of the level 1 team in the hierarchy
+        
+      - name: lvl_1_team_manager_employee_id
+        description: Employee ID of the level 1 team manager
+        
+      - name: lvl_1_team_manager_name
+        description: Name of the level 1 team manager
+        
+      # Level 2 information
+      - name: lvl_2_team_id
+        description: ID of the level 2 team
+        
+      - name: lvl_2_team_code
+        description: Code of the level 2 team
+        
+      - name: lvl_2_team_name
+        description: Name of the level 2 team in the hierarchy
+        
+      - name: lvl_2_team_manager_employee_id
+        description: Employee ID of the level 2 team manager
+        
+      - name: lvl_2_team_manager_name
+        description: Name of the level 2 team manager
+        
+      # Level 3 information
+      - name: lvl_3_team_id
+        description: ID of the level 3 team
+        
+      - name: lvl_3_team_code
+        description: Code of the level 3 team
+        
+      - name: lvl_3_team_name
+        description: Name of the level 3 team in the hierarchy
+        
+      - name: lvl_3_team_manager_employee_id
+        description: Employee ID of the level 3 team manager
+        
+      - name: lvl_3_team_manager_name
+        description: Name of the level 3 team manager
+        
+      # Level 4 information
+      - name: lvl_4_team_id
+        description: ID of the level 4 team
+        
+      - name: lvl_4_team_code
+        description: Code of the level 4 team
+        
+      - name: lvl_4_team_name
+        description: Name of the level 4 team in the hierarchy
+        
+      - name: lvl_4_team_manager_employee_id
+        description: Employee ID of the level 4 team manager
+        
+      - name: lvl_4_team_manager_name
+        description: Name of the level 4 team manager
+        
+      # Level 5 information
+      - name: lvl_5_team_id
+        description: ID of the level 5 team
+        
+      - name: lvl_5_team_code
+        description: Code of the level 5 team
+        
+      - name: lvl_5_team_name
+        description: Name of the level 5 team in the hierarchy
+        
+      - name: lvl_5_team_manager_employee_id
+        description: Employee ID of the level 5 team manager
+        
+      - name: lvl_5_team_manager_name
+        description: Name of the level 5 team manager
+        
+      # Level 6 information
+      - name: lvl_6_team_id
+        description: ID of the level 6 team
+        
+      - name: lvl_6_team_code
+        description: Code of the level 6 team
+        
+      - name: lvl_6_team_name
+        description: Name of the level 6 team in the hierarchy
+        
+      - name: lvl_6_team_manager_employee_id
+        description: Employee ID of the level 6 team manager
+        
+      - name: lvl_6_team_manager_name
+        description: Name of the level 6 team manager
+        
+      # Level 7 information
+      - name: lvl_7_team_id
+        description: ID of the level 7 team
+        
+      - name: lvl_7_team_code
+        description: Code of the level 7 team
+        
+      - name: lvl_7_team_name
+        description: Name of the level 7 team in the hierarchy
+        
+      - name: lvl_7_team_manager_employee_id
+        description: Employee ID of the level 7 team manager
+        
+      - name: lvl_7_team_manager_name
+        description: Name of the level 7 team manager
+        
+      # Level 8 information
+      - name: lvl_8_team_id
+        description: ID of the level 8 team
+        
+      - name: lvl_8_team_code
+        description: Code of the level 8 team
+        
+      - name: lvl_8_team_name
+        description: Name of the level 8 team in the hierarchy
+        
+      - name: lvl_8_team_manager_employee_id
+        description: Employee ID of the level 8 team manager
+        
+      - name: lvl_8_team_manager_name
+        description: Name of the level 8 team manager
+        
+      # Level 9 information
+      - name: lvl_9_team_id
+        description: ID of the level 9 team
+        
+      - name: lvl_9_team_code
+        description: Code of the level 9 team
+        
+      - name: lvl_9_team_name
+        description: Name of the level 9 team in the hierarchy
+        
+      - name: lvl_9_team_manager_employee_id
+        description: Employee ID of the level 9 team manager
+        
+      - name: lvl_9_team_manager_name
+        description: Name of the level 9 team manager
+        
+      # Level 10 information
+      - name: lvl_10_team_id
+        description: ID of the level 10 team
+        
+      - name: lvl_10_team_code
+        description: Code of the level 10 team
+        
+      - name: lvl_10_team_name
+        description: Name of the level 10 team in the hierarchy
+        
+      - name: lvl_10_team_manager_employee_id
+        description: Employee ID of the level 10 team manager
+        
+      - name: lvl_10_team_manager_name
+        description: Name of the level 10 team manager
+  - name: dim_job_profiles
+    description: Dimension table containing job profile information from Workday.
+    columns:
+      - name: dim_job_profile_sk
+        description: Surrogate key for the job profile dimension.
+      - name: job_workday_id
+        description: Natural key - unique identifier for the job profile from Workday
+        tests:
+          - not_null
+      - name: job_code
+        description: Standardized code representing the job profile from Workday
+      - name: job_profile
+        description: The job profile as defined in Workday
+      - name: management_level
+        description: Management level associated with the job profile (e.g., Individual Contributor, Manager, Director)
+      - name: job_level
+        description: Masked. Hierarchical level of the job within the organization structure
+        meta:
+          masking_policy: analyst_people_sensitive
+      - name: job_family
+        description: Functional area or family that the job belongs to (e.g., Engineering, Sales, Marketing)
+      - name: is_job_profile_active
+        description: Boolean flag indicating whether the job profile is currently active. 
+      - name: valid_from
+        description: Start date when this job profile record became effective. 
+      - name: valid_to
+        description: End date when this job profile record is no longer effective.
+

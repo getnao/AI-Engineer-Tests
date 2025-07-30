@@ -1,0 +1,56 @@
+version: 2
+
+models:
+  - name: vulnmapper_advisories_source
+    description: Advisory information from VulnMapper
+
+  - name: vulnmapper_container_fix_statuses_source
+    description: Container fix status information from VulnMapper
+
+  - name: vulnmapper_container_images_source
+    description: Container image information from VulnMapper
+
+  - name: vulnmapper_deviation_requests_source
+    description: Deviation request information from VulnMapper
+
+  - name: vulnmapper_operating_systems_source
+    description: Operating system information from VulnMapper
+
+  - name: vulnmapper_package_fix_statuses_source
+    description: Package fix status information from VulnMapper
+
+  - name: vulnmapper_packages_source
+    description: Package information from VulnMapper
+
+  - name: vulnmapper_project_groups_source
+    description: Project group information from VulnMapper
+
+  - name: vulnmapper_projects_source
+    description: Project information from VulnMapper
+
+  - name: vulnmapper_providers_source
+    description: Provider information from VulnMapper
+
+  - name: vulnmapper_servers_source
+    description: Server information from VulnMapper
+    
+  - name: vulnmapper_tracking_issues_source
+    description: Tracking issue information from VulnMapper
+
+  - name: vulnmapper_vulnerabilities_source
+    description: Vulnerability information from VulnMapper
+
+  - name: vulnmapper_tracking_issues_vulnerabilities_mapping_source
+    description: Mapping between tracking issues and vulnerabilities from VulnMapper
+
+  - name: vulnmapper_vulnerabilities_container_images_mapping_source
+    description: Mapping between vulnerabilities and container images from VulnMapper
+
+  - name: vulnmapper_vulnerabilities_packages_mapping_source
+    description: Mapping between vulnerabilities and packages from VulnMapper
+    
+  - name: vulnmapper_vulnerabilities_servers_mapping_source
+    description: Mapping between vulnerabilities and servers from VulnMapper
+
+  - name: vulnmapper_vulnerabilities_advisories_mapping_source
+    description: Mapping between vulnerabilities and advisories from VulnMapper

@@ -1,0 +1,226 @@
+version: 2
+models:
+  - name: clari_net_arr_entries_source
+    description: Forecast entries for each combination of fiscal_quarter/week/user/field
+    columns:
+      - name: fiscal_quarter
+        description: The fiscal quarter this forecast entry belongs to
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('clari_net_arr_time_periods_source')
+              field: fiscal_quarter
+      - name: time_frame_id
+        description: Identifier for the specific week within the fiscal quarter
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('clari_net_arr_time_frames_source')
+              field: time_frame_id
+      - name: user_id
+        description: Unique identifier for the user who submitted the forecast
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('clari_users_source')
+              field: user_id
+      - name: field_id
+        description: Identifier for the forecast field type being reported
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('clari_fields_source')
+              field: field_id
+      - name: entries_id
+        description: Unique identifier for this specific forecast entry
+        data_tests:
+          - not_null
+          - unique
+      - name: forecast_value
+        description: The numerical forecast value submitted by the user
+      - name: currency
+        description: Currency code for the forecast value
+      - name: is_updated
+        description: Flag indicating whether this entry has been updated
+      - name: updated_by
+        description: User who last updated this forecast entry
+      - name: updated_on
+        description: Timestamp when the forecast entry was last updated
+      - name: uploaded_at
+        description: Timestamp when this record was loaded into the data warehouse
+        data_tests:
+          - not_null
+  - name: clari_fields_source
+    description: Dim table for forecast fields, is an union of 'net_arr' and 'new_logo' endpoints
+    columns:
+      - name: field_id
+        description: Unique identifier for the forecast field
+        data_tests:
+          - not_null
+          - unique
+      - name: field_name
+        description: Human-readable name of the forecast field
+        data_tests:
+          - not_null
+      - name: field_type
+        description: Type classification of the forecast field
+        data_tests:
+          - not_null
+      - name: uploaded_at
+        description: Timestamp when this record was loaded into the data warehouse
+        data_tests:
+          - not_null
+  - name: clari_net_arr_time_frames_source
+    description: "Dim table for time frames, i.e the weeks in a fiscal quarter"
+    columns:
+      - name: fiscal_quarter
+        description: The fiscal quarter this time frame belongs to
+        data_tests:
+          - not_null
+      - name: time_frame_id
+        description: Unique identifier for this specific week timeframe
+        data_tests:
+          - not_null
+          - unique
+      - name: week_start_date
+        description: Start date of the week
+        data_tests:
+          - not_null
+      - name: week_end_date
+        description: End date of the week
+        data_tests:
+          - not_null
+      - name: week_number
+        description: Sequential number of the week within the fiscal quarter
+        data_tests:
+          - not_null
+      - name: uploaded_at
+        description: Timestamp when this record was loaded into the data warehouse
+        data_tests:
+          - not_null
+  - name: clari_net_arr_time_periods_source
+    description: Dim table for fiscal quarter
+    columns:
+      - name: fiscal_quarter
+        description: Unique identifier for the fiscal quarter (e.g. 'FY23-Q1')
+        data_tests:
+          - not_null
+          - unique
+      - name: fiscal_quarter_start_date
+        description: Start date of the fiscal quarter
+        data_tests:
+          - not_null
+      - name: fiscal_quarter_end_date
+        description: End date of the fiscal quarter
+        data_tests:
+          - not_null
+      - name: quarter
+        description: Quarter number (1-4)
+        data_tests:
+          - not_null
+      - name: year
+        description: Fiscal year
+        data_tests:
+          - not_null
+      - name: crm_id
+        description: CRM system identifier for this fiscal period
+        data_tests:
+          - not_null
+      - name: time_period_type
+        description: Classification of the time period (e.g. 'FISCAL_QUARTER')
+        data_tests:
+          - not_null
+      - name: uploaded_at
+        description: Timestamp when this record was loaded into the data warehouse
+        data_tests:
+          - not_null
+  - name: clari_users_source
+    description: Dim table for users, is an union of 'net_arr' and 'new_logo' endpoints
+    columns:
+      - name: user_id
+        description: Unique identifier for the user in Clari
+        data_tests:
+          - not_null
+          - unique
+      - name: crm_user_id
+        description: User's identifier in the CRM system
+        data_tests:
+          - not_null
+      - name: user_email
+        description: User's email address
+        data_tests:
+          - not_null
+      - name: parent_role_id
+        description: Identifier of the user's parent role in the hierarchy
+      - name: parent_role
+        description: Name of the user's parent role in the hierarchy
+      - name: sales_team_role_id
+        description: Identifier of the user's sales team role
+        data_tests:
+          - not_null
+      - name: sales_team_role
+        description: Name of the user's sales team role
+        data_tests:
+          - not_null
+      - name: user_full_name
+        description: User's full name
+        data_tests:
+          - not_null
+      - name: scope_id
+        description: Identifier for the user's visibility/access scope
+        data_tests:
+          - not_null
+      - name: uploaded_at
+        description: Timestamp when this record was loaded into the data warehouse
+        data_tests:
+          - not_null
+  - name: clari_new_logo_source
+    description: New logo forecast entries for each combination of fiscal_quarter/week/user/field
+    columns:
+      - name: forecast_id
+        description: Unique identifier for the forecast from the Clari API
+      - name: fiscal_quarter
+        description: The fiscal quarter this forecast entry belongs to
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('clari_net_arr_time_periods_source')
+              field: fiscal_quarter
+      - name: time_frame_id
+        description: Identifier for the specific week within the fiscal quarter (combined with quarter info)
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('clari_net_arr_time_frames_source')
+              field: time_frame_id
+      - name: user_id
+        description: Unique identifier for the user who submitted the forecast
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('clari_users_source')
+              field: user_id
+      - name: field_id
+        description: Identifier for the forecast field type being reported
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('clari_fields_source')
+              field: field_id
+      - name: entries_id
+        description: Unique identifier for this specific forecast entry (composite key)
+        data_tests:
+          - not_null
+          - unique
+      - name: forecast_value
+        description: The numerical forecast value submitted by the user
+      - name: is_updated
+        description: Flag indicating whether this entry has been updated
+      - name: updated_by
+        description: User who last updated this forecast entry
+      - name: updated_on
+        description: Timestamp when the forecast entry was last updated
+      - name: uploaded_at
+        description: Timestamp when this record was loaded into the data warehouse
+        data_tests:
+          - not_null

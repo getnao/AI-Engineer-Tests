@@ -1,0 +1,205 @@
+version: 2
+
+models:
+  - name: wk_rpt_registration_website_page_view
+    description: '{{ doc("wk_rpt_registration_website_page_view") }}'
+    columns:
+      - name: fct_behavior_website_page_view_sk
+        description: '{{ doc("fct_behavior_website_page_view_sk") }}'
+      - name: dim_behavior_website_page_sk
+        description: '{{ doc("dim_behavior_website_page_sk") }}'
+      - name: dim_behavior_referrer_page_sk
+        description: '{{ doc("dim_behavior_referrer_page_sk") }}'
+      - name: dim_namespace_id
+        description: '{{ doc("dim_namespace_id") }}'
+      - name: dim_project_id
+        description: '{{ doc("dim_project_id") }}'
+      - name: page_view_start_at
+        description: '{{ doc("page_view_start_at") }}'
+      - name: page_view_end_at
+        description: '{{ doc("page_view_end_at") }}'
+      - name: behavior_at
+        description: '{{ doc("behavior_at") }}'
+      - name: session_id
+        description: '{{ doc("session_id") }}'
+      - name: event_id
+        description: '{{ doc("event_id") }}'
+      - name: user_snowplow_domain_id
+        description: '{{ doc("user_snowplow_domain_id") }}'
+      - name: gsc_extra
+        description: '{{ doc("gsc_extra") }}'
+      - name: gsc_google_analytics_client_id
+        description: '{{ doc("gsc_google_analytics_client_id") }}'
+      - name: gsc_plan
+        description: '{{ doc("gsc_plan") }}'
+      - name: gsc_pseudonymized_user_id
+        description: '{{ doc("gsc_pseudonymized_user_id") }}'
+      - name: gsc_source
+        description: '{{ doc("gsc_source") }}'
+      - name: page_url_path
+        description: '{{ doc("page_url_path") }}'
+      - name: referer_url_path
+        description: '{{ doc("referer_url_path") }}'
+      - name: event_name
+        description: '{{ doc("event_name") }}'
+      - name: sf_formid
+        description: The Salesforce form ID associated with the page, if applicable.
+      - name: engaged_seconds
+        description: '{{ doc("engaged_seconds") }}'
+      - name: page_load_time_in_ms
+        description: '{{ doc("page_load_time_in_ms") }}'
+      - name: page_view_index
+        description: '{{ doc("page_view_index") }}'
+      - name: page_view_in_session_index
+        description: '{{ doc("page_view_in_session_index") }}'
+      - name: page_url_host_path
+        description: '{{ doc("page_url_host_path") }}'
+      - name: app_id
+        description: '{{ doc("app_id") }}'
+      - name: page_url_host
+        description: '{{ doc("page_url_host") }}'
+      - name: page_url_query
+        description: '{{ doc("page_url_query") }}'
+      - name: clean_url_path
+        description: '{{ doc("clean_url_path") }}'
+      - name: page_url_scheme
+        description: '{{ doc("page_url_scheme") }}'
+      - name: page_group
+        description: '{{ doc("page_group") }}'
+      - name: page_type
+        description: '{{ doc("page_type") }}'
+      - name: page_sub_type
+        description: '{{ doc("page_sub_type") }}'
+      - name: url_namespace_id
+        description: The namespace ID extracted from the URL, if present.
+      - name: url_project_id
+        description: The project ID extracted from the URL, if present.
+      - name: url_path_category
+        description: '{{ doc("url_path_category") }}'
+      - name: is_url_interacting_with_security
+        description: '{{ doc("is_url_interacting_with_security") }}'
+      - name: created_by
+        description: '{{ doc("created_by") }}'
+      - name: updated_by
+        description: '{{ doc("updated_by") }}'
+      - name: model_created_date
+        description: '{{ doc("model_created_date") }}'
+      - name: model_updated_date
+        description: '{{ doc("model_updated_date") }}'
+      - name: dbt_updated_at
+        description: '{{ doc("dbt_updated_at") }}'
+      - name: dbt_created_at
+        description: '{{ doc("dbt_created_at") }}'
+      
+  - name: wk_experiment_event_entity_daily
+    description: '{{ doc("wk_experiment_event_entity_daily") }}'
+    columns:
+      - name: behavior_date
+        description: '{{ doc("behavior_date") }}'
+      - name: ultimate_parent_namespace_id
+        description: '{{ doc("dim_ultimate_parent_namespace_id") }}'
+      - name: dim_namespace_id
+        description: '{{ doc("dim_namespace_id") }}'
+      - name: entity_id
+        description: '{{ doc("entity_id") }}'
+      - name: entity_category
+        description: Categorization of the entity identifier type, either 'namespace' when namespace ID is available or 'context_key' when only experiment context is available.
+      - name: dev_environment
+        description: The development environment where the experiment events occurred, either 'production' or 'staging'.
+      - name: app_id
+        description: '{{ doc("app_id") }}'
+      - name: experiment_name
+        description: '{{ doc("experiment_name") }}'
+      - name: experiment_variant
+        description: '{{ doc("experiment_variant") }}'
+      - name: event_action
+        description: '{{ doc("event_action") }}'
+      - name: event_label
+        description: '{{ doc("event_label") }}'
+      - name: event_property
+        description: '{{ doc("event_property") }}'
+      - name: event_category
+        description: '{{ doc("event_category") }}'
+      - name: count_daily_gsc_pseudonymized_user_id
+        description: Count of distinct pseudonymized users who participated in the experiment on the given day.
+      - name: count_daily_user_snowplow_domain_id
+        description: Count of distinct Snowplow domain IDs that participated in the experiment on the given day.
+      - name: count_daily_events
+        description: Total count of experiment-related events recorded on the given day.
+      - name: created_by
+        description: '{{ doc("created_by") }}'
+      - name: updated_by
+        description: '{{ doc("updated_by") }}'
+      - name: model_created_date
+        description: '{{ doc("model_created_date") }}'
+      - name: model_updated_date
+        description: '{{ doc("model_updated_date") }}'
+      - name: dbt_updated_at
+        description: '{{ doc("dbt_updated_at") }}'
+      - name: dbt_created_at
+        description: '{{ doc("dbt_created_at") }}'
+
+  - name: wk_mart_ping_product_entity_metric_monthly_all_deployments
+    description: '{{ doc("wk_mart_ping_product_entity_metric_monthly_all_deployments") }}'
+    columns:
+      - name: entity_metric_monthly_pk
+        description: The unique composite ID consisting of ping created date month, product entity ID, and metrics path.
+        data_tests:
+          - unique
+          - not_null
+      - name: product_entity_id
+        description: Presents the Ultimate Parent Namespace ID for GitLab.com deployments and Dim Installation ID for Self-Managed & Dedicated deployments.
+      - name: product_entity_type
+        description: Declares if the product entity ID is a Dim Installation ID or Ultimate Parent Namespace ID.
+      - name: ping_created_date_month
+        description: '{{ doc("ping_created_date_month") }}'
+      - name: dim_crm_account_id
+        description: '{{ doc("dim_crm_account_id") }}'
+      - name: crm_account_name
+        description: '{{ doc("crm_account_name") }}'
+      - name: parent_crm_account_name
+        description: '{{ doc("parent_crm_account_name") }}'
+      - name: parent_crm_account_industry
+        description: '{{ doc("parent_crm_account_industry") }}'
+      - name: parent_crm_account_sales_segment
+        description: '{{ doc("parent_crm_account_sales_segment") }}'
+      - name: parent_crm_account_region
+        description: '{{ doc("parent_crm_account_region") }}'
+      - name: parent_crm_account_geo
+        description: '{{ doc("parent_crm_account_geo") }}'
+      - name: latest_subscription_id
+        description: '{{ doc("latest_subscription_id") }}'
+      - name: dim_subscription_id_original
+        description: '{{ doc("dim_subscription_id_original") }}'
+      - name: is_paid_subscription
+        description: '{{ doc("is_paid_subscription") }}'
+      - name: ping_product_tier
+        description: '{{ doc("ping_product_tier") }}'
+      - name: ping_deployment_type
+        description: '{{ doc("ping_deployment_type") }}'
+      - name: major_minor_version_id
+        description: '{{ doc("major_minor_version_id") }}'
+      - name: major_minor_version
+        description: '{{ doc("major_minor_version") }}'
+      - name: metrics_path
+        description: '{{ doc("metrics_path") }}'
+      - name: monthly_metric_value
+        description: '{{ doc("monthly_metric_value") }}'
+      - name: time_frame
+        description: '{{ doc("time_frame") }}'
+      - name: group_name
+        description: '{{ doc("group_name") }}'
+      - name: stage_name
+        description: '{{ doc("stage_name") }}'
+      - name: section_name
+        description: '{{ doc("section_name") }}'
+      - name: is_smau
+        description: '{{ doc("is_smau") }}'
+      - name: is_gmau
+        description: '{{ doc("is_gmau") }}'
+      - name: is_paid_gmau
+        description: '{{ doc("is_paid_gmau") }}'
+      - name: is_umau
+        description: '{{ doc("is_umau") }}'
+      - name: umau_value
+        description: '{{ doc("umau_value") }}'

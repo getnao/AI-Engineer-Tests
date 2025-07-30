@@ -1,0 +1,37 @@
+version: 2
+
+models:
+
+  - name: fct_behavior_link_click
+    description: Derived fact table containing quantitative data for both staging and non-staging snowplow unstructured events limited to link_click event types.
+    columns: 
+      - name: fct_behavior_unstructured_sk
+        data_tests:
+          - not_null
+  - name: wk_rpt_daily_code_suggestion_metrics
+    description:  ' {{ doc("wk_rpt_daily_code_suggestion_metrics") }}'
+    columns:
+      - name: behavior_date
+        data_tests:
+          - not_null
+        description: Date when the events occurred
+      - name: total_all_events
+        description: Total count of all behavior events from the mart_behavior_structured_event table for the day
+      - name: peak_all_events_per_second
+        description: Maximum number of all behavior events that occurred within a single second for the day
+      - name: total_code_suggestion_events
+        description: Total count of all code suggestion events for the day from the GitLab AI Gateway (feature_category = 'code_suggestions')
+      - name: peak_code_suggestion_events_per_second
+        description: Maximum number of code suggestion events that occurred within a single second for the day
+      - name: request_generate_code_events
+        description: Count of request_generate_code events from the GitLab AI Gateway for the day (only populated after 2024-11-12)
+      - name: request_complete_code_events
+        description: Count of request_complete_code events from the GitLab AI Gateway for the day (only populated after 2024-11-12)
+      - name: peak_generate_code_events_per_second
+        description: Maximum number of request_generate_code events that occurred within a single second for the day (only populated after 2024-11-12)
+      - name: peak_complete_code_events_per_second
+        description: Maximum number of request_complete_code events that occurred within a single second for the day (only populated after 2024-11-12)
+      - name: total_active_code_suggestion_accounts
+        description: Total count of unique SFDC accounts that generated code suggestion events
+      - name: total_active_code_suggestion_users
+        description: Total count of unique users that generated code suggestion events

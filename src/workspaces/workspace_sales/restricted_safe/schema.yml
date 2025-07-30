@@ -1,0 +1,301 @@
+version: 2
+
+models:
+
+  - name: rpt_first_orders_aggregate_targets_actuals
+    description: This model is an aggregated look at First Order Targets and Actuals, filtered to 'Mid-Market Plus' as that is what we are looking at when talking about first orders.
+
+  - name: rpt_base_prospect_information_aggregate
+    description: An aggregate look at booked base prospects at the grain of close date, order type id, hierarchy sk, and sales qualified source name. This can be joined onto actuals for YoY reporting on 'what would have been' base prospects from FY25 to FY26+.
+
+  - name: wk_rpt_crm_opportunity_reduced
+    description: a table with reduced column list from mart_crm_opportunity that is used for testing entitlement tables for Tableau
+    columns:
+      - name: dim_crm_opportunity_id
+        data_tests:
+            - not_null
+            - unique
+  - name: wk_rpt_crm_account_reduced
+    description: a table with reduced column list from mart_crm_account that is used for testing entitlement tables for Tableau
+    columns:
+      - name: dim_crm_account_id
+        data_tests:
+            - not_null
+            - unique
+  - name: wk_prep_crm_account_share_active
+    description: an active account share table with reduced column list
+    columns:
+      - name: account_id
+        data_tests:
+            - not_null
+  - name: wk_prep_crm_opportunity_share_active
+    description: an active opportunity share table with reduced column list
+    columns:
+      - name: opportunity_id
+        data_tests:
+            - not_null
+  - name: wk_sales_daily_case_automation_test
+    description: >
+      This is the test model for the PUMP version so we can test changes to the case creation logic.
+  - name: wk_sales_gds_account_snapshots
+    description: >
+      Account snapshots with business logic specific to the Global Digital SMB Sales team
+  - name: wk_sales_gds_cases
+    description: >
+      SFDC cases with Global Digital SMB business logic including activity summary
+  - name: wk_sales_gds_fo_buckets
+    description: >
+      Derives the source of first orders using namespace and trial information
+  - name: wk_sales_sfdc_opportunity_product_snapshot
+    description: >
+      This references the snapshots of the SFDC opportunity products snapshot source table
+
+  - name: wk_sales_product_price_quantity
+    description: >
+      Current price and quantity information based on ARR that can be joined to opportunities
+  - name: wk_sales_renewal_arr
+    description: >
+      Pre- and post-renewal price and quantity information based on ARR to be joined to opportunities
+  - name: wk_sales_gds_opportunities
+    description : >
+      Opportunity data with SMB-specific business logic
+  - name: wk_sales_gds_account_disposition
+    description : >
+      Account data with appended summaries of recent cases and opportunities
+    data_tests: 
+      - dbt_utils.unique_combination_of_columns:
+            combination_of_columns:
+              - dim_crm_account_id
+              - snapshot_id
+              - sub_subscription_id
+              - dim_crm_opportunity_id_next_renewal
+  - name: wk_sales_sfdc_opportunity_product
+    description: Salesforce opportunity products workspace table. [Link to Epic](https://gitlab.com/groups/gitlab-com/business-technology/enterprise-apps/-/epics/527)
+  - name: bvs_ecosystems_document
+    description: '{{ doc("bvs_ecosystems_document") }}'
+    columns:
+      - name: account_name
+        description: '{{ doc("bvs_ecosystems_account_name") }}'
+      - name: collaborators
+        description: '{{ doc("bvs_ecosystems_collaborators") }}'
+      - name: crm_account_id
+        description: '{{ doc("bvs_ecosystems_crm_account_id") }}'
+      - name: crm_account_name
+        description: '{{ doc("bvs_ecosystems_crm_account_name") }}'
+      - name: crm_account_owner_email
+        description: '{{ doc("bvs_ecosystems_crm_account_owner_email") }}'
+      - name: crm_account_phone
+        description: '{{ doc("bvs_ecosystems_crm_account_phone") }}'
+      - name: crm_opportunity_id
+        description: '{{ doc("bvs_ecosystems_crm_opportunity_id") }}'
+      - name: crm_opportunity_name
+        description: '{{ doc("bvs_ecosystems_crm_opportunity_name") }}'
+      - name: crm_opportunity_owner_email
+        description: '{{ doc("bvs_ecosystems_crm_opportunity_owner_email") }}'
+      - name: crm_opportunity_phone
+        description: '{{ doc("bvs_ecosystems_crm_opportunity_phone") }}'
+      - name: is_demo
+        description: '{{ doc("bvs_ecosystems_is_demo") }}'
+      - name: document_name
+        description: '{{ doc("bvs_ecosystems_document_name") }}'
+      - name: document_status
+        description: '{{ doc("bvs_ecosystems_document_status") }}'
+      - name: document_id
+        description: '{{ doc("bvs_ecosystems_document_id") }}'
+      - name: update_history_created_at
+        description: '{{ doc("bvs_ecosystems_update_history_created_at") }}'
+      - name: update_history_created_by_id
+        description: '{{ doc("bvs_ecosystems_update_history_created_by_id") }}'
+      - name: update_history_created_by_username
+        description: '{{ doc("bvs_ecosystems_update_history_created_by_username") }}'
+      - name: update_history_last_updated_at
+        description: '{{ doc("bvs_ecosystems_update_history_last_updated_at") }}'
+      - name: update_history_updated_by_id
+        description: '{{ doc("bvs_ecosystems_update_history_updated_by_id") }}'
+      - name: update_history_updated_by_username
+        description: '{{ doc("bvs_ecosystems_update_history_updated_by_username") }}'
+      - name: uploaded_at
+        description: '{{ doc("bvs_ecosystems_uploaded_at") }}'
+  - name: bvs_ecosystems_collaborative_value_assessment
+    description: '{{ doc("bvs_ecosystems_cva") }}'
+    columns:
+      - name: account_name
+        description: '{{ doc("bvs_ecosystems_account_name") }}'
+      - name: active_external_collaborator
+        description: '{{ doc("bvs_ecosystems_active_external_collaborator") }}'
+      - name: active_internal_collaborator
+        description: '{{ doc("bvs_ecosystems_active_internal_collaborator") }}'
+      - name: active_partner_collaborator
+        description: '{{ doc("bvs_ecosystems_active_partner_collaborator") }}'
+      - name: crm_opportunity_id
+        description: '{{ doc("bvs_ecosystems_crm_opportunity_id") }}'
+      - name: collaborators
+        description: '{{ doc("bvs_ecosystems_collaborators") }}'
+      - name: count_of_value_drivers_modified
+        description: '{{ doc("bvs_ecosystems_count_of_value_drivers_modified") }}'
+      - name: is_discovery_modified
+        description: '{{ doc("bvs_ecosystems_is_discovery_modified") }}'
+      - name: document_id
+        description: '{{ doc("bvs_ecosystems_document_id") }}'
+      - name: effectiveness_score
+        description: '{{ doc("bvs_ecosystems_effectiveness_score") }}'
+      - name: does_include_discovery
+        description: '{{ doc("bvs_ecosystems_does_include_discovery") }}'
+      - name: is_investment_modified
+        description: '{{ doc("bvs_ecosystems_is_investment_modified") }}'
+      - name: is_demo
+        description: '{{ doc("bvs_ecosystems_is_demo") }}'
+      - name: updated_at,
+        description: '{{ doc("bvs_ecosystems_updated_at") }}'
+      - name: latest_editor
+        description: '{{ doc("bvs_ecosystems_latest_editor") }}'
+      - name: models_edits
+        description: '{{ doc("bvs_ecosystems_models_edits") }}'
+      - name: presentation_name
+        description: '{{ doc("bvs_ecosystems_presentation_name") }}'
+      - name: viewer_logs
+        description: '{{ doc("bvs_ecosystems_viewer_logs") }}'
+      - name: uploaded_at
+        description: '{{ doc("bvs_ecosystems_uploaded_at") }}'
+  - name: bvs_ecosystems_document_collaborator
+    description: '{{ doc("bvs_ecosystems_document_collaborator") }}'
+    columns:
+      - name: document_id
+        description: '{{ doc("bvs_ecosystems_document_id") }}'
+      - name: access_level
+        description: '{{ doc("bvs_ecosystems_access_level") }}'
+      - name: is_document_visible
+        description: '{{ doc("bvs_ecosystems_is_document_visible") }}'
+      - name: collaborator_id
+        description: '{{ doc("bvs_ecosystems_collaborator_id") }}'
+      - name: user_id
+        description: '{{ doc("bvs_ecosystems_user_id") }}'
+      - name: user_name
+        description: '{{ doc("bvs_ecosystems_user_name") }}'
+  - name: rpt_forecast_bookings_bucketing
+    description: >
+      This model is utilized as the base for the weekly sales forecast model. It categorizes different types of booked pipeline and can be used to build reporting on past quarter bookings.
+  - name: wk_rpt_premium_ultimate_journey_current_state
+    description: Current state model showing each account's journey stage in the Premium-Ultimate progression, based on milestone achievements rather than current usage metrics.
+    columns:
+      - name: dim_crm_account_id
+        description: Unique identifier for the CRM account
+        data_tests:
+          - not_null
+          - unique
+      - name: crm_account_name
+        description: Name of the CRM account
+      - name: journey_stage
+        description: Current journey stage based on milestone achievements (Premium Purchase, Premium Ramped, Premium Expansion, Ultimate Consideration, Ultimate Purchase, Ultimate Onboarding, Ultimate Ramped)
+      - name: current_tier
+        description: Current subscription tier (Currently Premium or Currently Ultimate)
+      - name: first_premium_date
+        description: Date when the account first purchased Premium
+      - name: first_ultimate_date
+        description: Date when the account first purchased Ultimate
+      - name: first_premium_ramped_date
+        description: Date when the account first achieved Premium ramped status
+      - name: first_premium_expansion_date
+        description: Date of the first Premium license expansion (with >10% increase)
+      - name: first_ultimate_expansion_date
+        description: Date of the first Ultimate license expansion (with >10% increase)
+      - name: first_security_feature_date
+        description: Date when security features were first used
+      - name: security_ramped_date
+        description: Date when security features achieved ramped status (Green)
+      - name: deployment_types
+        description: List of deployment types for this account (Self-Managed, GitLab.com, etc.)
+      - name: deployment_type_count
+        description: Number of different deployment types for this account
+      - name: account_level_days_to_ultimate
+        description: Days between first Premium purchase and first Ultimate purchase
+      - name: sa_activity_count
+        description: Number of Solution Architect activities for this account
+      - name: completed_demo_count
+        description: Number of completed demos for this account
+  - name: wk_rpt_premium_ultimate_journey_transitions
+    description: Historical model tracking account transitions between journey stages over time, showing entry and exit dates and duration in each stage.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - dim_crm_account_id
+            - stage_name
+            - entry_date
+    columns:
+      - name: dim_crm_account_id
+        description: Unique identifier for the CRM account
+      - name: crm_account_name
+        description: Name of the CRM account
+      - name: stage_name
+        description: Journey stage name (Premium Purchase, Premium Ramped, etc.)
+      - name: entry_date
+        description: Date when the account entered this stage
+      - name: exit_date
+        description: Date when the account exited this stage (NULL if current stage)
+      - name: days_in_stage
+        description: Number of days the account has been in or was in this stage
+      - name: stage_sequence
+        description: Logical sequence number of this stage (1=Premium Purchase through 8=Ultimate Ramped)
+      - name: next_stage
+        description: Name of the next stage the account moved to (NULL if current stage)
+      - name: current_journey_stage
+        description: Current journey stage from the current_state model
+      - name: current_tier
+        description: Current subscription tier (Currently Premium or Currently Ultimate)
+      - name: is_current_stage
+        description: Boolean flag indicating if this is the account's current stage
+      - name: deployment_types
+        description: List of deployment types for this account (Self-Managed, GitLab.com, etc.)
+      - name: deployment_type_count
+        description: Number of different deployment types for this account
+      - name: trigger_activity
+        description: Type of activity that triggered entry into this stage (e.g., Subscription Start, Product Usage Milestone, License Expansion)
+      - name: trigger_detail
+        description: Specific details about what triggered the stage entry (e.g., 'Started Ultimate trial before purchase', 'Achieved Green security health score')
+  - name: wk_rpt_premium_ultimate_journey_all_events
+    description: Comprehensive event log capturing all activities across the Premium-Ultimate customer journey timeline, including subscriptions, product usage, sales activities, and marketing touchpoints.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - dim_crm_account_id
+            - event_date
+            - stage_name
+            - source_type
+            - specific_deployment_type
+    columns:
+      - name: dim_crm_account_id
+        description: Unique identifier for the CRM account
+      - name: crm_account_name
+        description: Name of the CRM account
+      - name: parent_crm_account_name
+        description: Name of the parent CRM account for organizational hierarchy
+      - name: parent_crm_account_industry
+        description: Industry classification of the parent account
+      - name: parent_crm_account_sales_segment
+        description: Sales segment classification (Enterprise, Mid-Market, SMB, etc.)
+      - name: parent_crm_account_geo_region
+        description: Geographic region of the parent account
+      - name: parent_crm_account_max_family_employee_count
+        description: Maximum employee count across the account family
+      - name: stage_name
+        description: Journey stage associated with this event (Premium Purchase, Premium Ramped, Premium Expansion, Ultimate Consideration, Ultimate Purchase, Ultimate Onboarding, Ultimate Ramped, Ultimate Expansion)
+        data_tests:
+          - accepted_values:
+              values: ['Premium Purchase', 'Premium Ramped', 'Premium Expansion', 'Ultimate Consideration', 'Ultimate Purchase', 'Ultimate Onboarding', 'Ultimate Ramped', 'Ultimate Expansion']
+      - name: event_date
+        description: Date when this event occurred
+        data_tests:
+          - not_null
+      - name: source_type
+        description: Type of activity that generated this event
+        data_tests:
+          - accepted_values:
+              values: ['subscription_purchase', 'license_expansion', 'premium_usage_ramp', 'ultimate_trial', 'security_feature_usage', 'ultimate_opportunity', 'ultimate_campaign', 'ultimate_event', 'sa_activity', 'demo_completion', 'security_ramped']
+      - name: specific_deployment_type
+        description: Specific deployment type for this event (Self-Managed, GitLab.com, etc.)
+      - name: subscription_arr
+        description: Annual Recurring Revenue associated with subscription events
+      - name: license_quantity
+        description: Number of licenses associated with subscription events
+      - name: source_type_description
+        description: Human-readable description of the source type

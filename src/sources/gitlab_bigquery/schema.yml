@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: gke_cluster_resource_usage_source
+    description: add details here
+    columns:
+      - name: file_date_part
+        data_tests:
+          - not_null
+  - name: gke_cluster_resource_consumption_source
+    description: add details here
+    columns:
+      - name: file_date_part
+        data_tests:
+          - not_null

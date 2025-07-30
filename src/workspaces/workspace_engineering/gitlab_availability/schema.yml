@@ -1,0 +1,83 @@
+version: 2
+models:
+  - name: wk_gitlab_availability_gitlab_com
+    description: "gitlab.com availability data combining S3 and static sources (ephemeral)"
+    columns:
+      - name: availability_percentage
+      - name: availability_date
+      - name: tenant
+      - name: datetime_recorded_s3
+      - name: uploaded_at
+      - name: data_source
+  - name: wk_gitlab_availability_dedicated
+    description: "GitLab Dedicated availability data combining S3 and static sources (ephemeral)"
+    columns:
+      - name: availability_percentage
+      - name: availability_date
+      - name: tenant
+      - name: datetime_recorded_s3
+      - name: uploaded_at
+      - name: data_source
+  - name: wk_gitlab_availability_all
+    description: "Combined availability data for both gitlab.com and Dedicated deployments"
+    tests:
+      # Custom test 1: Error if gitlab.com deployment_type is NOT last day of month
+      - dbt_utils.expression_is_true:
+          expression: "NOT (deployment_type = 'GitLab.com' AND is_last_day_of_month = false)"
+          config:
+            severity: error
+      # Custom test 2: Error if availability percentage is higher than 1.0000
+      - dbt_utils.expression_is_true:
+          expression: "NOT (availability_percentage > 1)"
+          config:
+            severity: error
+      # Custom test 3: Error if tenant is 'Gitlab.com' but deployment_type is NOT 'gitlab.com'
+      - dbt_utils.expression_is_true:
+          expression: "NOT (tenant = 'gitlab.com' AND deployment_type != 'GitLab.com')"
+          config:
+            severity: error
+      # Custom test 4: Error if datetime_recorded_s3 is null for non-static data
+      - dbt_utils.expression_is_true:
+          expression: "NOT (data_source = 'S3' AND datetime_recorded_s3 IS NULL)"
+          config:
+            severity: error
+      # Custom test 5: Error if uploaded_at is null for non-static data
+      - dbt_utils.expression_is_true:
+          expression: "NOT (data_source = 'S3' AND uploaded_at IS NULL)"
+          config:
+            severity: error
+    columns:
+      - name: availability_percentage
+        description: "Percentage of availability for the given period"
+        tests:
+          - not_null
+      - name: availability_date
+        description: "Date of availability measurement"
+        tests:
+          - not_null
+      - name: tenant
+        description: "Tenant identifier"
+        tests:
+          - not_null
+      - name: datetime_recorded_s3
+        description: "Timestamp when data was recorded in S3 (null for static data)"
+      - name: uploaded_at
+        description: "Upload timestamp (null for static data)"
+      - name: data_source
+        description: "Source of the data ('S3' or 'static')"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['S3', 'static']
+      - name: deployment_type
+        description: "Type of GitLab deployment ('GitLab.com' or 'Dedicated')"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['GitLab.com', 'Dedicated']
+      - name: availability_month
+        description: "Month extracted from availability_date"
+      - name: availability_year
+        description: "Year extracted from availability_date"
+      - name: is_last_day_of_month
+        description: "Boolean flag indicating if the availability_date is the last day of the month"

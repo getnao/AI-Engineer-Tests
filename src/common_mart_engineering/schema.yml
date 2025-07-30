@@ -1,0 +1,122 @@
+version: 2
+
+models:
+  - name: mart_gcp_billing_line_item
+    description: '{{ doc("mart_gcp_billing_line_item") }}'
+    columns:
+      - name: gcp_billing_pl_allocation_pk
+        description: Unique identifier of line item in GCP allocated to a P&L category
+      - name: date_day
+        description: '{{ doc("date_actual") }}'
+      - name: gcp_project_id
+        description: '{{ doc("gcp_project_id") }}'
+      - name: gcp_service_description
+        description: '{{ doc("gcp_service_description") }}'
+      - name: plan_name
+        description: '{{ doc("plan_name_modified") }}'
+      - name: gcp_sku_description
+        description: '{{ doc("gcp_sku_description") }}'
+      - name: infra_label
+        description: '{{ doc("gcp_infra_label") }}'
+      - name: env_label
+        description: '{{ doc("gcp_env_label") }}'
+      - name: runner_label
+        description: '{{ doc("gcp_runner_label") }}'
+      - name: full_path
+        description: '{{ doc("gcp_full_path") }}'
+      - name: pl_category
+        description: '{{ doc("finance_pl_category") }}'
+      - name: usage_unit
+        description: '{{ doc("gcp_usage_unit") }}'
+      - name: pricing_unit
+        description: '{{ doc("gcp_pricing_unit") }}'
+      - name: usage_amount
+        description: '{{ doc("gcp_usage_amount") }}'
+      - name: usage_amount_in_pricing_units
+        description: '{{ doc("gcp_usage_amount_in_pricing_units") }}'
+      - name: cost_before_credits
+        description: '{{ doc("gcp_cost_before_credits") }}'
+      - name: net_cost
+        description: '{{ doc("gcp_net_cost") }}'
+  - name: rpt_gcp_billing_lookback
+    description: '{{ doc("rpt_gcp_billing_lookback") }}'
+    columns:
+      - name: date_day
+        description: '{{ doc("date_actual") }}'
+      - name: gcp_project_id
+        description: '{{ doc("gcp_project_id") }}'
+      - name: gcp_service_description
+        description: '{{ doc("gcp_service_description") }}'
+      - name: plan_name
+        description: '{{ doc("plan_name_modified") }}'
+      - name: gcp_sku_description
+        description: '{{ doc("gcp_sku_description") }}'
+      - name: infra_label
+        description: '{{ doc("gcp_infra_label") }}'
+      - name: env_label
+        description: '{{ doc("gcp_env_label") }}'
+      - name: runner_label
+        description: '{{ doc("gcp_runner_label") }}'
+      - name: full_path
+        description: '{{ doc("gcp_full_path") }}'
+      - name: pl_category
+        description: '{{ doc("finance_pl_category") }}'
+      - name: pl_percent
+        description:  '{{ doc("finance_pl_percent") }}'
+      - name: from_mapping
+        description: '{{ doc("gcp_from_mapping") }}'
+  - name: rpt_gcp_billing_line_item_with_lookback
+    description: '{{ doc("rpt_gcp_billing_line_item_with_lookback") }}'
+    columns:
+      - name: gcp_billing_pl_allocation_pk
+        description: Unique identifier of line item in GCP allocated to a P&L category
+      - name: date_day
+        description: '{{ doc("date_actual") }}'
+      - name: gcp_project_id
+        description: '{{ doc("gcp_project_id") }}'
+      - name: gcp_service_description
+        description: '{{ doc("gcp_service_description") }}'
+      - name: plan_name
+        description: '{{ doc("plan_name_modified") }}'
+      - name: gcp_sku_description
+        description: '{{ doc("gcp_sku_description") }}'
+      - name: infra_label
+        description: '{{ doc("gcp_infra_label") }}'
+      - name: env_label
+        description: '{{ doc("gcp_env_label") }}'
+      - name: runner_label
+        description: '{{ doc("gcp_runner_label") }}'
+      - name: full_path
+        description: '{{ doc("gcp_full_path") }}'
+      - name: pl_category
+        description: '{{ doc("finance_pl_category") }}'
+      - name: usage_unit
+        description: '{{ doc("gcp_usage_unit") }}'
+      - name: pricing_unit
+        description: '{{ doc("gcp_pricing_unit") }}'
+      - name: from_mapping
+        description: '{{ doc("gcp_from_mapping") }}'
+      - name: usage_amount
+        description: '{{ doc("gcp_usage_amount") }}'
+      - name: usage_amount_in_pricing_units
+        description: '{{ doc("gcp_usage_amount_in_pricing_units") }}'
+      - name: cost_before_credits
+        description: '{{ doc("gcp_cost_before_credits") }}'
+      - name: net_cost
+        description: '{{ doc("gcp_net_cost") }}'
+      - name: product_component
+        description: '{{ doc("gcp_product_component") }}'
+      - name: finance_sku_type
+        description: '{{ doc("gcp_finance_sku_type") }}'
+      - name: finance_sku_subtype
+        description: '{{ doc("gcp_finance_sku_subtype") }}'
+      - name: level_0
+        description: '{{ doc("gcp_level_0") }}'
+      - name: level_1
+        description: '{{ doc("gcp_level_1") }}'
+      - name: level_2
+        description: '{{ doc("gcp_level_2") }}'
+      - name: level_3
+        description: '{{ doc("gcp_level_3") }}'
+      - name: level_4
+        description: '{{ doc("gcp_level_4") }}'

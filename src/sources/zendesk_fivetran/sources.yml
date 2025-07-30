@@ -1,0 +1,53 @@
+version: 2
+
+sources:
+  - name: zendesk_fivetran
+    database: '{{ env_var("SNOWFLAKE_LOAD_DATABASE") }}'
+    schema: zendesk_fivetran
+    loader: fivetran
+    loaded_at_field: _fivetran_synced
+
+    quoting:
+      database: true
+      schema: false
+      identifier: false
+
+    tables:
+      - name: agent_condition
+      - name: agent_condition_required_status
+      - name: alert_recipient
+      - name: end_user_condition
+      - name: group
+        identifier: '"GROUP"'
+      - name: group_member
+      - name: macro
+      - name: macro_action
+      - name: organization
+      - name: organization_tag
+      - name: satisfaction_rating
+      - name: sla_policy_history
+      - name: sla_policy_metric_history
+      - name: ticket
+      - name: ticket_alert
+      - name: ticket_collaborator
+      - name: ticket_comment
+      - name: ticket_comment_attachment
+      - name: ticket_custom_field
+      - name: ticket_custom_status
+      - name: ticket_field_option
+      - name: ticket_field_history
+      - name: ticket_follower
+      - name: ticket_form_field
+      - name: ticket_form_history
+      - name: ticket_form_restricted_brand
+      - name: ticket_macro_reference
+      - name: ticket_sla_policy
+      - name: ticket_tag
+      - name: user
+      - name: user_segment
+      - name: user_segment_group
+      - name: user_segment_tag
+      - name: user_tag
+      - name: schedule
+      - name: schedule_holiday
+      - name: ticket_schedule

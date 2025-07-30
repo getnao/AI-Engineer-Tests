@@ -1,0 +1,247 @@
+unit_tests:
+  - name: test_snowplow_gitlab_event_dup_filter
+    model: snowplow_gitlab_events
+    overrides:
+      macros:
+        is_incremental: true
+        get_start_date: '2023-05-01 00:00:00'
+        get_end_date: '2023-06-01'
+
+    given:
+      - input: ref('snowplow_gitlab_good_events_sample_source')
+        rows: 
+          - {app_id: 'gitlab', v_tracker: 'py-0.1.0', event_id: '123e4567-e89b-12d3-a456-426614174000', derived_tstamp: '2023-05-01 12:00:00', uploaded_at: '2023-05-01 12:05:00', contexts: '{"data":[{"schema":"iglu:com.gitlab/gitlab_standard/jsonschema/1-0-0","data":{"environment":"production"}}]}'}
+          - {app_id: 'gitlab', v_tracker: 'py-0.1.0', event_id: '123e4567-e89b-12d3-a456-426614174000', derived_tstamp: '2023-05-01 12:30:00', uploaded_at: '2023-05-01 12:35:00', contexts: '{"data":[{"schema":"iglu:com.gitlab/gitlab_standard/jsonschema/1-0-0","data":{"environment":"production"}}]}'}
+          - {app_id: 'gitlab', v_tracker: 'py-0.1.0', event_id: '223e4567-e89b-12d3-a456-426614174001', derived_tstamp: '2023-05-01 13:00:00', uploaded_at: '2023-05-01 13:05:00', contexts: '{"data":[{"schema":"iglu:com.gitlab/gitlab_standard/jsonschema/1-0-0","data":{"environment":"production"}}]}'}
+          - {app_id: 'gitlab', v_tracker: 'py-0.1.0', event_id: '323e4567-e89b-12d3-a456-426614174002', derived_tstamp: '2023-05-01 12:00:00', uploaded_at: '2023-05-01 13:05:00', contexts: '{"data":[{"schema":"iglu:com.gitlab/gitlab_standard/jsonschema/1-0-0","data":{"environment":"production"}}]}'}
+          - {app_id: 'gitlab', v_tracker: 'py-0.1.0', event_id: '323e4567-e89b-12d3-a456-426614174002', derived_tstamp: '2023-05-01 12:00:00', uploaded_at: '2023-05-01 14:35:00', contexts: '{"data":[{"schema":"iglu:com.gitlab/gitlab_standard/jsonschema/1-0-0","data":{"environment":"production"}}]}'}
+      - input: ref('snowplow_event_counts')
+        rows:
+          - {clean_event_id: '123e4567-e89b-12d3-a456-426614174000', event_count: 2, last_uploaded_at: '2023-05-01 12:35:00'}
+          - {clean_event_id: '223e4567-e89b-12d3-a456-426614174001', event_count: 1, last_uploaded_at: '2023-05-01 13:05:00'}
+          - {clean_event_id: '323e4567-e89b-12d3-a456-426614174002', event_count: 1, last_uploaded_at: '2023-05-01 13:05:00'}
+      - input: ref('snowplow_gitlab_events_context_flattened')
+        rows:
+          - {event_id: '123e4567-e89b-12d3-a456-426614174000', derived_tstamp_date: '2023-05-01'}
+          - {event_id: '223e4567-e89b-12d3-a456-426614174001', derived_tstamp_date: '2023-05-01'}
+      - input: this
+        rows:
+          - {derived_tstamp: '2023-04-30 23:59:59'}
+
+    expect:
+      rows:
+        - {event_id: '223e4567-e89b-12d3-a456-426614174001', derived_tstamp: '2023-05-01 13:00:00'}
+        - {event_id: '323e4567-e89b-12d3-a456-426614174002', derived_tstamp: '2023-05-01 12:00:00'}
+
+  - name: test_snowplow_gitlab_events_staging_flag
+    model: snowplow_gitlab_events
+    overrides:
+      macros:
+        is_incremental: true
+        get_start_date: '2023-05-01 00:00:00'
+        get_end_date: '2023-06-01'
+    
+    given:
+      - input: ref('snowplow_gitlab_good_events_sample_source')
+        rows:
+          - {app_id: 'gitlab', v_tracker: 'js-3.4.0', event_id: '123e4567-e89b-12d3-a456-426614174000', derived_tstamp: '2023-05-01 12:00:00', uploaded_at: '2023-05-01 12:35:00', page_url: 'https://gitlab.com/'}
+          - {app_id: 'gitlab-staging', v_tracker: 'js-3.4.0', event_id: '223e4567-e89b-12d3-a456-426614174001', derived_tstamp: '2023-05-01 13:00:00', uploaded_at: '2023-05-01 13:05:00', page_url: 'https://staging.gitlab.com/'}
+          - {app_id: 'gitlab', v_tracker: 'js-3.4.0', event_id: '323e4567-e89b-12d3-a456-426614174002', derived_tstamp: '2023-05-01 14:00:00', uploaded_at: '2023-05-01 13:05:00', page_url: 'https://customers.stg.gitlab.com/'}
+      - input: ref('snowplow_event_counts')
+        rows:
+          - {clean_event_id: '123e4567-e89b-12d3-a456-426614174000', event_count: 1, last_uploaded_at: '2023-05-01 12:35:00'}
+          - {clean_event_id: '223e4567-e89b-12d3-a456-426614174001', event_count: 1, last_uploaded_at: '2023-05-01 13:05:00'}
+          - {clean_event_id: '323e4567-e89b-12d3-a456-426614174002', event_count: 1, last_uploaded_at: '2023-05-01 13:05:00'}
+      - input: ref('snowplow_gitlab_events_context_flattened')
+        rows:
+          - {event_id: '123e4567-e89b-12d3-a456-426614174000', derived_tstamp_date: '2023-05-01'}
+          - {event_id: '223e4567-e89b-12d3-a456-426614174001', derived_tstamp_date: '2023-05-01'}
+          - {event_id: '323e4567-e89b-12d3-a456-426614174002', derived_tstamp_date: '2023-05-01'}
+      - input: this
+        rows:
+          - {derived_tstamp: '2023-04-30 23:59:59'}
+    expect:
+      rows:
+        - {event_id: '123e4567-e89b-12d3-a456-426614174000', is_staging_event: false}
+        - {event_id: '223e4567-e89b-12d3-a456-426614174001', is_staging_event: true}
+        - {event_id: '323e4567-e89b-12d3-a456-426614174002', is_staging_event: true}
+
+  - name: test_snowplow_gitlab_events_tracker_filter
+    model: snowplow_gitlab_events
+    overrides:
+      macros:
+        is_incremental: true
+        get_start_date: '2023-05-01 00:00:00'
+        get_end_date: '2023-06-01'
+    given:
+      - input: ref('snowplow_gitlab_good_events_sample_source')
+        rows:
+          - {app_id: 'gitlab', v_tracker: 'js-3.4.0', event_id: '123e4567-e89b-12d3-a456-426614174000', derived_tstamp: '2023-05-01 12:00:00', uploaded_at: '2023-05-01 12:05:00', page_url: 'https://gitlab.com/'}
+          - {app_id: 'gitlab', v_tracker: 'rb-0.1.0', event_id: '223e4567-e89b-12d3-a456-426614174001', derived_tstamp: '2023-05-01 13:00:00', uploaded_at: '2023-05-01 12:05:00'}
+          - {app_id: 'gitlab', v_tracker: 'py-0.1.0', event_id: '323e4567-e89b-12d3-a456-426614174002', derived_tstamp: '2023-05-01 14:00:00', uploaded_at: '2023-05-01 12:05:00'}
+          - {app_id: 'gitlab', v_tracker: 'java-0.1.0', event_id: '423e4567-e89b-12d3-a456-426614174003', derived_tstamp: '2023-05-01 15:00:00', uploaded_at: '2023-05-01 12:05:00'}
+          - {app_id: 'gitlab', v_tracker: 'other-0.1.0', event_id: '523e4567-e89b-12d3-a456-426614174004', derived_tstamp: '2023-05-01 16:00:00', uploaded_at: '2023-05-01 12:05:00'}
+      - input: ref('snowplow_event_counts')
+        rows:
+          - {clean_event_id: '123e4567-e89b-12d3-a456-426614174000', event_count: 1, last_uploaded_at: '2023-05-01 12:05:00'}
+          - {clean_event_id: '223e4567-e89b-12d3-a456-426614174001', event_count: 1, last_uploaded_at: '2023-05-01 12:05:00'}
+          - {clean_event_id: '323e4567-e89b-12d3-a456-426614174002', event_count: 1, last_uploaded_at: '2023-05-01 12:05:00'}
+          - {clean_event_id: '423e4567-e89b-12d3-a456-426614174003', event_count: 1, last_uploaded_at: '2023-05-01 12:05:00'}
+          - {clean_event_id: '523e4567-e89b-12d3-a456-426614174004', event_count: 1, last_uploaded_at: '2023-05-01 12:05:00'}
+      - input: ref('snowplow_gitlab_events_context_flattened')
+        rows:
+          - {event_id: '123e4567-e89b-12d3-a456-426614174000', derived_tstamp_date: '2023-05-01'}
+          - {event_id: '223e4567-e89b-12d3-a456-426614174001', derived_tstamp_date: '2023-05-01'}
+          - {event_id: '323e4567-e89b-12d3-a456-426614174002', derived_tstamp_date: '2023-05-01'}
+          - {event_id: '423e4567-e89b-12d3-a456-426614174003', derived_tstamp_date: '2023-05-01'}
+      - input: this
+        rows:
+          - {derived_tstamp: '2023-04-30 23:59:59'}
+    expect:
+      rows:
+        - {event_id: '123e4567-e89b-12d3-a456-426614174000'}
+        - {event_id: '223e4567-e89b-12d3-a456-426614174001'}
+        - {event_id: '323e4567-e89b-12d3-a456-426614174002'}
+        - {event_id: '423e4567-e89b-12d3-a456-426614174003'}
+
+  - name: test_snowplow_gitlab_events_glm_source
+    model: snowplow_gitlab_events
+    overrides:
+      macros:
+        is_incremental: true
+        get_start_date: '2023-05-01 00:00:00'
+        get_end_date: '2023-06-01'
+    given:
+      - input: ref('snowplow_gitlab_good_events_sample_source')
+        rows:
+          - {app_id: 'gitlab', v_tracker: 'js-3.4.0', event_id: '123e4567-e89b-12d3-a456-426614174000', derived_tstamp: '2023-05-01 12:00:00', uploaded_at: '2023-05-01 12:05:00', page_url: 'https://gitlab.com/', page_urlquery: 'glm_source=test1'}
+          - {app_id: 'gitlab', v_tracker: 'js-3.4.0', event_id: '223e4567-e89b-12d3-a456-426614174001', derived_tstamp: '2023-05-01 13:00:00', uploaded_at: '2023-05-01 12:05:00', page_url: 'https://gitlab.com/', page_urlquery: 'param1=value1&glm_source=test2&param2=value2'}
+          - {app_id: 'gitlab', v_tracker: 'js-3.4.0', event_id: '323e4567-e89b-12d3-a456-426614174002', derived_tstamp: '2023-05-01 14:00:00', uploaded_at: '2023-05-01 12:05:00', page_url: 'https://gitlab.com/', page_urlquery: 'param1=value1'}
+      - input: ref('snowplow_event_counts')
+        rows:
+          - {clean_event_id: '123e4567-e89b-12d3-a456-426614174000', event_count: 1, last_uploaded_at: '2023-05-01 12:05:00'}
+          - {clean_event_id: '223e4567-e89b-12d3-a456-426614174001', event_count: 1, last_uploaded_at: '2023-05-01 12:05:00'}
+          - {clean_event_id: '323e4567-e89b-12d3-a456-426614174002', event_count: 1, last_uploaded_at: '2023-05-01 12:05:00'}
+      - input: ref('snowplow_gitlab_events_context_flattened')
+        rows:
+          - {event_id: '123e4567-e89b-12d3-a456-426614174000', derived_tstamp_date: '2023-05-01'}
+          - {event_id: '223e4567-e89b-12d3-a456-426614174001', derived_tstamp_date: '2023-05-01'}
+          - {event_id: '323e4567-e89b-12d3-a456-426614174002', derived_tstamp_date: '2023-05-01'}
+          - {event_id: '323e4567-e89b-12d3-a456-426614174005', derived_tstamp_date: '2023-05-02'}
+      - input: this
+        rows:
+          - {derived_tstamp: '2023-04-30 23:59:59'}
+    expect:
+      rows:
+        - {event_id: '123e4567-e89b-12d3-a456-426614174000', glm_source: 'test1'}
+        - {event_id: '223e4567-e89b-12d3-a456-426614174001', glm_source: 'test2'}
+        - {event_id: '323e4567-e89b-12d3-a456-426614174002', glm_source: null}
+
+  - name: test_snowplow_gitlab_events_web_page_id_deduplication
+    model: snowplow_gitlab_events
+    overrides:
+      macros:
+        is_incremental: true
+        get_start_date: '2023-05-01 00:00:00'
+        get_end_date: '2023-06-01'
+    given:
+      - input: ref('snowplow_gitlab_good_events_sample_source')
+        rows:
+          - {app_id: 'gitlab', v_tracker: 'js-3.4.0', event_id: '123e4567-e89b-12d3-a456-426614174000', derived_tstamp: '2023-05-01 12:00:00', uploaded_at: '2023-05-01 12:05:00'}
+          - {app_id: 'gitlab', v_tracker: 'js-3.4.0', event_id: '223e4567-e89b-12d3-a456-426614174001', derived_tstamp: '2023-05-01 13:00:00', uploaded_at: '2023-05-01 12:05:00'}
+          - {app_id: 'gitlab', v_tracker: 'js-3.4.0', event_id: '323e4567-e89b-12d3-a456-426614174002', derived_tstamp: '2023-05-01 14:00:00', uploaded_at: '2023-05-01 12:05:00'}
+          - {app_id: 'gitlab', v_tracker: 'js-3.4.0', event_id: '423e4567-e89b-12d3-a456-426614174003', derived_tstamp: '2023-05-01 15:00:00', uploaded_at: '2023-05-01 12:05:00'}
+      - input: ref('snowplow_event_counts')
+        rows:
+          - {clean_event_id: '123e4567-e89b-12d3-a456-426614174000', event_count: 1, last_uploaded_at: '2023-05-01 12:05:00'}
+          - {clean_event_id: '223e4567-e89b-12d3-a456-426614174001', event_count: 1, last_uploaded_at: '2023-05-01 12:05:00'}
+          - {clean_event_id: '323e4567-e89b-12d3-a456-426614174002', event_count: 2, last_uploaded_at: '2023-05-01 12:05:00'}
+          - {clean_event_id: '423e4567-e89b-12d3-a456-426614174003', event_count: 1, last_uploaded_at: '2023-05-01 12:05:00'}
+      - input: ref('snowplow_gitlab_events_context_flattened')
+        rows:
+          - {event_id: '123e4567-e89b-12d3-a456-426614174000', derived_tstamp_date: '2023-05-01', web_page_id: 'page1'}
+          - {event_id: '223e4567-e89b-12d3-a456-426614174001', derived_tstamp_date: '2023-05-01', web_page_id: 'page2'}
+          - {event_id: '323e4567-e89b-12d3-a456-426614174002', derived_tstamp_date: '2023-05-01', web_page_id: 'page3'}
+          - {event_id: '323e4567-e89b-12d3-a456-426614174002', derived_tstamp_date: '2023-05-01', web_page_id: 'page3'} # Duplicate
+          - {event_id: '423e4567-e89b-12d3-a456-426614174003', derived_tstamp_date: '2023-05-01', web_page_id: null}
+      - input: this
+        rows:
+          - {derived_tstamp: '2023-04-30 23:59:59'}
+    expect:
+      rows:
+        - {event_id: '123e4567-e89b-12d3-a456-426614174000'}
+        - {event_id: '223e4567-e89b-12d3-a456-426614174001'}
+        - {event_id: '423e4567-e89b-12d3-a456-426614174003'}
+
+  - name: test_snowplow_gitlab_events_context_flattened
+    model: snowplow_gitlab_events_context_flattened
+    overrides:
+      macros:
+        is_incremental: true
+        get_start_date: '2023-05-01 00:00:00'
+        get_end_date: '2023-06-01'
+
+    given:
+      - input: ref('snowplow_gitlab_good_events_sample_source')
+        rows:
+          - {event_id: '123e4567-e89b-12d3-a456-426614174000', derived_tstamp: '2023-05-01 12:00:00', uploaded_at: '2023-05-01 12:05:00', contexts: '{"data":[{"schema":"iglu:com.gitlab/gitlab_standard/jsonschema/1-0-0","data":{"environment":"production","extra":{"plan":"free"},"namespace_id":1,"project_id":2,"user_id":"user123","source":"web","is_gitlab_team_member":"False"}},{"schema":"iglu:com.snowplowanalytics.snowplow/web_page/jsonschema/1-0-0","data":{"id":"page1"}},{"schema":"iglu:com.gitlab/gitlab_experiment/jsonschema/1-0-0","data":{"experiment":"test_exp","key":"exp_key","variant":"control"}}]}'}
+          - {event_id: '223e4567-e89b-12d3-a456-426614174001', derived_tstamp: '2023-05-01 13:00:00', uploaded_at: '2023-05-01 12:05:00', contexts: '{"data":[{"schema":"iglu:com.gitlab/gitlab_standard/jsonschema/1-0-0","data":{"environment":"staging","extra":{"plan":"premium"},"namespace_id":3,"project_id":4,"user_id":"user456","source":"mobile","is_gitlab_team_member":"True"}},{"schema":"iglu:com.snowplowanalytics.snowplow/web_page/jsonschema/1-0-0","data":{"id":"page2"}},{"schema":"iglu:com.gitlab/code_suggestions_context/jsonschema/1-0-0","data":{"model_engine":"gpt-3.5-turbo","model_name":"codex","prefix_length":10,"suffix_length":5,"language":"python","gitlab_realm":"SaaS","is_streaming":true}}]}'}
+      - input: ref('snowplow_event_counts')
+        rows:
+          - {clean_event_id: '123e4567-e89b-12d3-a456-426614174000', event_count: 1, last_uploaded_at: '2023-05-01 12:05:00'}
+          - {clean_event_id: '223e4567-e89b-12d3-a456-426614174001', event_count: 1, last_uploaded_at: '2023-05-01 12:05:00'}
+      - input: this
+        rows:
+          - {derived_tstamp_date: '2023-04-30'}
+
+    expect:
+      rows:
+        - {event_id: '123e4567-e89b-12d3-a456-426614174000', derived_tstamp_date: '2023-05-01', environment: 'production', namespace_id: 1, project_id: 2, pseudonymized_user_id: 'user123', source: 'web', is_gitlab_team_member: False, web_page_id: 'page1',  model_engine: NULL, model_name: NULL, prefix_length: NULL, suffix_length: NULL, language: NULL, delivery_type: NULL, is_streaming: NULL, experiment_name: 'test_exp', experiment_context_key: 'exp_key', experiment_variant: 'control'}
+        - {event_id: '223e4567-e89b-12d3-a456-426614174001', derived_tstamp_date: '2023-05-01', environment: 'staging', namespace_id: 3, project_id: 4, pseudonymized_user_id: 'user456', source: 'mobile', is_gitlab_team_member: True, web_page_id: 'page2', model_engine: 'gpt-3.5-turbo', model_name: 'codex', prefix_length: 10, suffix_length: 5, language: 'python', delivery_type: 'SaaS', is_streaming: true, experiment_name: NULL, experiment_context_key: NULL, experiment_variant: NULL}
+
+  - name: test_snowplow_gitlab_events_context_flattened_deduplication
+    model: snowplow_gitlab_events_context_flattened
+    overrides:
+      macros:
+        is_incremental: true
+        get_start_date: '2023-05-01 00:00:00'
+        get_end_date: '2023-06-01'
+
+    given:
+      - input: ref('snowplow_gitlab_good_events_sample_source')
+        rows:
+          - {event_id: '123e4567-e89b-12d3-a456-426614174000', derived_tstamp: '2023-05-01 12:00:00', uploaded_at: '2023-05-01 11:05:00', contexts: '{"data":[{"schema":"iglu:com.gitlab/gitlab_standard/jsonschema/1-0-0","data":{"environment":"production","namespace_id":1,"project_id":2,"user_id":"user123"}}]}'}
+          - {event_id: '123e4567-e89b-12d3-a456-426614174000', derived_tstamp: '2023-05-01 12:00:00', uploaded_at: '2023-05-01 12:10:00', contexts: '{"data":[{"schema":"iglu:com.gitlab/gitlab_standard/jsonschema/1-0-0","data":{"environment":"production","namespace_id":1,"project_id":2,"user_id":"user123"}}]}'}
+      - input: ref('snowplow_event_counts')
+        rows:
+          - {clean_event_id: '123e4567-e89b-12d3-a456-426614174000', event_count: 1, last_uploaded_at: '2023-05-01 11:05:00'}
+      - input: this
+        rows:
+          - {derived_tstamp_date: '2023-04-30'}
+
+    expect:
+      rows:
+        - {event_id: '123e4567-e89b-12d3-a456-426614174000', derived_tstamp_date: '2023-05-01', environment: 'production', namespace_id: 1, project_id: 2, pseudonymized_user_id: 'user123'}
+
+  - name: test_snowplow_gitlab_events_context_flattened_data_types
+    model: snowplow_gitlab_events_context_flattened
+    overrides:
+      macros:
+        is_incremental: true
+        get_start_date: '2023-05-01 00:00:00'
+        get_end_date: '2023-06-01'
+
+    given:
+      - input: ref('snowplow_gitlab_good_events_sample_source')
+        rows:
+          - {event_id: '123e4567-e89b-12d3-a456-426614174000', derived_tstamp: '2023-05-01 12:00:00', uploaded_at: '2023-05-01 12:05:00', contexts: '{"data":[{"schema":"iglu:com.gitlab/gitlab_standard/jsonschema/1-0-0","data":{"environment":"production","namespace_id":"1","project_id":"2","user_id":"user123","is_gitlab_team_member":"False"}},{"schema":"iglu:com.gitlab/code_suggestions_context/jsonschema/1-0-0","data":{"prefix_length":"10","suffix_length":"5","is_streaming":"true","api_status_code":"200"}}]}'}
+      - input: ref('snowplow_event_counts')
+        rows:
+          - {clean_event_id: '123e4567-e89b-12d3-a456-426614174000', event_count: 1, last_uploaded_at: '2023-05-01 12:05:00'}
+      - input: this
+        rows:
+          - {derived_tstamp_date: '2023-04-30'}
+
+    expect:
+      rows:
+        - {event_id: '123e4567-e89b-12d3-a456-426614174000', derived_tstamp_date: '2023-05-01', environment: 'production', namespace_id: 1, project_id: 2, pseudonymized_user_id: 'user123', is_gitlab_team_member: False, prefix_length: 10, suffix_length: 5, is_streaming: true, api_status_code: 200}

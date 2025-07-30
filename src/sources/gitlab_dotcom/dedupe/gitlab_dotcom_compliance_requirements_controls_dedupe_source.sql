@@ -1,0 +1,1 @@
+{{ dedupe_source(source_table='compliance_requirements_controls') }}

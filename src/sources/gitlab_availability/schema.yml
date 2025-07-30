@@ -1,0 +1,25 @@
+models:
+  - name: gitlab_availability_gitlab_com_source
+    columns:
+      - name: availability_percentage
+      - name: availability_date
+      - name: tenant
+      - name: datetime_recorded_s3
+      - name: uploaded_at
+  - name: static_gitlab_availability_gitlab_com_source
+    columns:
+      - name: availability_percentage
+      - name: availability_date
+      - name: tenant
+  - name: gitlab_availability_dedicated_source
+    columns:
+      - name: availability_percentage
+      - name: availability_date
+      - name: tenant
+      - name: datetime_recorded_s3
+      - name: uploaded_at
+  - name: static_gitlab_availability_dedicated_source
+    columns:
+      - name: availability_percentage
+      - name: availability_date
+      - name: tenant

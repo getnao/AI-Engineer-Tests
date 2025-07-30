@@ -1,0 +1,38 @@
+version: 2
+
+sources:
+  - name: gitlab_bigquery
+    database: '{{ env_var("SNOWFLAKE_LOAD_DATABASE") }}'
+    schema: gitlab_bigquery
+    loaded_at_field: uploaded_at
+    loader: bigquery exporter
+    description: Data from GitLab product and engineering bigquery instances
+
+    quoting:
+      database: true
+      schema: false
+      identifier: false
+
+
+    tables:
+      - name: gke_cluster_resource_consumption
+        description: "gke_cluster_resource_consumption table exported from bigQuery"
+        external:
+          location: "@raw.gitlab_bigquery.gitlab_bigquery_extract/gke_cluster_resource_consumption"
+          file_format: "( type = parquet )"
+          auto_refresh: false
+          partitions:
+            - name: date_part
+              data_type: date
+              expression: to_date(split_part(metadata$filename, '/', 2),'YYYY-MM-DD')
+       
+      - name: gke_cluster_resource_usage
+        description: "gke_cluster_resource_consumption table exported from bigQuery"
+        external:
+          location: "@raw.gitlab_bigquery.gitlab_bigquery_extract/gke_cluster_resource_usage"
+          file_format: "( type = parquet )"
+          auto_refresh: false
+          partitions:
+            - name: date_part
+              data_type: date
+              expression: to_date(split_part(metadata$filename, '/', 2),'YYYY-MM-DD')

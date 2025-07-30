@@ -1,0 +1,29 @@
+version: 2
+
+sources:
+  - name: gitlab_availability
+    database: '{{ env_var("SNOWFLAKE_LOAD_DATABASE") }}'
+    schema: gitlab_availability
+    loader: Airflow
+    loaded_at_field: uploaded_at
+
+    quoting:
+      database: true
+      schema: false
+      identifier: false
+
+    freshness:
+      warn_after: {count: 24, period: hour}
+      error_after: {count: 48, period: hour}
+
+    tables:
+      - name: gitlab_com
+      - name: dedicated
+  - name: static_gitlab_availability
+    database: '{{ env_var("SNOWFLAKE_STATIC_DATABASE") }}'
+    schema: gitlab_availability
+    tables:
+      - name: gitlab_com
+        freshness: null
+      - name: dedicated
+        freshness: null

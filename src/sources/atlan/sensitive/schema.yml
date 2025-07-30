@@ -1,0 +1,146 @@
+version: 2
+
+models:
+    - name: atlan_active_users_source_pii
+      description: "This table captures daily user activity across different accounts. Each row represents a unique users engagement on a specific date, including identifying details and the volume of events performed. This table is primarily used for analyzing user activity trends, engagement levels, and account-level usage patterns."
+      columns:
+        - name: active_date
+          description: "The date when the user was active. Represents the activity date in the system."
+          data_tests:
+            - not_null
+        - name: account_name
+          description: "The name of the account (e.g.,organization or company) associated with the user."
+          data_tests:
+            - not_null
+        - name: user_id
+          description: "A unique identifier for the user."
+          data_tests:
+           - not_null
+        - name: event_count
+          description: "The number of tracked events (e.g., clicks, logins, actions) performed by the user on the active date."
+          data_tests:
+            - not_null
+        
+    - name: atlan_feature_usage_source_pii
+      description: "This table logs granular-level interactions of users with various features within the platform. Each row represents a specific user action or event associated with a feature at a precise timestamp. It provides insight into how users engage with different product capabilities (e.g., Discovery, Glossary), what types of assets they interact with, and how frequently. This data is useful for product usage analytics, feature adoption tracking, and user behavior segmentation."
+      columns:
+        - name: usage_timestamp
+          description: "The exact date and time when the feature usage event occurred."
+          data_tests:
+            - not_null
+        - name: feature_used
+          description: "The specific feature used by the user (e.g., Discovery, Lineage, Glossary etc.)."
+          data_tests:
+            - not_null
+        - name: event_type
+          description: "The nature of the event typically View (e.g., page view) or Interaction (e.g., click, expand)."
+          data_tests:
+            - not_null
+        - name: link
+          description: "The URL where the event occurred, indicating the context or page the user was on."
+          data_tests:
+            - not_null
+        - name: account_name
+          description: "The name of the organization or account associated with the user."
+          data_tests:
+            - not_null
+        - name: asset_type
+          description: "The type of asset interacted with during the event (e.g., Table, View, Column etc.)."
+        - name: asset_connector
+          description: "The source system or connector associated with the asset (e.g., Snowflake, Databricks etc.)."
+        - name: asset_guid
+          description: "Unique identifier of the asset being interacted with.."
+        - name: user_id
+          description: "A unique identifier for the user."
+          data_tests:
+            - not_null
+        - name: role
+          description: "The user's role within the account (e.g., Admin, Guest, Member)."
+          data_tests:
+            - not_null
+        - name: event_count
+          description: "Count of events of the same type aggregated for that timestamp and context. Useful for summarizing frequent actions."
+          data_tests:
+            - not_null
+          
+    - name: atlan_user_details_source_pii
+      description: "This table captures essential information about each user within the platform, including signup metadata, organizational attributes, assigned roles, and technical environment details. This table is foundational for understanding user segmentation, persona-based access, and platform usage preferences."
+      columns:
+        - name: user_id
+          description: "A unique identifier for the user."
+          data_tests:
+            - not_null
+        - name: signup_date
+          description: "The date when the user signed up or was registered on the platform."
+          data_tests:
+            - not_null
+        - name: domain
+          description: "The domain the user belongs to, inferred from their email or organization mapping."
+          data_tests:
+            - not_null
+        - name: role
+          description: "The user's access level or permissions in the system (e.g., Admin, Guest, Member)."
+          data_tests:
+            - not_null
+        - name: personas
+          description: "List of personas assigned to the user (e.g., Data Steward, Analyst, Engineer)."
+        - name: groups
+          description: "List of user groups the user is part of (e.g., Marketing Team, Governance Committee)."
+        - name: job_role
+          description: "The job role specified by the user at the time of signup (e.g., Data Analyst, Product Manager)."
+        - name: data_platform
+          description: "The operating system/platform the user most commonly uses (e.g., macOS, Windows)."
+        - name: data_brands
+          description: "Browser or client details inferred  from session metadata (e.g., Chrome, Safari, Firefox)."
+        
+    - name: atlan_event_details_source_pii
+      description: "This table tracks enrichment-related user events within the platform. Each row captures metadata about an enrichment action (such as editing a description, tagging, or adding documentation), including who performed it, when, and in which context. This table helps analyze user contributions and the depth of asset enrichment activity."
+      columns:
+        - name: usage_timestamp
+          description: "The exact date and time the enrichment event occurred."
+          data_tests:
+            - not_null
+        - name: enrichment_event
+          description: "The specific type or detail of the enrichment action (e.g.,added tag, edited description)."
+          data_tests:
+            - not_null
+        - name: enrichment_url
+          description: "URL where the enrichment action took place, showing context of the asset or feature."
+          data_tests:
+            - not_null
+        - name: account_name
+          description: "Name of the organization or workspace the user belongs to."
+          data_tests:
+            - not_null
+        - name: user_role
+          description: "User's role within the platform (e.g., Admin, Member, Guest)."
+          data_tests:
+            - not_null
+        - name: event_count
+          description: "Number of enrichment events aggregated in the same context (timestamp + user + asset)."
+          data_tests:
+            - not_null
+        - name: user_id
+          description: "A unique identifier for the user."
+          data_tests:
+           - not_null
+
+    - name: atlan_user_licenses_details_source_pii
+      description: "This table shows the current licenses assignment details."
+      columns:
+        - name: recorded_date
+          description: "Date on which the user and license values were recorded."
+          data_tests:
+            - not_null
+        - name: domain
+          description: "gitlab.atlan.com"
+          data_tests:
+            - not_null
+        - name: event_name
+          description: "Either enabled_user_count_by_role or licenses_count_by_role for assigned licenses and total licenses respectively"
+          data_tests:
+            - not_null
+        - name: event_value
+          description: "JSON storing role wise values for the respective event_names"
+          data_tests:
+            - not_null

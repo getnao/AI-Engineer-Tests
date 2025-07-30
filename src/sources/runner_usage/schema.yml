@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: runner_logs_source
+    description: tabularized data from dedicated runner logs
+    columns:
+      - name: job_duration_seconds
+      - name: job_failure_reason
+      - name: job_status
+      - name: job_url
+        data_tests:
+          - unique
+      - name: labels
+      - name: runner_id
+      - name: runner_name
+      - name: runner_system_id
+      - name: timestamp
+      - name: customer
+      - name: runner
+      - name: partition_date
+        description: date compiled by year, month, and day partitions in object name
+        data_tests:
+          - not_null
+      - name: partition_year
+        description: year partition from object name
+        data_tests:
+          - not_null
+      - name: partition_month
+        description: month partition from object name
+        data_tests:
+          - not_null
+      - name: partition_day
+        description: day partition from object name
+        data_tests:
+          - not_null

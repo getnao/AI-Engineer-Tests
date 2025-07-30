@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name:  wk_rpt_gitlab_registered_users_monthly
+    description: '{{ doc("wk_rpt_gitlab_registered_users_monthly") }}'
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - reporting_month
+            - delivery_type
+            - deployment_type
+    columns:
+      - name: reporting_month
+        description: First day of the calendar month of the Service Ping and paid seats
+      - name: is_first_day_of_last_month_of_fiscal_quarter
+        description: '{{ doc("date_is_first_day_of_last_month_of_fiscal_quarter") }}'
+      - name: fiscal_quarter_name_fy
+        description: '{{ doc("date_fiscal_quarter_name_fy") }}'
+      - name: delivery_type
+        description: '{{ doc("product_delivery_type") }}'
+      - name: deployment_type
+        description: '{{ doc("product_deployment_type") }}'
+      - name: total_user_count
+        description: The total reported count of users, based on `instance_user_count` from the last ping of the month per installation
+      - name: paid_user_count
+        description: The count of paid users, defined as the count of paid seats from base products (i.e., not add-ons). In the event that `paid_user_count` is greater than `total_user_count` (ex. some edge cases with Dedicated), `paid_user_count` is set as `total_user_count`
+      - name: free_user_count
+        description: The count of free users, defined as `total_user_count - paid_user_count`

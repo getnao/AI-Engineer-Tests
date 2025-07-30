@@ -1,0 +1,10 @@
+version: 2
+ 
+models:
+ - name: rspec_flaky_tests_source
+   description: Base model for rspec_flaky_tests_source
+   columns:
+    - name: combined_composite_keys
+      description: Combined Composite Keys for all columns
+      data_tests:
+        - unique

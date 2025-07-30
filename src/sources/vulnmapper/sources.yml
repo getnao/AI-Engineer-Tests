@@ -1,0 +1,46 @@
+version: 2
+
+sources:
+  - name: vulnmapper
+    database: '{{ env_var("SNOWFLAKE_LOAD_DATABASE") }}'
+    schema: vulnmapper
+    loader: Snowflake
+    loaded_at_field: loaded_at
+    description: VulnMapper security data source
+    tables:
+      - name: advisories
+        description: Known security advisories from VulnMapper
+      - name: container_fix_statuses
+        description: Container fix status information from VulnMapper
+      - name: container_images
+        description: Container image information from VulnMapper
+      - name: deviation_requests
+        description: Deviation request information from VulnMapper
+      - name: operating_systems
+        description: Operating system information from VulnMapper
+      - name: package_fix_statuses
+        description: Package fix status information from VulnMapper
+      - name: packages
+        description: Package information from VulnMapper
+      - name: project_groups
+        description: Project group information from VulnMapper
+      - name: projects
+        description: Project information from VulnMapper
+      - name: providers
+        description: Provider information from VulnMapper
+      - name: servers
+        description: Server information from VulnMapper
+      - name: tracking_issues
+        description: Tracking issue information from VulnMapper
+      - name: vulnerabilities
+        description: Vulnerability information from VulnMapper
+      - name: tracking_issues_vulnerabilities_mapping
+        description: Mapping between tracking issues and vulnerabilities from VulnMapper
+      - name: vulnerabilities_container_images_mapping
+        description: Mapping between vulnerabilities and container images from VulnMapper
+      - name: vulnerabilities_packages_mapping
+        description: Mapping between vulnerabilities and packages from VulnMapper
+      - name: vulnerabilities_servers_mapping
+        description: Mapping between vulnerabilities and servers from VulnMapper
+      - name: vulnerabilities_advisories_mapping
+        description: Mapping between vulnerabilities and advisories from VulnMapper

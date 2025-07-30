@@ -1,0 +1,60 @@
+version: 2
+
+models:
+  - name: clickhouse_billing_usage_cost
+    description: '{{ doc("clickhouse_billing_usage_cost") }}'
+    columns:
+      - name: environment_name
+        description: '{{ doc("clickhouse_billing_environment_name") }}'
+        tests:
+          - not_null
+      - name: cost_date
+        description: '{{ doc("clickhouse_billing_cost_date") }}'
+        tests:
+          - not_null
+      - name: data_warehouse_id
+        description: '{{ doc("clickhouse_billing_data_warehouse_id") }}'
+        tests:
+          - not_null
+      - name: index
+        description: '{{ doc("clickhouse_billing_index") }}'
+      - name: service_id
+        description: '{{ doc("clickhouse_billing_service_id") }}'
+      - name: entity_type
+        description: '{{ doc("clickhouse_billing_entity_type") }}'
+        tests:
+          - not_null
+      - name: entity_id
+        description: '{{ doc("clickhouse_billing_entity_id") }}'
+        tests:
+          - not_null
+      - name: entity_name
+        description: '{{ doc("clickhouse_billing_entity_name") }}'
+        tests:
+          - not_null
+      - name: organization_tier
+        description: '{{ doc("clickhouse_billing_organization_tier") }}'
+      - name: total_chc
+        description: '{{ doc("clickhouse_billing_total_chc") }}'
+      - name: discount
+        description: '{{ doc("clickhouse_billing_discount") }}'
+      - name: inter_region_tier1_chc
+        description: '{{ doc("clickhouse_billing_inter_region_tier1_chc") }}'
+      - name: inter_region_tier2_chc
+        description: '{{ doc("clickhouse_billing_inter_region_tier2_chc") }}'
+      - name: inter_region_tier3_chc
+        description: '{{ doc("clickhouse_billing_inter_region_tier3_chc") }}'
+      - name: inter_region_tier4_chc
+        description: '{{ doc("clickhouse_billing_inter_region_tier4_chc") }}'
+      - name: public_data_transfer_chc
+        description: '{{ doc("clickhouse_billing_public_data_transfer_chc") }}'
+      - name: compute_chc
+        description: '{{ doc("clickhouse_billing_compute_chc") }}'
+      - name: grand_total_chc
+        description: '{{ doc("clickhouse_billing_grand_total_chc") }}'
+      - name: currency
+        description: '{{ doc("clickhouse_billing_currency") }}'
+      - name: uploaded_at
+        description: '{{ doc("clickhouse_billing_uploaded_at") }}'
+        tests:
+          - not_null

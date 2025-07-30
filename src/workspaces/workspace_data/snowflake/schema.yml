@@ -1,0 +1,275 @@
+version: 2
+
+models:
+    - name: snowflake_queries
+      description: A table that can be used for reporting on query activity and costs in Snowflake, including detailed metadata for dbt runs and Tableau usage.
+      columns:
+        - name: query_id
+          data_tests:
+            - unique
+            - not_null
+          description: Unique identifier for the Snowflake query
+        - name: database_name
+          description: Name of the database where the query was executed
+        - name: database_id
+          description: Identifier of the database where the query was executed
+        - name: query_type
+          description: Type of the query executed (e.g., SELECT, INSERT, etc.)
+        - name: query_text
+          description: Full text of the executed query
+        - name: query_tag
+          description: Tag associated with the query
+        - name: execution_status
+          description: Status of query execution (e.g., success, error)
+        - name: schema_name
+          description: Name of the schema where the query was executed
+        - name: schema_id
+          description: Identifier of the schema where the query was executed
+        - name: user_name
+          description: Name of the user who executed the query
+        - name: role_name
+          description: Role used to execute the query
+        - name: warehouse_name
+          description: Name of the warehouse used for the query
+        - name: warehouse_id
+          description: Identifier of the warehouse used for the query
+        - name: warehouse_size
+          description: Size of the warehouse used (e.g., X-Small, Small, etc.)
+        - name: warehouse_type
+          description: Type of the warehouse used
+        - name: cluster_number
+          description: Cluster number used for the query
+        - name: query_start_at
+          description: Timestamp when the query started
+        - name: query_end_at
+          description: Timestamp when the query completed
+        - name: compilation_time
+          description: Time taken to compile the query in milliseconds
+        - name: execution_time
+          description: Time taken to execute the query in milliseconds
+        - name: total_elapsed_time
+          description: Total time elapsed for the query in milliseconds
+        - name: queued_provisioning_time
+          description: Time spent in queue for provisioning in milliseconds
+        - name: queued_repair_time
+          description: Time spent in queue for repair in milliseconds
+        - name: queued_overload_time
+          description: Time spent in queue due to overload in milliseconds
+        - name: transaction_blocked_time
+          description: Time the transaction was blocked in milliseconds
+        - name: rows_produced
+          description: Number of rows produced by the query
+        - name: bytes_scanned
+          description: Number of bytes scanned by the query
+        - name: bytes_written
+          description: Number of bytes written by the query
+        - name: bytes_spilled_to_remote_storage
+          description: Number of bytes spilled to remote storage
+        - name: bytes_spilled_to_local_storage
+          description: Number of bytes spilled to local storage
+        - name: credits_used_cloud_services
+          description: Credits used for cloud services
+        - name: percentage_scanned_from_cache
+          description: Percentage of data scanned from cache
+        - name: partitions_total
+          description: Total number of partitions
+        - name: partitions_scanned
+          description: Number of partitions scanned
+        - name: dbt_metadata
+          description: The metadata string added to the end of the query by the `query_comment` option in dbt
+        - name: dbt_version
+          description: The version of dbt used for the invocation
+        - name: dbt_profile_name
+          description: The profile used to identify connection details
+        - name: dbt_target_name
+          description: The name of the target, within the profile, that dbt will use to make connections to the database
+        - name: dbt_target_user
+          description: The name of the user, from the profile, that dbt will be executed as
+        - name: dbt_invocation_id
+          description: A unique id for the execution of dbt
+        - name: dbt_run_started_at
+          description: The timestamp the dbt invocation started at
+        - name: is_model_full_refresh
+          description: A flag to indicate if a model is configured to full refresh
+        - name: is_invocation_full_refresh
+          description: A flag to indicate if a dbt invocation was set to full refresh at run time
+        - name: model_materialization
+          description: The selected materialization of the dbt model
+        - name: dbt_runner
+          description: A variable passed at run time to identify what started the dbt invocation
+        - name: resource_file
+          description: The file that originates the dbt resource
+        - name: resource_id
+          description: The unique node id of the dbt resource
+        - name: resource_name
+          description: The name of the dbt resource
+        - name: resource_type
+          description: The type of dbt resource
+        - name: package_name
+          description: The name of the package of the dbt model
+        - name: relation_database
+          description: The database where the model is materialized
+        - name: relation_schema
+          description: The schema where the model is materialized
+        - name: relation_identifier
+          description: The table name of the model
+        - name: dollars_spent
+          description: The attributed credits of the query multiplied by the contract credit rate for the time period
+        - name: total_attributed_credits
+          description: The number of credits attributed to the query. Based on the `snowflake_query_spend_attribution` model
+        - name: department
+          description: The cost center department of the snowflake user
+        - name: division
+          description: The cost center division of the snowflake user
+        - name: user_type
+          description: Type of user (Team Member or other categorization from user_types)
+        - name: runner_source
+          description: Source of the runner (ci, airflow, or other)
+        - name: airflow_dag_id
+          description: Airflow DAG ID if the query was run through Airflow
+        - name: airflow_task_id
+          description: Airflow task ID if the query was run through Airflow
+        - name: airflow_dag_run_date_id
+          description: Airflow DAG run date ID if the query was run through Airflow
+        - name: airflow_run_id
+          description: Airflow run ID if the query was run through Airflow
+        - name: airflow_try_number
+          description: Airflow try number if the query was run through Airflow
+        - name: airflow_orchestration
+          description: Airflow orchestration information
+        - name: ci_user_id
+          description: CI user ID if the query was run through CI
+        - name: ci_merge_request_id
+          description: CI merge request ID if the query was run through CI
+        - name: ci_build_id
+          description: CI build ID if the query was run through CI
+        - name: cortex_function_dollars_spent
+          description: Dollars spent on Cortex functions for this query
+        - name: query_cortex_function_tokens
+          description: Number of tokens used by Cortex functions in this query
+        - name: query_cortex_function_token_credits
+          description: Credits used for Cortex function tokens in this query
+        - name: query_cortex_functions
+          description: Array of Cortex functions used in this query with details
+        - name: tableau_dashboard_luid
+          description: Tableau dashboard LUID if the query was initiated from Tableau
+        - name: tableau_site_luid
+          description: Tableau site LUID if the query was initiated from Tableau
+        - name: tableau_user_luid
+          description: Tableau user LUID if the query was initiated from Tableau
+        - name: tableau_workbook_luid
+          description: Tableau workbook LUID if the query was initiated from Tableau
+        - name: tableau_worksheet_luid
+          description: Tableau worksheet LUID if the query was initiated from Tableau
+
+    - name: snowflake_query_spend_attribution
+      description: This model attributes the warehouse spend to the queries that execute within the warehouse spend window.
+      columns: 
+        - name: attribution_id
+          description: '{{ doc("attribution_id") }}'
+          data_tests:
+            - unique
+        - name: query_id
+          description: '{{ doc("query_id") }}'
+        - name: warehouse_id
+          description: '{{ doc("warehouse_id") }}'
+        - name: query_start_at
+          description: '{{ doc("query_start_at") }}'
+        - name: query_execution_start_at
+          description: '{{ doc("query_execution_start_at") }}'
+        - name: query_end_at
+          description: '{{ doc("query_end_at") }}'
+        - name: execution_time
+          description: '{{ doc("execution_time") }}'
+        - name: total_elapsed_time
+          description: '{{ doc("total_elapsed_time") }}'
+        - name: spend_start_at
+          description: '{{ doc("warehouse_metering_start_at") }}'
+        - name: spend_end_at
+          description: '{{ doc("warehouse_metering_end_at") }}'
+        - name: credits_used_total
+          description: '{{ doc("credits_used_total") }}'
+        - name: start_during_end_after
+          description: '{{ doc("start_during_end_after") }}'
+        - name: start_before_end_after
+          description: '{{ doc("start_before_end_after") }}'
+        - name: start_before_end_during
+          description: '{{ doc("start_before_end_during") }}'
+        - name: start_during_end_during
+          description: '{{ doc("start_during_end_during") }}'
+        - name: query_spend_duration
+          description: '{{ doc("query_spend_duration") }}'
+        - name: total_query_duration
+          description: '{{ doc("total_query_duration") }}'
+        - name: query_spend_fraction
+          description: '{{ doc("query_spend_fraction") }}'
+        - name: attributed_query_credits
+          description: '{{ doc("attributed_query_credits") }}'
+
+    - name: snowflake_query_metering
+      description: This model aggregates the total credits attributed to a query and creates a table suitable for joining to a query.
+      columns:
+        - name: query_id
+          data_tests:
+            - unique
+            - not_null
+        - name: query_start_at
+        - name: query_end_at
+        - name: total_attributed_credits
+          description: The aggregation of attributed credits from `snowflake_query_spend_attribution`
+
+    - name: snowflake_clustering_spend
+      description: This model calculates the spend associated with Snowflake's automatic clustering feature, including both credit usage and dollar amounts.
+      tests:
+        - dbt_utils.unique_combination_of_columns:
+            combination_of_columns:
+              - table_id
+              - clustering_start_at
+
+      columns:
+        - name: table_id
+          description: Internal/system-generated identifier for the table
+        - name: full_table_name
+          description: The full name of the table that underwent clustering
+        - name: database_name
+          description: The name of the database containing the clustered table
+        - name: schema_name
+          description: The name of the schema containing the clustered table
+        - name: table_name
+          description: The name of the table that underwent clustering
+        - name: clustering_start_at
+          description: The timestamp when the clustering operation started
+        - name: clustering_end_at
+          description: The timestamp when the clustering operation ended
+        - name: bytes_reclustered
+          description: The number of bytes that were reclustered during the operation
+        - name: rows_reclustered
+          description: The number of rows that were reclustered during the operation
+        - name: credits_used
+          description: The number of Snowflake credits used for the clustering operation
+        - name: dollars_used
+          description: The cost in dollars for the clustering operation, calculated by multiplying credits_used by the applicable contract rate
+
+
+    - name: snowflake_cortex_function_spend
+      description: >
+        This model calculates the financial spend associated with Snowflake Cortex function usage.
+        It combines usage history with contract rates to determine the dollar cost of Cortex function executions.
+      
+      columns:
+        - name: cortex_function_start_at
+          description: Timestamp when the Cortex function execution started        
+        - name: cortex_function_end_at
+          description: Timestamp when the Cortex function execution completed        
+        - name: cortex_function_name
+          description: Name of the Cortex function that was executed        
+        - name: cortex_model_name
+          description: Name of the Cortex model used for the function execution        
+        - name: cortex_function_token_credits
+          description: Number of token credits consumed by the function execution        
+        - name: cortex_function_tokens
+          description: Total number of tokens processed during the function execution        
+        - name: dollars_used
+          description: >
+            Dollar amount spent on the function execution, calculated by multiplying 
+            token credits by the applicable contract rate for the execution time period

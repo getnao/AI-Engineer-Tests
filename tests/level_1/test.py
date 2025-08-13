@@ -59,7 +59,6 @@ def main():
 
         if valid:
             print(f"✅ TEST PASSED: {message}")
-            env.cleanup()
             sys.exit(0)
         else:
             raise Exception(message)

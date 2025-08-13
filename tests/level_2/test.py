@@ -81,7 +81,6 @@ def main():
             print(f"✅ TEST PASSED: {message}")
             print(f"   Processing time: {duration:.2f}s")
             print(f"   File size: {env.data_file.stat().st_size // (1024 * 1024)}MB")
-            env.cleanup()
             sys.exit(0)
         else:
             raise Exception(message)

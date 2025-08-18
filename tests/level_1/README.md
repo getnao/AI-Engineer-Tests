@@ -11,7 +11,7 @@ python agent/main.py "user prompt describing the task" "/absolute/path/to/workin
 
 ### User prompt
 ```
-Please add $10 to all purchase amounts in 'data/data_1.csv' because there was an error in recording
+Please add 10 dollars to all purchase amounts in 'data/data_1.csv' because there was an error in recording
 ```
 
 ## Files available

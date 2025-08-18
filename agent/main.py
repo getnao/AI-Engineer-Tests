@@ -29,13 +29,13 @@ def main():
     client = OpenAI(api_key=api_key)
 
     try:
-        response = client.chat.completions.create(
+        response = client.responses.create(
             model="gpt-4.1",
-            messages=[{"role": "user", "content": prompt}],
+            input=[{"role": "user", "content": prompt}],
         )
 
         # Extract and print the response
-        ai_response = response.choices[0].message.content
+        ai_response = response.output_text
         print(ai_response)
 
     except Exception as e:

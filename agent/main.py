@@ -39,7 +39,7 @@ def main():
         print(ai_response)
 
     except Exception as e:
-        print(f"Error making OpenAI request: {e}")
+        print(f"Error: {e}")
         sys.exit(1)
 
 
